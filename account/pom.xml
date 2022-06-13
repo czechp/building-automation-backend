@@ -17,4 +17,12 @@
     </properties>
 
 
+    <dependencies>
+
+        <dependency>
+            <groupId>app.web.pcz-portfolio</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
