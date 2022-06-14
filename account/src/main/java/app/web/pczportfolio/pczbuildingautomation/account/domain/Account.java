@@ -34,6 +34,12 @@ public class Account {
         return new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
     }
 
+    public static Account createFromEntity(AccountEntity entity) {
+        Account account = new Account(entity.getUsername(), entity.getPassword(), entity.getEmail());
+        account.setId(entity.getId());
+        return  account;
+    }
+
 
     private static void comparePasswords(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm))
