@@ -29,7 +29,7 @@ public class Account {
         this.enableToken = UUID.randomUUID().toString();
     }
 
-    public static Account create(AccountCommandDto dto) {
+    public static Account createFromCommandDto(AccountCommandDto dto) {
         comparePasswords(dto.getPassword(), dto.getPasswordConfirm());
         return new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
     }
@@ -37,6 +37,6 @@ public class Account {
 
     private static void comparePasswords(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm))
-            throw new BadRequestException("Passwords are not equals");
+            throw new BadRequestException("Passwords are not equal");
     }
 }

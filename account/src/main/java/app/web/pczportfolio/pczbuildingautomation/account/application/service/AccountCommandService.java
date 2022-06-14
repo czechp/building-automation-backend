@@ -20,7 +20,7 @@ class AccountCommandService implements AccountCreateUseCase {
     @Override
     public void createAccount(AccountCommandDto dto) {
         usernameAndEmailAreUnique(dto);
-        Account account = Account.create(dto);
+        Account account = Account.createFromCommandDto(dto);
         accountCreatePort.createAccount(account);
         emailNotificationPort.accountCreatedNotification(account.getEmail(), account.getEnableToken());
 
@@ -30,7 +30,7 @@ class AccountCommandService implements AccountCreateUseCase {
         findByUsernameOrEmailPort
                 .findByUsernameOrEmail(dto.getUsername(), dto.getEmail())
                 .ifPresent((r) -> {
-                    throw new BadRequestException("Account with username or email already exists");
+                    throw new BadRequestException("Account with such username or email already exists");
                 });
     }
 
