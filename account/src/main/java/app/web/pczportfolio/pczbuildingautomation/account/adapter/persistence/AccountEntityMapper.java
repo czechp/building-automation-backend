@@ -7,7 +7,8 @@ class AccountEntityMapper {
         AccountEntity accountEntity = new AccountEntity(
                 account.getUsername(),
                 account.getPassword(),
-                account.getEmail()
+                account.getEmail(),
+                account.getEnableToken()
         );
         accountEntity.setId(account.getId());
         return accountEntity;

@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @AllArgsConstructor
@@ -24,9 +25,18 @@ class AccountWarmup {
 
         logger.info("<>-------------------AccountWarmup-------------------<>");
         Stream.of(
-                        new AccountEntity("admin", passwordEncoder.encode("admin123"), "admin@some123.pl"),
-                        new AccountEntity("superuser", passwordEncoder.encode("superuser123"), "superuser@some123.pl"),
-                        new AccountEntity("user", passwordEncoder.encode("user"), "user@some123.pl")
+                        new AccountEntity(
+                                "admin",
+                                passwordEncoder.encode("admin123"),
+                                "admin@some123.pl", UUID.randomUUID().toString()),
+                        new AccountEntity(
+                                "superuser",
+                                passwordEncoder.encode("superuser123"),
+                                "superuser@some123.pl", UUID.randomUUID().toString()),
+                        new AccountEntity(
+                                "user",
+                                passwordEncoder.encode("user"),
+                                "user@some123.pl", UUID.randomUUID().toString())
                 )
                 .forEach(repository::save);
     }

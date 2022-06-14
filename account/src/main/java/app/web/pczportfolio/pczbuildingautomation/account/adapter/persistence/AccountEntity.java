@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.lang.reflect.Member;
 
 @Entity
 @Table(name = "accounts")
@@ -28,12 +29,16 @@ class AccountEntity {
     @NotNull(message = "Email cannot be null")
     @Email(message = "Incorrect email format")
     private String email;
+
+    @NotBlank(message = "Enable token cannot be blank")
+    private String enableToken;
     AccountEntity() {
     }
 
-    AccountEntity(String username, String password, String email) {
+    AccountEntity(String username, String password, String email, String enableToken) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.enableToken = enableToken;
     }
 }
