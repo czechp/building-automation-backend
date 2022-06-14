@@ -48,8 +48,10 @@ class AccountCommandServiceTest {
                 .thenReturn(Optional.empty());
         accountCreateUseCase.createAccount(dto);
         //then
-        Mockito.verify(accountCreatePort, Mockito.times(1)).createAccount(any());
-        Mockito.verify(emailNotificationPort, Mockito.times(1)).accountCreatedNotification(anyString(), anyString());
+        Mockito.verify(accountCreatePort, Mockito.times(1))
+                .createAccount(any());
+        Mockito.verify(emailNotificationPort, Mockito.times(1))
+                .accountCreatedNotification(anyString(), anyString());
     }
 
     @Test
@@ -66,8 +68,10 @@ class AccountCommandServiceTest {
                 .findByUsernameOrEmail(anyString(), anyString())).thenReturn(Optional.empty());
         //then
         assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
-        Mockito.verify(accountCreatePort, Mockito.times(0)).createAccount(any());
-        Mockito.verify(emailNotificationPort, Mockito.times(0)).accountCreatedNotification(anyString(), anyString());
+        Mockito.verify(accountCreatePort, Mockito.times(0))
+                .createAccount(any());
+        Mockito.verify(emailNotificationPort, Mockito.times(0))
+                .accountCreatedNotification(anyString(), anyString());
     }
 
     @Test
@@ -84,8 +88,10 @@ class AccountCommandServiceTest {
                 .thenReturn(Optional.of(Account.create(dto)));
         //then
         assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
-        Mockito.verify(accountCreatePort, Mockito.times(0)).createAccount(any());
-        Mockito.verify(emailNotificationPort, Mockito.times(0)).accountCreatedNotification(anyString(), anyString());
+        Mockito.verify(accountCreatePort, Mockito.times(0))
+                .createAccount(any());
+        Mockito.verify(emailNotificationPort, Mockito.times(0))
+                .accountCreatedNotification(anyString(), anyString());
     }
 
 
