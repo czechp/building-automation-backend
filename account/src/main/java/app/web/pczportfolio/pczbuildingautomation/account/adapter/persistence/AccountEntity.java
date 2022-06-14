@@ -10,10 +10,10 @@ import java.lang.reflect.Member;
 
 @Entity
 @Table(name = "accounts")
-@Getter(AccessLevel.PACKAGE)
+@Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode()
-class AccountEntity {
+public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

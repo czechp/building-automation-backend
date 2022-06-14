@@ -20,6 +20,8 @@ class AccountPersistenceAdapter implements AccountCreatePort, AccountFindByUsern
 
     @Override
     public Optional<Account> findByUsernameOrEmail(String username, String email) {
-        return accountJpaRepository.findByUsernameOrEmail(username, email);
+        return accountJpaRepository
+                .findByUsernameOrEmail(username, email)
+                .map(AccountEntityMapper::toDomain);
     }
 }

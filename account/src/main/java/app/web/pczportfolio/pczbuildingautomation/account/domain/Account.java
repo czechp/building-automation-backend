@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.domain;
 
+import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
 import lombok.AccessLevel;

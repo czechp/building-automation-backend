@@ -13,4 +13,8 @@ class AccountEntityMapper {
         accountEntity.setId(account.getId());
         return accountEntity;
     }
+
+    static Account toDomain(AccountEntity accountEntity) {
+        return Account.createFromEntity(accountEntity);
+    }
 }
