@@ -1,9 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCreatePort;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountDeletePort;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountFindByIdPort;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountFindByUsernameOrEmailPort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.configuration.HttpExceptionHandler;
@@ -32,14 +29,7 @@ class AccountRestAdapterTest {
     private static final String URL = "/api/accounts";
 
     @MockBean
-    AccountFindByUsernameOrEmailPort accountFindByUsernameOrEmailPort;
-    @MockBean
-    AccountCreatePort accountCreatePort;
-    @MockBean
-    AccountFindByIdPort accountFindByIdPort;
-    @MockBean
-    AccountDeletePort accountDeletePort;
-
+    AccountCommandPort accountCommandPort;
     @Autowired
     AccountRestAdapter accountRestAdapter;
 
@@ -69,7 +59,7 @@ class AccountRestAdapterTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
         //when
-        Mockito.when(accountFindByUsernameOrEmailPort
+        Mockito.when(accountCommandPort
                         .findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.empty());
         //then
@@ -90,7 +80,7 @@ class AccountRestAdapterTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
         //when
-        Mockito.when(accountFindByUsernameOrEmailPort
+        Mockito.when(accountCommandPort
                         .findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.empty());
         //then
@@ -111,7 +101,7 @@ class AccountRestAdapterTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
         //when
-        Mockito.when(accountFindByUsernameOrEmailPort
+        Mockito.when(accountCommandPort
                         .findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.of(new Account()));
         //then

@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.*;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountEmailNotificationPort;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
@@ -23,15 +24,10 @@ import static org.mockito.ArgumentMatchers.*;
 class AccountCommandServiceTest {
 
     @MockBean
-    AccountCreatePort accountCreatePort;
+    AccountCommandPort accountCommandPort;
     @MockBean
-    AccountFindByUsernameOrEmailPort accountFindByUsernameOrEmailPort;
-    @MockBean
-    AccountCreateEmailNotificationPort accountEmailNotificationPort;
-    @MockBean
-    AccountFindByIdPort accountFindByIdPort;
-    @MockBean
-    AccountDeletePort accountDeletePort;
+    AccountEmailNotificationPort accountEmailNotificationPort;
+
     @Autowired
     AccountCreateUseCase accountCreateUseCase;
 
@@ -48,11 +44,11 @@ class AccountCommandServiceTest {
                 "somePassword"
         );
         //when
-        Mockito.when(accountFindByUsernameOrEmailPort.findAccountByUsernameOrEmail(anyString(), anyString()))
+        Mockito.when(accountCommandPort.findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.empty());
         accountCreateUseCase.createAccount(dto);
         //then
-        Mockito.verify(accountCreatePort, Mockito.times(1))
+        Mockito.verify(accountCommandPort, Mockito.times(1))
                 .createAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(1))
                 .accountCreatedNotification(anyString(), anyString());
@@ -68,11 +64,11 @@ class AccountCommandServiceTest {
                 "differentPassword"
         );
         //when
-        Mockito.when(accountFindByUsernameOrEmailPort
+        Mockito.when(accountCommandPort
                 .findAccountByUsernameOrEmail(anyString(), anyString())).thenReturn(Optional.empty());
         //then
         assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
-        Mockito.verify(accountCreatePort, Mockito.times(0))
+        Mockito.verify(accountCommandPort, Mockito.times(0))
                 .createAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(0))
                 .accountCreatedNotification(anyString(), anyString());
@@ -88,11 +84,11 @@ class AccountCommandServiceTest {
                 "somePassword"
         );
         //when
-        Mockito.when(accountFindByUsernameOrEmailPort.findAccountByUsernameOrEmail(anyString(), anyString()))
+        Mockito.when(accountCommandPort.findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.of(Account.createFromCommandDto(dto)));
         //then
         assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
-        Mockito.verify(accountCreatePort, Mockito.times(0))
+        Mockito.verify(accountCommandPort, Mockito.times(0))
                 .createAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(0))
                 .accountCreatedNotification(anyString(), anyString());
@@ -103,9 +99,12 @@ class AccountCommandServiceTest {
         //given
         final long id = 1L;
         //when
-        Mockito.when(accountFindByIdPort.findAccountById(anyLong()))
+        Mockito.when(accountCommandPort.findAccountById(anyLong()))
                 .thenReturn(Optional.of(new Account()));
+        accountDeleteByIdUseCase.deleteAccountById(id);
         //then
+        Mockito.verify(accountCommandPort, Mockito.times(1)).deleteAccount(any());
+
     }
 
     @Configuration
