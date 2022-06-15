@@ -19,7 +19,7 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
     @Override
     public void createAccount(AccountCommandDto dto) {
         usernameAndEmailAreUnique(dto);
-        Account account = Account.createFromCommandDto(dto);
+        Account account = Account.create(dto);
         accountCommandPort.createAccount(account);
         accountNotificationPort.accountCreatedNotification(account.getEmail(), account.getEnableToken());
     }

@@ -27,7 +27,7 @@ class AccountPersistenceAdapter implements AccountCommandPort {
     @Override
     public Optional<Account> findAccountById(long id) {
         return accountJpaRepository.findById(id)
-                .map(Account::createFromEntity);
+                .map(Account::mapFromEntity);
     }
 
     @Override

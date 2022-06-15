@@ -15,6 +15,6 @@ class AccountEntityMapper {
     }
 
     static Account toDomain(AccountEntity accountEntity) {
-        return Account.createFromEntity(accountEntity);
+        return Account.mapFromEntity(accountEntity);
     }
 }

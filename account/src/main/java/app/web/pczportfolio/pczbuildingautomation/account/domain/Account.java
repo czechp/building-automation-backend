@@ -22,6 +22,9 @@ public class Account {
 
     private String enableToken;
 
+    private boolean adminConfirmed;
+    private boolean emailConfirmed;
+
     Account(String username, String password, String email) {
         this.username = username;
         this.password = password;
@@ -29,15 +32,17 @@ public class Account {
         this.enableToken = UUID.randomUUID().toString();
     }
 
-    public static Account createFromCommandDto(AccountCommandDto dto) {
+    public static Account create(AccountCommandDto dto) {
         comparePasswords(dto.getPassword(), dto.getPasswordConfirm());
         return new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
     }
 
-    public static Account createFromEntity(AccountEntity entity) {
+    public static Account mapFromEntity(AccountEntity entity) {
         Account account = new Account(entity.getUsername(), entity.getPassword(), entity.getEmail());
         account.setId(entity.getId());
-        return  account;
+        account.setAdminConfirmed(entity.isAdminConfirmed());
+        account.setEmailConfirmed(entity.isEmailConfirmed());
+        return account;
     }
 
 

@@ -85,7 +85,7 @@ class AccountCommandServiceTest {
         );
         //when
         Mockito.when(accountCommandPort.findAccountByUsernameOrEmail(anyString(), anyString()))
-                .thenReturn(Optional.of(Account.createFromCommandDto(dto)));
+                .thenReturn(Optional.of(Account.create(dto)));
         //then
         assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
         Mockito.verify(accountCommandPort, Mockito.times(0))
