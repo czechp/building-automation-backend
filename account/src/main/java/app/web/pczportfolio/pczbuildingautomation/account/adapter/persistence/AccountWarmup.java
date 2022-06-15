@@ -38,6 +38,13 @@ class AccountWarmup {
                                 passwordEncoder.encode("user"),
                                 "user@some123.pl", UUID.randomUUID().toString())
                 )
+                .map(this::activateAccount)
                 .forEach(repository::save);
+    }
+
+    private AccountEntity activateAccount(AccountEntity accountEntity){
+        accountEntity.setAdminConfirmed(true);
+        accountEntity.setEmailConfirmed(true);
+        return accountEntity;
     }
 }
