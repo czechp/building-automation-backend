@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountEmailNotificationPort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountNotificationPort;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
@@ -26,7 +26,7 @@ class AccountCommandServiceTest {
     @MockBean
     AccountCommandPort accountCommandPort;
     @MockBean
-    AccountEmailNotificationPort accountEmailNotificationPort;
+    AccountNotificationPort accountEmailNotificationPort;
 
     @Autowired
     AccountCreateUseCase accountCreateUseCase;

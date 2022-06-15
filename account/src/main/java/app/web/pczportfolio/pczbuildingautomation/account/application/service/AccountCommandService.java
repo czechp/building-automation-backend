@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountEmailNotificationPort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountNotificationPort;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUseCase {
     private final AccountCommandPort accountCommandPort;
-    private final AccountEmailNotificationPort accountEmailNotificationPort;
+    private final AccountNotificationPort accountNotificationPort;
 
     @Override
     public void createAccount(AccountCommandDto dto) {
         usernameAndEmailAreUnique(dto);
         Account account = Account.createFromCommandDto(dto);
         accountCommandPort.createAccount(account);
-        accountEmailNotificationPort.accountCreatedNotification(account.getEmail(), account.getEnableToken());
+        accountNotificationPort.accountCreatedNotification(account.getEmail(), account.getEnableToken());
     }
 
     @Override

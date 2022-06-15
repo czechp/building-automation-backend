@@ -1,10 +1,10 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.email;
 
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountEmailNotificationPort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountNotificationPort;
 import org.springframework.stereotype.Service;
 
 @Service
-class EmailNotifier implements AccountEmailNotificationPort {
+class Notifier implements AccountNotificationPort {
 
     //TODO: create it
     @Override

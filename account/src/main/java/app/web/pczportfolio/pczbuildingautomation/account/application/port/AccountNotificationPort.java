@@ -1,5 +1,5 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.port;
 
-public interface AccountEmailNotificationPort {
+public interface AccountNotificationPort {
     void accountCreatedNotification(String email, String enableToken);
 }
