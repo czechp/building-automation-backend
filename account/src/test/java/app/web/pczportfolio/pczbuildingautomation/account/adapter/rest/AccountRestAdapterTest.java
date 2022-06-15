@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @SpringJUnitConfig(AccountRestAdapterTest.TestConfiguration.class)
@@ -80,8 +81,7 @@ class AccountRestAdapterTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
         //when
-        Mockito.when(accountCommandPort
-                        .findAccountByUsernameOrEmail(anyString(), anyString()))
+        Mockito.when(accountCommandPort.findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.empty());
         //then
         mockMvc.perform(requestBuilder)
@@ -109,6 +109,31 @@ class AccountRestAdapterTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
+    @Test
+    void deleteAccountTest() throws Exception {
+        final long id = 1L;
+        //given
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/{id}", id);
+        //when
+        Mockito.when(accountCommandPort.findAccountById(anyLong()))
+                .thenReturn(Optional.of(new Account()));
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    void deleteAccountNotExistsTest() throws Exception {
+        final long id = 1L;
+        //given
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/{id}", id);
+        //when
+        Mockito.when(accountCommandPort.findAccountById(anyLong()))
+                .thenReturn(Optional.empty());
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
 
     @Configuration
     @ComponentScan("app.web.pczportfolio.pczbuildingautomation.account")

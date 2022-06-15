@@ -104,7 +104,19 @@ class AccountCommandServiceTest {
         accountDeleteByIdUseCase.deleteAccountById(id);
         //then
         Mockito.verify(accountCommandPort, Mockito.times(1)).deleteAccount(any());
+    }
 
+
+    @Test
+    void accountDeleteNotExistsTest() {
+        //given
+        final long id = 1L;
+        //when
+        Mockito.when(accountCommandPort.findAccountById(anyLong()))
+                .thenReturn(Optional.empty());
+        //then
+        assertThrows(BadRequestException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
+        Mockito.verify(accountCommandPort, Mockito.times(0)).deleteAccount(any());
     }
 
     @Configuration
