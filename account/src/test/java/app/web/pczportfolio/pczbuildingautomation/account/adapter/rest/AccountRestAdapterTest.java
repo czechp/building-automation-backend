@@ -1,6 +1,8 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCreatePort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountDeletePort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountFindByIdPort;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountFindByUsernameOrEmailPort;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
@@ -33,6 +35,10 @@ class AccountRestAdapterTest {
     AccountFindByUsernameOrEmailPort accountFindByUsernameOrEmailPort;
     @MockBean
     AccountCreatePort accountCreatePort;
+    @MockBean
+    AccountFindByIdPort accountFindByIdPort;
+    @MockBean
+    AccountDeletePort accountDeletePort;
 
     @Autowired
     AccountRestAdapter accountRestAdapter;
@@ -64,7 +70,7 @@ class AccountRestAdapterTest {
                 .content(requestBody);
         //when
         Mockito.when(accountFindByUsernameOrEmailPort
-                        .findByUsernameOrEmail(anyString(), anyString()))
+                        .findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.empty());
         //then
         mockMvc.perform(requestBuilder)
@@ -85,7 +91,7 @@ class AccountRestAdapterTest {
                 .content(requestBody);
         //when
         Mockito.when(accountFindByUsernameOrEmailPort
-                        .findByUsernameOrEmail(anyString(), anyString()))
+                        .findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.empty());
         //then
         mockMvc.perform(requestBuilder)
@@ -106,7 +112,7 @@ class AccountRestAdapterTest {
                 .content(requestBody);
         //when
         Mockito.when(accountFindByUsernameOrEmailPort
-                        .findByUsernameOrEmail(anyString(), anyString()))
+                        .findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.of(new Account()));
         //then
         mockMvc.perform(requestBuilder)

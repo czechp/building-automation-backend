@@ -4,6 +4,6 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 
 import java.util.Optional;
 
-public interface AccountFindByUsernameOrEmailPort {
-    Optional<Account> findAccountByUsernameOrEmail(String username, String email);
+public interface AccountFindByIdPort {
+    Optional<Account> findAccountById(long id);
 }
