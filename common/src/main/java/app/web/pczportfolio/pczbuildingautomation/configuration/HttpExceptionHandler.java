@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @ControllerAdvice
-class HttpExceptionHandler {
+public class HttpExceptionHandler {
     @ExceptionHandler({BadRequestException.class})
     ResponseEntity<HashMap<String, String>> badRequestHandler(Exception exception) {
         return buildResponse(exception, HttpStatus.BAD_REQUEST);
