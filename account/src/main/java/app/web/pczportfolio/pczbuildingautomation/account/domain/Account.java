@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
+import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
 import lombok.AccessLevel;
@@ -17,19 +18,18 @@ public class Account {
     private long id;
     private String username;
     private String password;
-
     private String email;
-
     private String enableToken;
-
     private boolean adminConfirmed;
     private boolean emailConfirmed;
+    private AccountRole accountRole;
 
     Account(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.enableToken = UUID.randomUUID().toString();
+        this.accountRole = AccountRole.USER;
     }
 
     public static Account create(AccountCommandDto dto) {

@@ -19,6 +19,7 @@ class AccountWarmup {
     private final AccountJpaRepository repository;
     private final Logger logger = LoggerFactory.getLogger(AccountWarmup.class);
     private final PasswordEncoder passwordEncoder;
+
     @EventListener(ApplicationReadyEvent.class)
     void init() {
         //TODO: use password encoder here
@@ -28,21 +29,26 @@ class AccountWarmup {
                         new AccountEntity(
                                 "admin",
                                 passwordEncoder.encode("admin123"),
-                                "admin@some123.pl", UUID.randomUUID().toString()),
+                                "admin@some123.pl",
+                                UUID.randomUUID().toString(),
+                                AccountRole.ADMIN
+                        ),
                         new AccountEntity(
                                 "superuser",
                                 passwordEncoder.encode("superuser123"),
-                                "superuser@some123.pl", UUID.randomUUID().toString()),
+                                "superuser@some123.pl", UUID.randomUUID().toString(),
+                                AccountRole.SUPERUSER),
                         new AccountEntity(
                                 "user",
                                 passwordEncoder.encode("user"),
-                                "user@some123.pl", UUID.randomUUID().toString())
+                                "user@some123.pl", UUID.randomUUID().toString(),
+                                AccountRole.USER)
                 )
                 .map(this::activateAccount)
                 .forEach(repository::save);
     }
 
-    private AccountEntity activateAccount(AccountEntity accountEntity){
+    private AccountEntity activateAccount(AccountEntity accountEntity) {
         accountEntity.setAdminConfirmed(true);
         accountEntity.setEmailConfirmed(true);
         return accountEntity;
