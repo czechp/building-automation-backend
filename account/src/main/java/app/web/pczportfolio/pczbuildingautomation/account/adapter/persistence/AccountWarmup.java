@@ -40,7 +40,7 @@ class AccountWarmup {
                                 AccountRole.SUPERUSER),
                         new AccountEntity(
                                 "user",
-                                passwordEncoder.encode("user"),
+                                passwordEncoder.encode("user123"),
                                 "user@some123.pl", UUID.randomUUID().toString(),
                                 AccountRole.USER)
                 )
