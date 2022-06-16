@@ -4,6 +4,6 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 
 import java.util.Optional;
 
-public abstract class AccountDeleteByIdUseCase {
-    public abstract void deleteAccountById(long id);
+public interface  AccountDeleteByIdUseCase {
+    public  void deleteAccountById(long id);
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-class AccountCommandService extends AccountDeleteByIdUseCase implements AccountCreateUseCase {
+class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUseCase {
     private final AccountCommandPort accountCommandPort;
     private final AccountNotificationPort accountNotificationPort;
 
