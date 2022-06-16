@@ -111,12 +111,28 @@ class AccountRestAdapterTest {
 
     @Test
     void deleteAccountTest() throws Exception {
-        final long id = 1L;
         //given
+        final long id = 1L;
+        final String commonUsername = "user";
+        final Account accountToDelete = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
+        final Account currentLoggedUser = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/{id}", id);
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
-                .thenReturn(Optional.of(new Account()));
+                .thenReturn(Optional.of(accountToDelete));
+
+        Mockito.when((accountCommandPort.findCurrentLoggedUser()))
+                .thenReturn(Optional.of(currentLoggedUser));
         //then
         mockMvc.perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isNoContent());

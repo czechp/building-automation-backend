@@ -8,6 +8,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -98,9 +99,26 @@ class AccountCommandServiceTest {
     void accountDeleteTest() {
         //given
         final long id = 1L;
+        final String commonUsername = "user";
+        final Account accountToDelete = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
+        final Account currentLoggedUser = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
-                .thenReturn(Optional.of(new Account()));
+                .thenReturn(Optional.of(accountToDelete));
+
+        Mockito.when((accountCommandPort.findCurrentLoggedUser()))
+                .thenReturn(Optional.of(currentLoggedUser));
+
         accountDeleteByIdUseCase.deleteAccountById(id);
         //then
         Mockito.verify(accountCommandPort, Mockito.times(1)).deleteAccount(any());
@@ -111,9 +129,27 @@ class AccountCommandServiceTest {
     void accountDeleteNotExistsTest() {
         //given
         final long id = 1L;
+        final String commonUsername = "user";
+        final Account accountToDelete = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
+        final Account currentLoggedUser = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
+        //when
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
                 .thenReturn(Optional.empty());
+
+        Mockito.when((accountCommandPort.findCurrentLoggedUser()))
+                .thenReturn(Optional.of(currentLoggedUser));
+
         //then
         assertThrows(BadRequestException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
         Mockito.verify(accountCommandPort, Mockito.times(0)).deleteAccount(any());
