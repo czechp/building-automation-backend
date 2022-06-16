@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityUserDetailsService;
+import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityUtilities;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 class AccountPersistenceAdapter implements AccountCommandPort, SecurityUserDetailsService {
     private final AccountJpaRepository accountJpaRepository;
+    private final SecurityUtilities securityUtilities;
 
     @Override
     public void createAccount(Account account) {
@@ -26,6 +28,7 @@ class AccountPersistenceAdapter implements AccountCommandPort, SecurityUserDetai
                 .findByUsernameOrEmail(username, email)
                 .map(AccountEntityMapper::toDomain);
     }
+
 
     @Override
     public Optional<Account> findAccountById(long id) {
@@ -42,5 +45,12 @@ class AccountPersistenceAdapter implements AccountCommandPort, SecurityUserDetai
     @Override
     public void deleteAccount(Account account) {
         accountJpaRepository.delete(AccountEntityMapper.toEntity(account));
+    }
+
+    @Override
+    public Optional<Account> findCurrentLoggedUser() {
+        String currentLoggedUsername = securityUtilities.getCurrentUser();
+        return accountJpaRepository.findByUsername(currentLoggedUsername)
+                .map(AccountEntityMapper::toDomain);
     }
 }

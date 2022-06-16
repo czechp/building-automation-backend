@@ -13,4 +13,6 @@ public interface AccountCommandPort {
 
     Optional<Account> findAccountByUsernameOrEmail(String username, String email);
 
+    Optional<Account> findCurrentLoggedUser();
+
 }
