@@ -2,14 +2,17 @@ package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityUserDetailsService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-class AccountPersistenceAdapter implements AccountCommandPort {
+class AccountPersistenceAdapter implements AccountCommandPort, SecurityUserDetailsService {
     private final AccountJpaRepository accountJpaRepository;
 
     @Override
@@ -28,6 +31,12 @@ class AccountPersistenceAdapter implements AccountCommandPort {
     public Optional<Account> findAccountById(long id) {
         return accountJpaRepository.findById(id)
                 .map(Account::mapFromEntity);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return accountJpaRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username: " + username + " not found"));
     }
 
     @Override
