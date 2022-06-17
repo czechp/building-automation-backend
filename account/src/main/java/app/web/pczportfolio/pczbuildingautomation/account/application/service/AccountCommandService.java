@@ -11,6 +11,7 @@ import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFile
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +28,7 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
     }
 
     @Override
+    @Transactional
     public void deleteAccountById(long id) {
         accountCommandPort.findAccountById(id)
                 .ifPresentOrElse(
