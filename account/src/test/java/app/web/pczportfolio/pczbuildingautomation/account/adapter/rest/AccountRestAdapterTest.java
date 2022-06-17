@@ -151,6 +151,39 @@ class AccountRestAdapterTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
+    @Test
+    void accountAdminActivationTest() throws Exception {
+        //given
+        final long id = 1L;
+        final boolean activation = true;
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.patch(URL + "/admin-activation/{id}", id)
+                .param("activation", "true");
+        final Account account = Account.create(new AccountCommandDto("someUsername",
+                "someEmail@gmail.com",
+                "somePwd",
+                "somePwd"
+        ));
+        //when
+        Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.of(account));
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    void accountAdminActivationAccountNotExistsTest() throws Exception {
+        //given
+        final long id = 1L;
+        final boolean activation = true;
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.patch(URL + "/admin-activation/{id}", id)
+                .param("activation", "true");
+
+        Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.empty());
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
     @Configuration
     @ComponentScan("app.web.pczportfolio.pczbuildingautomation.account")
     static class TestConfiguration {
