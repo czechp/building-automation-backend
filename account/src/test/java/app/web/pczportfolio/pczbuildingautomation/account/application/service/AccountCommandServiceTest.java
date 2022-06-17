@@ -6,9 +6,9 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
-import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -68,7 +68,7 @@ class AccountCommandServiceTest {
         Mockito.when(accountCommandPort
                 .findAccountByUsernameOrEmail(anyString(), anyString())).thenReturn(Optional.empty());
         //then
-        assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
+        assertThrows(ConditionsNotFulFiled.class, () -> accountCreateUseCase.createAccount(dto));
         Mockito.verify(accountCommandPort, Mockito.times(0))
                 .createAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(0))
@@ -88,7 +88,7 @@ class AccountCommandServiceTest {
         Mockito.when(accountCommandPort.findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.of(Account.create(dto)));
         //then
-        assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
+        assertThrows(ConditionsNotFulFiled.class, () -> accountCreateUseCase.createAccount(dto));
         Mockito.verify(accountCommandPort, Mockito.times(0))
                 .createAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(0))
@@ -143,7 +143,6 @@ class AccountCommandServiceTest {
                 "somePassword"
         ));
         //when
-        //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -151,7 +150,7 @@ class AccountCommandServiceTest {
                 .thenReturn(Optional.of(currentLoggedUser));
 
         //then
-        assertThrows(BadRequestException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
+        assertThrows(NotFoundException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
         Mockito.verify(accountCommandPort, Mockito.times(0)).deleteAccount(any());
     }
 
