@@ -8,7 +8,8 @@ class Notifier implements AccountNotificationPort {
 
     //TODO: create it
     @Override
-    public void accountCreatedNotification(String email, String enableToken) {
-
+    public void accountCreatedNotification(String email, String emailConfirmToken) {
+        System.out.println("Email: " + email);
+        System.out.println("Token: " + emailConfirmToken);
     }
 }
