@@ -18,7 +18,7 @@ class AccountPersistenceAdapter implements AccountCommandPort, SecurityUserDetai
     private final SecurityUtilities securityUtilities;
 
     @Override
-    public void createAccount(Account account) {
+    public void saveAccount(Account account) {
         accountJpaRepository.save(AccountEntityMapper.toEntity(account));
     }
 

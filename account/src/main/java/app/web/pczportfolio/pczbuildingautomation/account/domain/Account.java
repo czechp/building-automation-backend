@@ -20,7 +20,7 @@ public class Account {
     private String password;
     private String email;
     private String enableToken;
-    private boolean adminConfirmed;
+    private boolean adminActivation;
     private boolean emailConfirmed;
     private AccountRole accountRole;
 
@@ -40,7 +40,7 @@ public class Account {
     public static Account mapFromEntity(AccountEntity entity) {
         Account account = new Account(entity.getUsername(), entity.getPassword(), entity.getEmail());
         account.setId(entity.getId());
-        account.setAdminConfirmed(entity.isAdminConfirmed());
+        account.setAdminActivation(entity.isAdminConfirmed());
         account.setEmailConfirmed(entity.isEmailConfirmed());
         return account;
     }
@@ -49,5 +49,13 @@ public class Account {
     private static void comparePasswords(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm))
             throw new ConditionsNotFulFiled("Passwords are not equal");
+    }
+
+    public void adminActivate() {
+        this.adminActivation = true;
+    }
+
+    public void adminDeactivate() {
+        this.adminActivation = false;
     }
 }

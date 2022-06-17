@@ -5,7 +5,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import java.util.Optional;
 
 public interface AccountCommandPort {
-    void createAccount(Account account);
+    void saveAccount(Account account);
 
     void deleteAccount(Account account);
 

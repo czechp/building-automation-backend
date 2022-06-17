@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountNotificationPort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountAdminActivateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
@@ -15,15 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUseCase {
+class AccountCommandService implements AccountCreateUseCase,
+        AccountDeleteByIdUseCase,
+        AccountAdminActivateUseCase {
     private final AccountCommandPort accountCommandPort;
     private final AccountNotificationPort accountNotificationPort;
 
     @Override
     public void createAccount(AccountCommandDto dto) {
         usernameAndEmailAreUnique(dto);
-        Account account = Account.create(dto);
-        accountCommandPort.createAccount(account);
+        final Account account = Account.create(dto);
+        accountCommandPort.saveAccount(account);
         accountNotificationPort.accountCreatedNotification(account.getEmail(), account.getEnableToken());
     }
 
@@ -33,11 +36,28 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
         accountCommandPort.findAccountById(id)
                 .ifPresentOrElse(
                         this::deleteAccount,
-                        NotFoundException.getRunnable("Account with id: " + id + " not exists")
+                        NotFoundException.getRunnable(notFoundExceptionMsg(id))
                 );
 
     }
 
+    @Override
+    @Transactional
+    public void adminActivation(long accountId, boolean activation) {
+        final Account account = accountCommandPort.findAccountById(accountId)
+                .orElseThrow(() -> new NotFoundException(notFoundExceptionMsg(accountId)));
+
+        if(activation)
+            account.adminActivate();
+        else
+            account.adminDeactivate();
+        
+        accountCommandPort.saveAccount(account);
+    }
+
+    private String notFoundExceptionMsg(long accountId) {
+        return "Account with id: " + accountId + " does not exist";
+    }
 
     private void usernameAndEmailAreUnique(AccountCommandDto dto) {
         accountCommandPort
@@ -60,13 +80,13 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
     }
 
     private boolean userIsAdmin() {
-        Account currentUser = accountCommandPort.findCurrentLoggedUser()
+        final Account currentUser = accountCommandPort.findCurrentLoggedUser()
                 .orElseThrow(() -> new ConditionsNotFulFiled("There is no current logged user"));
         return currentUser.getAccountRole().equals(AccountRole.ADMIN);
     }
 
     private boolean userIsAccountOwner(Account account) {
-        Account currentUser = accountCommandPort.findCurrentLoggedUser()
+        final Account currentUser = accountCommandPort.findCurrentLoggedUser()
                 .orElseThrow(() -> new ConditionsNotFulFiled("There is no current logged user"));
         return account.getUsername().equals(currentUser.getUsername());
 
