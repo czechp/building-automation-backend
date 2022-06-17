@@ -44,10 +44,10 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
                     throw new ConditionsNotFulFiled("Account with such username or email already exists");
                 });
     }
-    
+
 
     private void deleteAccount(Account account) {
-        if(conditionsToDeleteFulfilled(account))
+        if (conditionsToDeleteFulfilled(account))
             accountCommandPort.deleteAccount(account);
         else
             throw new ConditionsNotFulFiled("You aren't owner of account");
@@ -63,7 +63,7 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
         return currentUser.getAccountRole().equals(AccountRole.ADMIN);
     }
 
-    private boolean userIsAccountOwner(Account account){
+    private boolean userIsAccountOwner(Account account) {
         Account currentUser = accountCommandPort.findCurrentLoggedUser()
                 .orElseThrow(() -> new ConditionsNotFulFiled("There is no current logged user"));
         return account.getUsername().equals(currentUser.getUsername());
