@@ -148,7 +148,7 @@ class AccountRestAdapterTest {
                 .thenReturn(Optional.empty());
         //then
         mockMvc.perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Configuration

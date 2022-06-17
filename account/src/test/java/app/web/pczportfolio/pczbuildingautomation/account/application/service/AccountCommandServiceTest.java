@@ -7,6 +7,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
+import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -143,7 +144,6 @@ class AccountCommandServiceTest {
                 "somePassword"
         ));
         //when
-        //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
                 .thenReturn(Optional.empty());
 
@@ -151,7 +151,7 @@ class AccountCommandServiceTest {
                 .thenReturn(Optional.of(currentLoggedUser));
 
         //then
-        assertThrows(BadRequestException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
+        assertThrows(NotFoundException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
         Mockito.verify(accountCommandPort, Mockito.times(0)).deleteAccount(any());
     }
 
