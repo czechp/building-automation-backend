@@ -1,6 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.configuration;
 
-import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,8 @@ import java.util.HashMap;
 
 @ControllerAdvice
 public class HttpExceptionHandler {
-    @ExceptionHandler({BadRequestException.class})
-    ResponseEntity<HashMap<String, String>> badRequestHandler(Exception exception) {
+    @ExceptionHandler({ConditionsNotFulFiled.class})
+    ResponseEntity<HashMap<String, String>> conditionsNotFulFilledHandler(Exception exception) {
         return buildResponse(exception, HttpStatus.BAD_REQUEST);
     }
 

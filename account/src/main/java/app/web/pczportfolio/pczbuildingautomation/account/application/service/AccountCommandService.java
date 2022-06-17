@@ -7,7 +7,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
-import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
         accountCommandPort
                 .findAccountByUsernameOrEmail(dto.getUsername(), dto.getEmail())
                 .ifPresent((r) -> {
-                    throw new BadRequestException("Account with such username or email already exists");
+                    throw new ConditionsNotFulFiled("Account with such username or email already exists");
                 });
     }
     
@@ -50,7 +50,7 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
         if(conditionsToDeleteFulfilled(account))
             accountCommandPort.deleteAccount(account);
         else
-            throw new BadRequestException("You aren't owner of account");
+            throw new ConditionsNotFulFiled("You aren't owner of account");
     }
 
     private boolean conditionsToDeleteFulfilled(Account account) {
@@ -59,13 +59,13 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
 
     private boolean userIsAdmin() {
         Account currentUser = accountCommandPort.findCurrentLoggedUser()
-                .orElseThrow(() -> new BadRequestException("There is no current logged user"));
+                .orElseThrow(() -> new ConditionsNotFulFiled("There is no current logged user"));
         return currentUser.getAccountRole().equals(AccountRole.ADMIN);
     }
 
     private boolean userIsAccountOwner(Account account){
         Account currentUser = accountCommandPort.findCurrentLoggedUser()
-                .orElseThrow(() -> new BadRequestException("There is no current logged user"));
+                .orElseThrow(() -> new ConditionsNotFulFiled("There is no current logged user"));
         return account.getUsername().equals(currentUser.getUsername());
 
     }

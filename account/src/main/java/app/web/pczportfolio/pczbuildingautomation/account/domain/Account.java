@@ -3,7 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.domain;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
-import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +48,6 @@ public class Account {
 
     private static void comparePasswords(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm))
-            throw new BadRequestException("Passwords are not equal");
+            throw new ConditionsNotFulFiled("Passwords are not equal");
     }
 }
