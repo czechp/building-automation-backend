@@ -43,7 +43,7 @@ class AccountCommandService implements AccountCreateUseCase,
 
     @Override
     @Transactional
-    public void adminActivation(long accountId, boolean activation) {
+    public void accountAdminActivation(long accountId, boolean activation) {
         final Account account = accountCommandPort.findAccountById(accountId)
                 .orElseThrow(() -> new NotFoundException(notFoundExceptionMsg(accountId)));
 

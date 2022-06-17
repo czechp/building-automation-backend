@@ -172,7 +172,7 @@ class AccountCommandServiceTest {
         );
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.of(account));
-        accountAdminActivateUseCase.adminActivation(accountId, accountActivation);
+        accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation);
         //then
         Mockito.verify(accountCommandPort, Mockito.times(1)).saveAccount(any());
     }
@@ -184,7 +184,7 @@ class AccountCommandServiceTest {
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.empty());
         //then
-        assertThrows(NotFoundException.class, () -> accountAdminActivateUseCase.adminActivation(accountId, accountActivation));
+        assertThrows(NotFoundException.class, () -> accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation));
 
     }
 
