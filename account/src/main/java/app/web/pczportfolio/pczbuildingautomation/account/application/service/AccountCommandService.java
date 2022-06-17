@@ -51,7 +51,7 @@ class AccountCommandService implements AccountCreateUseCase,
             account.adminActivate();
         else
             account.adminDeactivate();
-        
+
         accountCommandPort.saveAccount(account);
     }
 

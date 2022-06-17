@@ -162,6 +162,7 @@ class AccountCommandServiceTest {
     void adminActivateTest() {
         //given
         final long accountId = 1L;
+        final boolean accountActivation = true;
         final Account account = Account.create(new AccountCommandDto(
                         "someUsername",
                         "someEmail@gmail.com",
@@ -171,7 +172,7 @@ class AccountCommandServiceTest {
         );
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.of(account));
-        accountAdminActivateUseCase.adminActivation(accountId);
+        accountAdminActivateUseCase.adminActivation(accountId, accountActivation);
         //then
         Mockito.verify(accountCommandPort, Mockito.times(1)).saveAccount(any());
     }
@@ -179,11 +180,11 @@ class AccountCommandServiceTest {
     @Test
     void adminActivateAccountNotFoundTest() {
         final long accountId = 1L;
-
+        final boolean accountActivation = true;
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.empty());
         //then
-        assertThrows(NotFoundException.class, () -> accountAdminActivateUseCase.adminActivation(accountId));
+        assertThrows(NotFoundException.class, () -> accountAdminActivateUseCase.adminActivation(accountId, accountActivation));
 
     }
 
