@@ -2,11 +2,13 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountNotificationPort;
+import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountAdminActivateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
-import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ class AccountCommandServiceTest {
     @Autowired
     AccountDeleteByIdUseCase accountDeleteByIdUseCase;
 
+    @Autowired
+    AccountAdminActivateUseCase accountAdminActivateUseCase;
+
     @Test
     void createAccountTest() {
         //given
@@ -49,7 +54,7 @@ class AccountCommandServiceTest {
         accountCreateUseCase.createAccount(dto);
         //then
         Mockito.verify(accountCommandPort, Mockito.times(1))
-                .createAccount(any());
+                .saveAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(1))
                 .accountCreatedNotification(anyString(), anyString());
     }
@@ -67,9 +72,9 @@ class AccountCommandServiceTest {
         Mockito.when(accountCommandPort
                 .findAccountByUsernameOrEmail(anyString(), anyString())).thenReturn(Optional.empty());
         //then
-        assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
+        assertThrows(ConditionsNotFulFiled.class, () -> accountCreateUseCase.createAccount(dto));
         Mockito.verify(accountCommandPort, Mockito.times(0))
-                .createAccount(any());
+                .saveAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(0))
                 .accountCreatedNotification(anyString(), anyString());
     }
@@ -87,9 +92,9 @@ class AccountCommandServiceTest {
         Mockito.when(accountCommandPort.findAccountByUsernameOrEmail(anyString(), anyString()))
                 .thenReturn(Optional.of(Account.create(dto)));
         //then
-        assertThrows(BadRequestException.class, () -> accountCreateUseCase.createAccount(dto));
+        assertThrows(ConditionsNotFulFiled.class, () -> accountCreateUseCase.createAccount(dto));
         Mockito.verify(accountCommandPort, Mockito.times(0))
-                .createAccount(any());
+                .saveAccount(any());
         Mockito.verify(accountEmailNotificationPort, Mockito.times(0))
                 .accountCreatedNotification(anyString(), anyString());
     }
@@ -98,9 +103,26 @@ class AccountCommandServiceTest {
     void accountDeleteTest() {
         //given
         final long id = 1L;
+        final String commonUsername = "user";
+        final Account accountToDelete = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
+        final Account currentLoggedUser = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
-                .thenReturn(Optional.of(new Account()));
+                .thenReturn(Optional.of(accountToDelete));
+
+        Mockito.when((accountCommandPort.findCurrentLoggedUser()))
+                .thenReturn(Optional.of(currentLoggedUser));
+
         accountDeleteByIdUseCase.deleteAccountById(id);
         //then
         Mockito.verify(accountCommandPort, Mockito.times(1)).deleteAccount(any());
@@ -111,12 +133,59 @@ class AccountCommandServiceTest {
     void accountDeleteNotExistsTest() {
         //given
         final long id = 1L;
+        final String commonUsername = "user";
+        final Account accountToDelete = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
+        final Account currentLoggedUser = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
                 .thenReturn(Optional.empty());
+
+        Mockito.when((accountCommandPort.findCurrentLoggedUser()))
+                .thenReturn(Optional.of(currentLoggedUser));
+
         //then
-        assertThrows(BadRequestException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
+        assertThrows(NotFoundException.class, () -> accountDeleteByIdUseCase.deleteAccountById(id));
         Mockito.verify(accountCommandPort, Mockito.times(0)).deleteAccount(any());
+    }
+
+    @Test
+    void adminActivateTest() {
+        //given
+        final long accountId = 1L;
+        final boolean accountActivation = true;
+        final Account account = Account.create(new AccountCommandDto(
+                        "someUsername",
+                        "someEmail@gmail.com",
+                        "somePassword",
+                        "somePassword"
+                )
+        );
+        //when
+        Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.of(account));
+        accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation);
+        //then
+        Mockito.verify(accountCommandPort, Mockito.times(1)).saveAccount(any());
+    }
+
+    @Test
+    void adminActivateAccountNotFoundTest() {
+        final long accountId = 1L;
+        final boolean accountActivation = true;
+        //when
+        Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.empty());
+        //then
+        assertThrows(NotFoundException.class, () -> accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation));
+
     }
 
     @Configuration

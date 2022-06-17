@@ -111,12 +111,28 @@ class AccountRestAdapterTest {
 
     @Test
     void deleteAccountTest() throws Exception {
-        final long id = 1L;
         //given
+        final long id = 1L;
+        final String commonUsername = "user";
+        final Account accountToDelete = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
+        final Account currentLoggedUser = Account.create(new AccountCommandDto(
+                commonUsername,
+                "someEmail@gmail.com",
+                "somePassword",
+                "somePassword"
+        ));
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/{id}", id);
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong()))
-                .thenReturn(Optional.of(new Account()));
+                .thenReturn(Optional.of(accountToDelete));
+
+        Mockito.when((accountCommandPort.findCurrentLoggedUser()))
+                .thenReturn(Optional.of(currentLoggedUser));
         //then
         mockMvc.perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
@@ -132,7 +148,40 @@ class AccountRestAdapterTest {
                 .thenReturn(Optional.empty());
         //then
         mockMvc.perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void accountAdminActivationTest() throws Exception {
+        //given
+        final long id = 1L;
+        final boolean activation = true;
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.patch(URL + "/admin-activation/{id}", id)
+                .param("activation", "true");
+        final Account account = Account.create(new AccountCommandDto("someUsername",
+                "someEmail@gmail.com",
+                "somePwd",
+                "somePwd"
+        ));
+        //when
+        Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.of(account));
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    void accountAdminActivationAccountNotExistsTest() throws Exception {
+        //given
+        final long id = 1L;
+        final boolean activation = true;
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.patch(URL + "/admin-activation/{id}", id)
+                .param("activation", "true");
+
+        Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.empty());
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Configuration
