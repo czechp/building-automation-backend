@@ -5,10 +5,14 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 class AccountEntityMapper {
     static AccountEntity toEntity(Account account) {
         AccountEntity accountEntity = new AccountEntity(
+                account.getId(),
+                account.getVersion(),
                 account.getUsername(),
                 account.getPassword(),
                 account.getEmail(),
                 account.getEnableToken(),
+                account.isEmailConfirmed(),
+                account.isEmailConfirmed(),
                 account.getAccountRole()
         );
         accountEntity.setId(account.getId());

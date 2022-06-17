@@ -26,14 +26,14 @@ class AccountRestAdapter {
         accountCreateUseCase.createAccount(accountCommandDto);
     }
 
-    @Secured("ADMIN")
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteAccount(@PathVariable(name = "id") long id) {
         accountDeleteByIdUseCase.deleteAccountById(id);
     }
 
-    @Secured("ADMIN")
+    @Secured({"ROLE_ADMIN"})
     @PatchMapping("/admin-activation/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void accountAdminActivation(

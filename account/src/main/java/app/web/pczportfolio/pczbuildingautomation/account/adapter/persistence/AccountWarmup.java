@@ -22,7 +22,6 @@ class AccountWarmup {
 
     @EventListener(ApplicationReadyEvent.class)
     void init() {
-        //TODO: use password encoder here
 
         logger.info("<>-------------------AccountWarmup-------------------<>");
         Stream.of(
