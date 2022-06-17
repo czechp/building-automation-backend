@@ -8,6 +8,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.BadRequestException;
+import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
         accountCommandPort.findAccountById(id)
                 .ifPresentOrElse(
                         this::deleteAccount,
-                        throwBadRequestException("Account with id: " + id + " not exists")
+                        NotFoundException.getRunnable("Account with id: " + id + " not exists")
                 );
 
     }
@@ -40,16 +41,10 @@ class AccountCommandService implements AccountCreateUseCase, AccountDeleteByIdUs
         accountCommandPort
                 .findAccountByUsernameOrEmail(dto.getUsername(), dto.getEmail())
                 .ifPresent((r) -> {
-                    throwBadRequestException("Account with such username or email already exists").run();
+                    throw new BadRequestException("Account with such username or email already exists");
                 });
     }
-
-    private Runnable throwBadRequestException(String message) {
-        return () -> {
-            throw new BadRequestException(message);
-        };
-    }
-
+    
 
     private void deleteAccount(Account account) {
         if(conditionsToDeleteFulfilled(account))
