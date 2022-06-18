@@ -5,11 +5,14 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountAdminActivateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
+import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountEmailConfirmUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountTestUseCases;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,7 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 
 @SpringJUnitConfig(AccountCommandServiceTest.TestConfiguration.class)
@@ -38,6 +41,9 @@ class AccountCommandServiceTest {
 
     @Autowired
     AccountAdminActivateUseCase accountAdminActivateUseCase;
+
+    @Autowired
+    AccountEmailConfirmUseCase accountEmailConfirmUseCase;
 
     @Test
     void createAccountTest() {
@@ -172,8 +178,9 @@ class AccountCommandServiceTest {
         );
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.of(account));
-        accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation);
+        Account activatedAccount = accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation);
         //then
+        assertEquals(accountActivation, activatedAccount.isAdminActivation());
         Mockito.verify(accountCommandPort, Mockito.times(1)).saveAccount(any());
     }
 
@@ -188,6 +195,47 @@ class AccountCommandServiceTest {
 
     }
 
+    @Test
+    void emailConfirmedTest() {
+        //given
+        final Account account = AccountTestUseCases.cases.get("accountToEmailConfirmed");
+        final String token = account.getEnableToken();
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.of(account));
+        Account emailConfirmedAccount = accountEmailConfirmUseCase.accountConfirmEmail(token);
+        //then
+        assertTrue(emailConfirmedAccount.isEmailConfirmed());
+        Mockito.verify(accountCommandPort, Mockito.times(1)).saveAccount(any());
+
+    }
+
+    @Test
+    void emailConfirmedTokensNotEqualTest() {
+        //given
+        final Account account = AccountTestUseCases.cases.get("accountToEmailConfirmed");
+        final String token = "Another token";
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.of(account));
+        //then
+        assertThrows(ConditionsNotFulFiled.class, () -> accountEmailConfirmUseCase.accountConfirmEmail(token));
+    }
+
+    @Test
+    void emailConfirmedMatchedAccountNotFound(){
+        //given
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.empty());
+        //then
+        assertThrows(NotFoundException.class, ()->accountEmailConfirmUseCase.accountConfirmEmail(anyString()));
+    }
+    @Test
+    void emailConfirmedAccountNotFoundTest() {
+        //given
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.empty());
+        //then
+        assertThrows(NotFoundException.class, () -> accountEmailConfirmUseCase.accountConfirmEmail(anyString()));
+    }
     @Configuration
     @ComponentScan({"app.web.pczportfolio.pczbuildingautomation.account"})
     static class TestConfiguration {

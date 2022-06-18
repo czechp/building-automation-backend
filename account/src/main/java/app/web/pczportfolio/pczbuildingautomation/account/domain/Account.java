@@ -4,16 +4,15 @@ import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.UUID;
 
 @Getter
 @Setter(AccessLevel.PACKAGE)
 @NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PACKAGE)
 public class Account {
     private long id;
     private String username;
@@ -23,6 +22,7 @@ public class Account {
     private boolean adminActivation;
     private boolean emailConfirmed;
     private AccountRole accountRole;
+    private long version;
 
     Account(String username, String password, String email) {
         this.username = username;
@@ -32,16 +32,24 @@ public class Account {
         this.accountRole = AccountRole.USER;
     }
 
+
     public static Account create(AccountCommandDto dto) {
         comparePasswords(dto.getPassword(), dto.getPasswordConfirm());
         return new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
     }
 
     public static Account mapFromEntity(AccountEntity entity) {
-        Account account = new Account(entity.getUsername(), entity.getPassword(), entity.getEmail());
-        account.setId(entity.getId());
-        account.setAdminActivation(entity.isAdminConfirmed());
-        account.setEmailConfirmed(entity.isEmailConfirmed());
+        Account account = new Account(
+                entity.getId(),
+                entity.getUsername(),
+                entity.getPassword(),
+                entity.getEmail(),
+                entity.getEnableToken(),
+                entity.isAdminConfirmed(),
+                entity.isEmailConfirmed(),
+                entity.getAccountRole(),
+                entity.getVersion()
+        );
         return account;
     }
 
@@ -51,11 +59,21 @@ public class Account {
             throw new ConditionsNotFulFiled("Passwords are not equal");
     }
 
-    public void adminActivate() {
+    public Account adminActivate() {
         this.adminActivation = true;
+        return this;
     }
 
-    public void adminDeactivate() {
+    public Account adminDeactivate() {
         this.adminActivation = false;
+        return this;
+    }
+
+    public Account confirmEmail(String token) {
+        if (this.enableToken.equals(token)) {
+            this.setEmailConfirmed(true);
+            return this;
+        } else
+            throw new ConditionsNotFulFiled("Email confirmation token is wrong");
     }
 }

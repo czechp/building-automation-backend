@@ -1,9 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,11 +17,12 @@ import java.util.List;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode()
+@AllArgsConstructor
 public class AccountEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @Version
     private long version;
     @NotNull(message = "Username cannot be null")
@@ -47,12 +45,14 @@ public class AccountEntity implements UserDetails {
     private boolean emailConfirmed;
 
     @NotNull(message = "Role cannot be null")
-    private AccountRole accountRole = AccountRole.USER;
+    @Enumerated(value = EnumType.STRING)
+    private AccountRole accountRole;
 
     AccountEntity() {
     }
 
-    AccountEntity(String username, String password, String email, String enableToken, AccountRole accountRole) {
+
+    public AccountEntity(String username, String password, String email, String enableToken, AccountRole accountRole) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -62,7 +62,7 @@ public class AccountEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.accountRole.toString()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.accountRole.toString()));
     }
 
     @Override

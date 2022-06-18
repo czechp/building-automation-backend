@@ -2,6 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountTestUseCases;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.configuration.HttpExceptionHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,8 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 
 @SpringJUnitConfig(AccountRestAdapterTest.TestConfiguration.class)
 class AccountRestAdapterTest {
@@ -184,6 +184,44 @@ class AccountRestAdapterTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
+    @Test
+    void accountEmailConfirmationTest() throws Exception {
+        //given
+        final Account account = AccountTestUseCases.cases.get("accountToEmailConfirmed");
+        final String token = account.getEnableToken();
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.patch(URL + "/email-confirmation/{token}", token);
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.of(account));
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+
+    @Test
+    void accountEmailConfirmationAccountNotFoundTest() throws Exception {
+        final String token = "12345";
+        //given
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.patch(URL + "/email-confirmation/{token}", token);
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.empty());
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+
+    @Test
+    void accountEmailConfirmationTokensDoNotMatch() throws Exception {
+        final Account account = AccountTestUseCases.cases.get("accountToEmailConfirmed");
+        final String token = "different token";
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.patch(URL + "/email-confirmation/{token}", token);
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.of(account));
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
     @Configuration
     @ComponentScan("app.web.pczportfolio.pczbuildingautomation.account")
     static class TestConfiguration {

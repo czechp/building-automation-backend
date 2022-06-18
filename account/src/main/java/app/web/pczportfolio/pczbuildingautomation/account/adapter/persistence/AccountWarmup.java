@@ -22,7 +22,6 @@ class AccountWarmup {
 
     @EventListener(ApplicationReadyEvent.class)
     void init() {
-        //TODO: use password encoder here
 
         logger.info("<>-------------------AccountWarmup-------------------<>");
         Stream.of(
@@ -46,11 +45,23 @@ class AccountWarmup {
                 )
                 .map(this::activateAccount)
                 .forEach(repository::save);
+
+        repository.save(getAccountEntityToEmailConfirm("123445"));
     }
 
     private AccountEntity activateAccount(AccountEntity accountEntity) {
         accountEntity.setAdminConfirmed(true);
         accountEntity.setEmailConfirmed(true);
         return accountEntity;
+    }
+
+    private AccountEntity getAccountEntityToEmailConfirm(String emailToken) {
+        return new AccountEntity(
+                "userToEmailConfirm",
+                "somePassword",
+                "someEmail@gmail.com",
+                emailToken,
+                AccountRole.USER
+        );
     }
 }

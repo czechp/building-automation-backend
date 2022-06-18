@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountAdminActivateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
+import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountEmailConfirmUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
@@ -18,16 +19,18 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 class AccountCommandService implements AccountCreateUseCase,
         AccountDeleteByIdUseCase,
-        AccountAdminActivateUseCase {
+        AccountAdminActivateUseCase,
+        AccountEmailConfirmUseCase {
     private final AccountCommandPort accountCommandPort;
     private final AccountNotificationPort accountNotificationPort;
 
     @Override
-    public void createAccount(AccountCommandDto dto) {
+    public Account createAccount(AccountCommandDto dto) {
         usernameAndEmailAreUnique(dto);
         final Account account = Account.create(dto);
-        accountCommandPort.saveAccount(account);
+        Account newAccount = accountCommandPort.saveAccount(account);
         accountNotificationPort.accountCreatedNotification(account.getEmail(), account.getEnableToken());
+        return newAccount;
     }
 
     @Override
@@ -43,16 +46,27 @@ class AccountCommandService implements AccountCreateUseCase,
 
     @Override
     @Transactional
-    public void accountAdminActivation(long accountId, boolean activation) {
+    public Account accountAdminActivation(long accountId, boolean activation) {
         final Account account = accountCommandPort.findAccountById(accountId)
                 .orElseThrow(() -> new NotFoundException(notFoundExceptionMsg(accountId)));
-
+        Account accountAfterActivation;
         if(activation)
-            account.adminActivate();
+            accountAfterActivation = account.adminActivate();
         else
-            account.adminDeactivate();
+            accountAfterActivation = account.adminDeactivate();
 
-        accountCommandPort.saveAccount(account);
+        accountCommandPort.saveAccount(accountAfterActivation);
+        return  accountAfterActivation;
+    }
+
+    @Transactional
+    @Override
+    public Account accountConfirmEmail(String token) {
+        Account account = accountCommandPort.findAccountByEnableToken(token)
+                .orElseThrow(() -> new NotFoundException("There is no account with such email confirm token: " + token));
+        Account accountConfirmed = account.confirmEmail(token);
+        accountCommandPort.saveAccount(accountConfirmed);
+        return account;
     }
 
     private String notFoundExceptionMsg(long accountId) {
