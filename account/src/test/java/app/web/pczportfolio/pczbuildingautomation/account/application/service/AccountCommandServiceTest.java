@@ -220,7 +220,14 @@ class AccountCommandServiceTest {
         assertThrows(ConditionsNotFulFiled.class, () -> accountEmailConfirmUseCase.accountConfirmEmail(token));
     }
 
-
+    @Test
+    void emailConfirmedMatchedAccountNotFound(){
+        //given
+        //when
+        Mockito.when(accountCommandPort.findAccountByEnableToken(any())).thenReturn(Optional.empty());
+        //then
+        assertThrows(NotFoundException.class, ()->accountEmailConfirmUseCase.accountConfirmEmail(anyString()));
+    }
     @Test
     void emailConfirmedAccountNotFoundTest() {
         //given
