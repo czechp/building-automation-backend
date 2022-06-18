@@ -26,8 +26,9 @@ class AccountCommandService implements AccountCreateUseCase,
     public Account createAccount(AccountCommandDto dto) {
         usernameAndEmailAreUnique(dto);
         final Account account = Account.create(dto);
-        accountCommandPort.saveAccount(account);
+        Account newAccount = accountCommandPort.saveAccount(account);
         accountNotificationPort.accountCreatedNotification(account.getEmail(), account.getEnableToken());
+        return newAccount;
     }
 
     @Override
