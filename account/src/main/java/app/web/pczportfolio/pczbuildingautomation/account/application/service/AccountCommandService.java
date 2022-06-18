@@ -59,11 +59,13 @@ class AccountCommandService implements AccountCreateUseCase,
         return  accountAfterActivation;
     }
 
+    @Transactional
     @Override
     public Account accountConfirmEmail(String token) {
         Account account = accountCommandPort.findAccountByEnableToken(token)
                 .orElseThrow(() -> new NotFoundException("There is no account with such email confirm token: " + token));
         Account accountConfirmed = account.confirmEmail(token);
+        accountCommandPort.saveAccount(accountConfirmed);
         return account;
     }
 

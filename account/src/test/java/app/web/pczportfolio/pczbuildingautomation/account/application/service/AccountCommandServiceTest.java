@@ -205,6 +205,7 @@ class AccountCommandServiceTest {
         Account emailConfirmedAccount = accountEmailConfirmUseCase.accountConfirmEmail(token);
         //then
         assertTrue(emailConfirmedAccount.isEmailConfirmed());
+        Mockito.verify(accountCommandPort, Mockito.times(1)).saveAccount(any());
 
     }
 
