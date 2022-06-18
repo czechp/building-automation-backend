@@ -1,5 +1,5 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.useCase;
 
 public interface AccountDeleteByIdUseCase {
-    public void deleteAccountById(long id);
+    void deleteAccountById(long id);
 }

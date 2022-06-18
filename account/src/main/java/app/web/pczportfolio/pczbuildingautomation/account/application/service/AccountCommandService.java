@@ -23,7 +23,7 @@ class AccountCommandService implements AccountCreateUseCase,
     private final AccountNotificationPort accountNotificationPort;
 
     @Override
-    public void createAccount(AccountCommandDto dto) {
+    public Account createAccount(AccountCommandDto dto) {
         usernameAndEmailAreUnique(dto);
         final Account account = Account.create(dto);
         accountCommandPort.saveAccount(account);
