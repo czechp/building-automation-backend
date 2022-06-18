@@ -22,6 +22,7 @@ public class Account {
     private boolean emailConfirmed;
     private AccountRole accountRole;
     private long version;
+
     Account(String username, String password, String email) {
         this.username = username;
         this.password = password;
@@ -29,7 +30,6 @@ public class Account {
         this.enableToken = UUID.randomUUID().toString();
         this.accountRole = AccountRole.USER;
     }
-
 
 
     public static Account create(AccountCommandDto dto) {
@@ -58,11 +58,13 @@ public class Account {
             throw new ConditionsNotFulFiled("Passwords are not equal");
     }
 
-    public void adminActivate() {
+    public Account adminActivate() {
         this.adminActivation = true;
+        return this;
     }
 
-    public void adminDeactivate() {
+    public Account adminDeactivate() {
         this.adminActivation = false;
+        return this;
     }
 }

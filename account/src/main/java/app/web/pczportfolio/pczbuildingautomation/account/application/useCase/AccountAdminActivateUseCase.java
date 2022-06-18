@@ -1,5 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.useCase;
 
+import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+
 public interface AccountAdminActivateUseCase {
-    void accountAdminActivation(long accountId, boolean activation);
+    Account accountAdminActivation(long accountId, boolean activation);
 }

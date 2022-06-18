@@ -10,6 +10,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 
@@ -172,8 +174,9 @@ class AccountCommandServiceTest {
         );
         //when
         Mockito.when(accountCommandPort.findAccountById(anyLong())).thenReturn(Optional.of(account));
-        accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation);
+        Account activatedAccount = accountAdminActivateUseCase.accountAdminActivation(accountId, accountActivation);
         //then
+        assertEquals(accountActivation, activatedAccount.isAdminActivation());
         Mockito.verify(accountCommandPort, Mockito.times(1)).saveAccount(any());
     }
 
