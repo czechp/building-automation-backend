@@ -15,4 +15,5 @@ public interface AccountCommandPort {
 
     Optional<Account> findCurrentLoggedUser();
 
+    Optional<Account> findAccountByEnableToken(String token);
 }

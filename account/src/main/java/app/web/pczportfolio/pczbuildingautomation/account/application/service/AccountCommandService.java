@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountAdminActivateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
+import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountEmailConfirmUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
@@ -18,7 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 class AccountCommandService implements AccountCreateUseCase,
         AccountDeleteByIdUseCase,
-        AccountAdminActivateUseCase {
+        AccountAdminActivateUseCase,
+        AccountEmailConfirmUseCase {
     private final AccountCommandPort accountCommandPort;
     private final AccountNotificationPort accountNotificationPort;
 
@@ -55,6 +57,14 @@ class AccountCommandService implements AccountCreateUseCase,
 
         accountCommandPort.saveAccount(accountAfterActivation);
         return  accountAfterActivation;
+    }
+
+    @Override
+    public Account accountConfirmEmail(String token) {
+        Account account = accountCommandPort.findAccountByEnableToken(token)
+                .orElseThrow(() -> new NotFoundException("There is no account with such email confirm token: " + token));
+        Account accountConfirmed = account.confirmEmail(token);
+        return account;
     }
 
     private String notFoundExceptionMsg(long accountId) {

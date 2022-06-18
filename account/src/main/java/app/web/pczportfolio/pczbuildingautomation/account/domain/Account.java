@@ -12,6 +12,7 @@ import java.util.UUID;
 @Setter(AccessLevel.PACKAGE)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PACKAGE)
 public class Account {
     private long id;
     private String username;
@@ -66,5 +67,13 @@ public class Account {
     public Account adminDeactivate() {
         this.adminActivation = false;
         return this;
+    }
+
+    public Account confirmEmail(String token) {
+        if (this.enableToken.equals(token)) {
+            this.setEmailConfirmed(true);
+            return this;
+        } else
+            throw new ConditionsNotFulFiled("Email confirmation token is wrong");
     }
 }

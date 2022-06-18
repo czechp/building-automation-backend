@@ -53,4 +53,11 @@ class AccountPersistenceAdapter implements AccountCommandPort, SecurityUserDetai
         return accountJpaRepository.findByUsername(currentLoggedUsername)
                 .map(AccountEntityMapper::toDomain);
     }
+
+    @Override
+    public Optional<Account> findAccountByEnableToken(String token) {
+        return accountJpaRepository.findByEnableToken(token)
+                .map(AccountEntityMapper::toDomain);
+
+    }
 }
