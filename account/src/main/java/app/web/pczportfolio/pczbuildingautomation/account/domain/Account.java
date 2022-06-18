@@ -2,7 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
-import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
+import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import lombok.*;
 

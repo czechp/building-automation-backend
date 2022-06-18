@@ -4,7 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountCreateUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountEmailConfirmUseCase;
-import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
+import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCommandDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;

@@ -8,7 +8,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountDeleteByIdUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountEmailConfirmUseCase;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
-import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
+import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;

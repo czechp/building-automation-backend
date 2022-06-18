@@ -3,7 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountCommandPort;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountTestUseCases;
-import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountCommandDto;
+import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.configuration.HttpExceptionHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
