@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AccountCommandDto {
+public class AccountCreateCmdDto {
     @NotBlank(message = "Username cannot be blank")
     @Length(min = 3, message = "Username has to have minimum 3 characters")
     private String username;
