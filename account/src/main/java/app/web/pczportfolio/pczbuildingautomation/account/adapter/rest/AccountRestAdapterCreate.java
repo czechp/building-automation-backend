@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
-class AccountAdapterCreate {
+class AccountRestAdapterCreate {
     private final AccountUseCaseCreate accountUseCaseCreate;
 
     @PostMapping

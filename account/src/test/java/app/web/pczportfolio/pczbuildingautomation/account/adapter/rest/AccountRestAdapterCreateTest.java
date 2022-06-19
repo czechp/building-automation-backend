@@ -7,7 +7,6 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseCreate;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.configuration.HttpExceptionHandler;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,12 +25,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig(AccountAdapterCreateTest.TestConfiguration.class)
-class AccountAdapterCreateTest {
+@SpringJUnitConfig(AccountRestAdapterCreateTest.TestConfiguration.class)
+class AccountRestAdapterCreateTest {
     private static final String URL = "/api/accounts";
     @MockBean
     AccountPortFindByUsernameOrEmail accountPortFindByUsernameOrEmail;
@@ -46,11 +44,11 @@ class AccountAdapterCreateTest {
 
     ObjectMapper objectMapper;
     MockMvc mockMvc;
-    AccountAdapterCreate accountAdapterCreate;
+    AccountRestAdapterCreate accountAdapterCreate;
 
     @BeforeEach
     void initTest() {
-        this.accountAdapterCreate = new AccountAdapterCreate(accountUseCaseCreate);
+        this.accountAdapterCreate = new AccountRestAdapterCreate(accountUseCaseCreate);
         this.objectMapper = new ObjectMapper();
         this.mockMvc = MockMvcBuilders.standaloneSetup(accountAdapterCreate)
                 .setControllerAdvice(new HttpExceptionHandler())
