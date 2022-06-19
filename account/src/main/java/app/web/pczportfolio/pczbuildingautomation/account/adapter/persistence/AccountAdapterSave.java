@@ -10,12 +10,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class AccountAdapterSave implements AccountPortSave {
     private final AccountJpaRepository accountJpaRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Account saveAccount(Account account) {
         AccountEntity accountEntity = AccountEntityMapper.toEntity(account);
-        accountEntity.setPassword(passwordEncoder.encode(account.getPassword()));
         return AccountEntityMapper.toDomain(accountJpaRepository.save(accountEntity));
     }
 }

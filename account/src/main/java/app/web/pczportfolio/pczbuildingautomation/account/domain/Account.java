@@ -2,11 +2,12 @@ package app.web.pczportfolio.pczbuildingautomation.account.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
-import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCommandDto;
+import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCreateCmdDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
 import lombok.*;
 
 import java.util.UUID;
+import java.util.function.Function;
 
 @Getter
 @Setter(AccessLevel.PACKAGE)
@@ -33,9 +34,11 @@ public class Account {
     }
 
 
-    public static Account create(AccountCommandDto dto) {
+    public static Account create(AccountCreateCmdDto dto, Function<String, String> hashPasswordFunction) {
         comparePasswords(dto.getPassword(), dto.getPasswordConfirm());
-        return new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
+        Account newAccount = new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
+        newAccount.setPassword(hashPasswordFunction.apply(dto.getPassword()));
+        return newAccount;
     }
 
     public static Account mapFromEntity(AccountEntity entity) {
@@ -75,5 +78,9 @@ public class Account {
             return this;
         } else
             throw new ConditionsNotFulFiled("Email confirmation token is wrong");
+    }
+
+    public void hashPassword(Function<String, String> hashPasswordSupplier) {
+        this.password = hashPasswordSupplier.apply(this.password);
     }
 }
