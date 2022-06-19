@@ -2,6 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseDelete;
 import app.web.pczportfolio.pczbuildingautomation.configuration.HttpExceptionHandler;
+import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,5 +59,17 @@ class AccountRestAdapterDeleteTest {
         //then
         mockMvc.perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void deleteAccountNoPrivilegesTest() throws Exception {
+        //given
+        final long id = 1L;
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete(URL + "/{id}", id);
+        //when
+        doThrow(new NotEnoughPrivilegesException("You have no permission to delete the account")).when(accountUseCaseDelete).deleteAccount(anyLong());
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 }

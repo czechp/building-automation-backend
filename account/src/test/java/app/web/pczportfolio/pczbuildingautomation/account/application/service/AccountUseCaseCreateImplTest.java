@@ -6,18 +6,15 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseCreate;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
-import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.Optional;
 
@@ -82,7 +79,7 @@ class AccountUseCaseCreateImplTest {
         //when
         when(accountPortFindByUsernameOrEmail.findAccountByUsernameOrEmail(anyString(), anyString())).thenReturn(Optional.of(accountExisted));
         //then
-        assertThrows(ConditionsNotFulFiled.class, () -> accountUseCaseCreate.createAccount(accountToCreate));
+        assertThrows(ConditionsNotFulFiledException.class, () -> accountUseCaseCreate.createAccount(accountToCreate));
     }
 
     @Test
@@ -97,7 +94,7 @@ class AccountUseCaseCreateImplTest {
         //when
         when(accountPortFindByUsernameOrEmail.findAccountByUsernameOrEmail(anyString(), anyString())).thenReturn(Optional.empty());
         //then
-        assertThrows(ConditionsNotFulFiled.class, () -> accountUseCaseCreate.createAccount(accountToCreate));
+        assertThrows(ConditionsNotFulFiledException.class, () -> accountUseCaseCreate.createAccount(accountToCreate));
     }
 
     @Configuration

@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.configuration;
 
-import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
+import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 
 @ControllerAdvice
 public class HttpExceptionHandler {
-    @ExceptionHandler({ConditionsNotFulFiled.class})
+    @ExceptionHandler({ConditionsNotFulFiledException.class})
     ResponseEntity<HashMap<String, String>> conditionsNotFulFilledHandler(Exception exception) {
         return buildResponse(exception, HttpStatus.BAD_REQUEST);
     }
@@ -20,6 +21,11 @@ public class HttpExceptionHandler {
     @ExceptionHandler({NotFoundException.class})
     ResponseEntity<HashMap<String, String>> notFoundHandler(Exception exception) {
         return buildResponse(exception, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({NotEnoughPrivilegesException.class})
+    ResponseEntity<HashMap<String, String>> notEnoughPrivilegesHandler(Exception exception) {
+        return buildResponse(exception, HttpStatus.FORBIDDEN);
     }
 
     private ResponseEntity<HashMap<String, String>> buildResponse(Exception exception, HttpStatus httpStatus) {
