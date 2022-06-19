@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter(AccessLevel.PACKAGE)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Builder(access = AccessLevel.PACKAGE)
+@Builder(access = AccessLevel.PUBLIC, setterPrefix = "with")
 public class Account {
     private long id;
     private String username;
