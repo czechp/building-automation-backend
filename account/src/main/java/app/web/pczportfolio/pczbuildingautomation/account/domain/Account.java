@@ -34,9 +34,11 @@ public class Account {
     }
 
 
-    public static Account create(AccountCreateCmdDto dto) {
+    public static Account create(AccountCreateCmdDto dto, Function<String, String> hashPasswordFunction) {
         comparePasswords(dto.getPassword(), dto.getPasswordConfirm());
-        return new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
+        Account newAccount = new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
+        newAccount.setPassword(hashPasswordFunction.apply(dto.getPassword()));
+        return newAccount;
     }
 
     public static Account mapFromEntity(AccountEntity entity) {

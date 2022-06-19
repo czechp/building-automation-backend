@@ -24,13 +24,12 @@ class AccountUseCaseCreateImpl implements AccountUseCaseCreate {
 
     @Override
     public Account createAccount(AccountCreateCmdDto accountCreateCmdDto) {
-        Function<String, String> hashPasswordSupplier = passwordEncoder::encode;
+        Function<String, String> hashPasswordFunction = passwordEncoder::encode;
         accountPortFindByUsernameOrEmail.findAccountByUsernameOrEmail(accountCreateCmdDto.getUsername(), accountCreateCmdDto.getPassword())
                 .ifPresent((r) -> {
                     throw new ConditionsNotFulFiled("Account with such username or email already exists");
                 });
-        Account newAccount = Account.create(accountCreateCmdDto);
-        newAccount.hashPassword(hashPasswordSupplier);
+        Account newAccount = Account.create(accountCreateCmdDto, hashPasswordFunction);
         accountPortSave.saveAccount(newAccount);
         accountPortCreateNotifier.notifyAboutNewAccount(newAccount.getEmail(), newAccount.getEnableToken());
         return newAccount;
