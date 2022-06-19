@@ -1,0 +1,22 @@
+package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
+
+
+import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseDelete;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@AllArgsConstructor
+@RequestMapping("/api/accounts")
+class AccountRestAdapterDelete {
+    private final AccountUseCaseDelete accountUseCaseDelete;
+
+    @Secured({"ROLE_ADMIN"})
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteAccount(@PathVariable(name = "id") long id) {
+        accountUseCaseDelete.deleteAccount(id);
+    }
+}
