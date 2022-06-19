@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 class AccountRestAdapterDelete {
     private final AccountUseCaseDelete accountUseCaseDelete;
 
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteAccount(@PathVariable(name = "id") long id) {

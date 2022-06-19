@@ -3,7 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.domain;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCreateCmdDto;
-import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import lombok.*;
 
 import java.util.UUID;
@@ -59,7 +59,7 @@ public class Account {
 
     private static void comparePasswords(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm))
-            throw new ConditionsNotFulFiled("Passwords are not equal");
+            throw new ConditionsNotFulFiledException("Passwords are not equal");
     }
 
     public Account adminActivate() {
@@ -77,7 +77,7 @@ public class Account {
             this.setEmailConfirmed(true);
             return this;
         } else
-            throw new ConditionsNotFulFiled("Email confirmation token is wrong");
+            throw new ConditionsNotFulFiledException("Email confirmation token is wrong");
     }
 
     public void hashPassword(Function<String, String> hashPasswordSupplier) {

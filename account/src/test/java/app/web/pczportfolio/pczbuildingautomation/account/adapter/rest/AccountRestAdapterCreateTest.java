@@ -4,7 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.dto.Accoun
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseCreate;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.configuration.HttpExceptionHandler;
-import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,7 +80,7 @@ class AccountRestAdapterCreateTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody);
         //when
-        when(accountUseCaseCreate.createAccount(accountToCreate)).thenThrow(new ConditionsNotFulFiled("Password not equal"));
+        when(accountUseCaseCreate.createAccount(accountToCreate)).thenThrow(new ConditionsNotFulFiledException("Password not equal"));
         //then
         mockMvc.perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());

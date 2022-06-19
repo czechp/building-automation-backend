@@ -6,13 +6,12 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseCreate;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
-import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +26,7 @@ class AccountUseCaseCreateImpl implements AccountUseCaseCreate {
         Function<String, String> hashPasswordFunction = passwordEncoder::encode;
         accountPortFindByUsernameOrEmail.findAccountByUsernameOrEmail(accountCreateCmdDto.getUsername(), accountCreateCmdDto.getPassword())
                 .ifPresent((r) -> {
-                    throw new ConditionsNotFulFiled("Account with such username or email already exists");
+                    throw new ConditionsNotFulFiledException("Account with such username or email already exists");
                 });
         Account newAccount = Account.create(accountCreateCmdDto, hashPasswordFunction);
         accountPortSave.saveAccount(newAccount);
