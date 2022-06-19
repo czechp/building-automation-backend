@@ -7,7 +7,11 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseCreate;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,18 +24,25 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringJUnitConfig(AccountUseCaseCreateImplTest.TestConfiguration.class)
+@ExtendWith(MockitoExtension.class)
 class AccountUseCaseCreateImplTest {
-    @MockBean
+    @Mock
     AccountPortFindByUsernameOrEmail accountPortFindByUsernameOrEmail;
-    @MockBean
+    @Mock
     AccountPortSave accountPortSave;
-    @MockBean
+    @Mock
     AccountPortCreateNotifier accountPortCreateNotifier;
-    @MockBean
+    @Mock
     PasswordEncoder passwordEncoder;
-    @Autowired
     AccountUseCaseCreate accountUseCaseCreate;
+
+    @BeforeEach
+    void init() {
+        this.accountUseCaseCreate = new AccountUseCaseCreateImpl(passwordEncoder,
+                accountPortFindByUsernameOrEmail,
+                accountPortCreateNotifier,
+                accountPortSave);
+    }
 
     @Test
     void createAccount() {
