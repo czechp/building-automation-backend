@@ -11,6 +11,7 @@ import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesE
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +21,7 @@ class AccountUseCaseDeleteImpl implements AccountUseCaseDelete {
     private final AccountPortFindByUsername accountFindByUsername;
     private final SecurityUtilities securityUtilities;
 
+    @Transactional
     @Override
     public void deleteAccount(long id) {
         accountPortFindById.findAccountById(id)

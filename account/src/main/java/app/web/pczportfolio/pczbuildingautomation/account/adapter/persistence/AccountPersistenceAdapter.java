@@ -14,7 +14,8 @@ class AccountPersistenceAdapter implements
         AccountPortFindById,
         AccountPortFindByUsername,
         AccountPortFindByUsernameOrEmail,
-        AccountPortSave {
+        AccountPortSave,
+        AccountPortFindByEnableToken {
     private final AccountJpaRepository accountJpaRepository;
 
     @Override
@@ -46,4 +47,9 @@ class AccountPersistenceAdapter implements
         return AccountEntityMapper.toDomain(accountJpaRepository.save(accountEntity));
     }
 
+    @Override
+    public Optional<Account> findAccountByEnableToken(String enableToken) {
+        return accountJpaRepository.findByEnableToken(enableToken)
+                .map(AccountEntityMapper::toDomain);
+    }
 }

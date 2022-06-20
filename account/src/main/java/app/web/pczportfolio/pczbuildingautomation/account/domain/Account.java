@@ -62,20 +62,17 @@ public class Account {
             throw new ConditionsNotFulFiledException("Passwords are not equal");
     }
 
-    public Account adminActivate() {
+    public void adminActivate() {
         this.adminActivation = true;
-        return this;
     }
 
-    public Account adminDeactivate() {
+    public void adminDeactivate() {
         this.adminActivation = false;
-        return this;
     }
 
-    public Account confirmEmail(String token) {
+    public void confirmEmail(String token) {
         if (this.enableToken.equals(token)) {
             this.setEmailConfirmed(true);
-            return this;
         } else
             throw new ConditionsNotFulFiledException("Email confirmation token is wrong");
     }
