@@ -22,9 +22,5 @@ class AccountRestAdapterCreate {
         accountUseCaseCreate.createAccount(accountCreateCmdDto);
     }
 
-    @Configuration
-    @ComponentScan()
-    static class TestConfiguration{
 
-    }
 }

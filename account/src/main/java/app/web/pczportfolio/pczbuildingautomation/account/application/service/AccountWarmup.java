@@ -62,6 +62,15 @@ class AccountWarmup {
                         .withEnableToken("user321")
                         .withEmailConfirmed(true)
                         .withAdminActivation(true)
+                        .build(),
+                Account.builder()
+                        .withUsername("userWithoutActivation")
+                        .withPassword(passwordEncoder.encode("user123"))
+                        .withEmail("userWithoutActivation@gmail.com")
+                        .withAccountRole(AccountRole.USER)
+                        .withEnableToken("user321")
+                        .withEmailConfirmed(true)
+                        .withAdminActivation(false)
                         .build()
         );
     }
