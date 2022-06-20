@@ -72,7 +72,7 @@ public class Account {
         return this;
     }
 
-    public Account confirmEmail(String token) {
+    public void confirmEmail(String token) {
         if (this.enableToken.equals(token)) {
             this.setEmailConfirmed(true);
             return this;
