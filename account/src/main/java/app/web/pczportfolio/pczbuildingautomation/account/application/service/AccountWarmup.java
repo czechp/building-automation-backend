@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -43,7 +44,7 @@ class AccountWarmup {
                         .withAccountRole(AccountRole.ADMIN)
                         .withEnableToken("admin321")
                         .withEmailConfirmed(true)
-                        .withAdminActivation(true)
+                        .withAccountConfiguration(AccountConfiguration.builder().withAdminActivation(true).build())
                         .build(),
                 Account.builder()
                         .withUsername("superuser")
@@ -52,7 +53,7 @@ class AccountWarmup {
                         .withAccountRole(AccountRole.SUPERUSER)
                         .withEnableToken("superuser321")
                         .withEmailConfirmed(true)
-                        .withAdminActivation(true)
+                        .withAccountConfiguration(AccountConfiguration.builder().withAdminActivation(true).build())
                         .build(),
                 Account.builder()
                         .withUsername("user")
@@ -61,7 +62,7 @@ class AccountWarmup {
                         .withAccountRole(AccountRole.USER)
                         .withEnableToken("user321")
                         .withEmailConfirmed(true)
-                        .withAdminActivation(true)
+                        .withAccountConfiguration(AccountConfiguration.builder().withAdminActivation(true).build())
                         .build(),
                 Account.builder()
                         .withUsername("userWithoutActivation")
@@ -70,7 +71,7 @@ class AccountWarmup {
                         .withAccountRole(AccountRole.USER)
                         .withEnableToken("user321")
                         .withEmailConfirmed(true)
-                        .withAdminActivation(false)
+                        .withAccountConfiguration(AccountConfiguration.builder().withAdminActivation(false).build())
                         .build()
         );
     }
