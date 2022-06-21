@@ -20,8 +20,7 @@ public class Account {
     private String username;
     private String password;
     private String email;
-    private String enableToken;
-    private boolean emailConfirmed;
+
     private AccountRole accountRole;
     private AccountConfiguration accountConfiguration;
 
@@ -29,7 +28,6 @@ public class Account {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.enableToken = UUID.randomUUID().toString();
         this.accountRole = AccountRole.USER;
         this.accountConfiguration = new AccountConfiguration();
     }
@@ -48,9 +46,8 @@ public class Account {
                 .withUsername(entity.getUsername())
                 .withPassword(entity.getPassword())
                 .withEmail(entity.getEmail())
-                .withEnableToken(entity.getEnableToken())
-                .withEmailConfirmed(entity.isEmailConfirmed())
                 .withVersion(entity.getVersion())
+                .withAccountRole(entity.getAccountRole())
                 .withAccountConfiguration(AccountConfiguration.mapFromEntity(entity.getAccountConfigurationEmb()))
                 .build();
 
@@ -71,8 +68,8 @@ public class Account {
     }
 
     public void confirmEmail(String token) {
-        if (this.enableToken.equals(token)) {
-            this.setEmailConfirmed(true);
+        if (this.accountConfiguration.getEnableToken().equals(token)) {
+            this.accountConfiguration.setEmailConfirmed(true);
         } else
             throw new ConditionsNotFulFiledException("Email confirmation token is wrong");
     }
@@ -81,8 +78,6 @@ public class Account {
         this.password = hashPasswordSupplier.apply(this.password);
     }
 
-    public boolean isAdminActivation() {
-        return this.accountConfiguration.isAdminActivation();
-    }
+
 
 }

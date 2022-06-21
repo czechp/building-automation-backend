@@ -10,26 +10,16 @@ class AccountEntityMapper {
                 .withUsername(account.getUsername())
                 .withPassword(account.getPassword())
                 .withEmail(account.getEmail())
-                .withEnableToken(account.getEnableToken())
-                .withEmailConfirmed(account.isEmailConfirmed())
                 .withAccountRole(account.getAccountRole())
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
-                                .withAdminActivation(account.isAdminActivation())
+                                .withAdminActivation(account.getAccountConfiguration().isAdminActivation())
+                                .withEmailConfirmed(account.getAccountConfiguration().isEmailConfirmed())
+                                .withEnableToken(account.getAccountConfiguration().getEnableToken())
                                 .build()
                 )
                 .build();
-//                new AccountEntity(
-//                account.getId(),
-//                account.getVersion(),
-//                account.getUsername(),
-//                account.getPassword(),
-//                account.getEmail(),
-//                account.getEnableToken(),
-//                account.isEmailConfirmed(),
-//                account.isEmailConfirmed(),
-//                account.getAccountRole()
-//        );
+
         accountEntity.setId(account.getId());
         return accountEntity;
     }

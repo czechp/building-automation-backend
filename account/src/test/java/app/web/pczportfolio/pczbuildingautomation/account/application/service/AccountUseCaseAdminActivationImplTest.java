@@ -49,7 +49,7 @@ class AccountUseCaseAdminActivationImplTest {
         when(accountPortFindById.findAccountById(anyLong())).thenReturn(Optional.of(fetchedAccount));
         Account activatedAccount = accountUseCaseAdminActivation.accountAdminActivation(id, activation);
         //then
-        assertEquals(activation, activatedAccount.isAdminActivation());
+        assertEquals(activation, activatedAccount.getAccountConfiguration().isAdminActivation());
         verify(accountPortSave, times(1)).saveAccount(fetchedAccount);
     }
 

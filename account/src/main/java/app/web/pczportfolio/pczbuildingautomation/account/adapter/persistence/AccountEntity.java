@@ -19,6 +19,7 @@ import java.util.List;
 @EqualsAndHashCode()
 @Builder(access = AccessLevel.PACKAGE, setterPrefix = "with")
 @AllArgsConstructor
+@NoArgsConstructor
 public class AccountEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,20 +39,11 @@ public class AccountEntity implements UserDetails {
     @Email(message = "Incorrect email format")
     private String email;
 
-    @NotBlank(message = "Enable token cannot be blank")
-    private String enableToken;
-
-    private boolean emailConfirmed;
-
     @NotNull(message = "Role cannot be null")
     @Enumerated(value = EnumType.STRING)
     private AccountRole accountRole;
 
     private AccountConfigurationEmb accountConfigurationEmb;
-
-    AccountEntity() {
-        this.accountConfigurationEmb = new AccountConfigurationEmb();
-    }
 
 
     @Override
@@ -76,6 +68,7 @@ public class AccountEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.accountConfigurationEmb.isAdminActivation() && emailConfirmed;
+        return this.accountConfigurationEmb.isAdminActivation()
+                && this.accountConfigurationEmb.isEmailConfirmed();
     }
 }
