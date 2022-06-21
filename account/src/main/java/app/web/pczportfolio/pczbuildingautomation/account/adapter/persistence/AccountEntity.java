@@ -17,7 +17,9 @@ import java.util.List;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode()
+@Builder(access = AccessLevel.PACKAGE, setterPrefix = "with")
 @AllArgsConstructor
+@NoArgsConstructor
 public class AccountEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,28 +39,12 @@ public class AccountEntity implements UserDetails {
     @Email(message = "Incorrect email format")
     private String email;
 
-    @NotBlank(message = "Enable token cannot be blank")
-    private String enableToken;
-
-    private boolean adminConfirmed;
-
-    private boolean emailConfirmed;
-
     @NotNull(message = "Role cannot be null")
     @Enumerated(value = EnumType.STRING)
     private AccountRole accountRole;
 
-    AccountEntity() {
-    }
+    private AccountConfigurationEmb accountConfigurationEmb;
 
-
-    public AccountEntity(String username, String password, String email, String enableToken, AccountRole accountRole) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.enableToken = enableToken;
-        this.accountRole = accountRole;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -82,6 +68,7 @@ public class AccountEntity implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.adminConfirmed && emailConfirmed;
+        return this.accountConfigurationEmb.isAdminActivation()
+                && this.accountConfigurationEmb.isEmailConfirmed();
     }
 }

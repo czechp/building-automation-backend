@@ -49,7 +49,7 @@ class AccountPersistenceAdapter implements
 
     @Override
     public Optional<Account> findAccountByEnableToken(String enableToken) {
-        return accountJpaRepository.findByEnableToken(enableToken)
+        return accountJpaRepository.findByAccountConfigurationEmbEnableToken(enableToken)
                 .map(AccountEntityMapper::toDomain);
     }
 }

@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -41,36 +42,49 @@ class AccountWarmup {
                         .withPassword(passwordEncoder.encode("admin123"))
                         .withEmail("admin@gmail.com")
                         .withAccountRole(AccountRole.ADMIN)
-                        .withEnableToken("admin321")
-                        .withEmailConfirmed(true)
-                        .withAdminActivation(true)
+                        .withAccountConfiguration(
+                                AccountConfiguration.builder()
+                                        .withAdminActivation(true)
+                                        .withEmailConfirmed(true)
+                                        .withEnableToken("admin123")
+                                        .build())
                         .build(),
                 Account.builder()
                         .withUsername("superuser")
                         .withPassword(passwordEncoder.encode("superuser123"))
                         .withEmail("superuser@gmail.com")
                         .withAccountRole(AccountRole.SUPERUSER)
-                        .withEnableToken("superuser321")
-                        .withEmailConfirmed(true)
-                        .withAdminActivation(true)
+                        .withAccountConfiguration(
+                                AccountConfiguration.builder()
+                                        .withAdminActivation(true)
+                                        .withEmailConfirmed(true)
+                                        .withEnableToken("superuser123")
+                                        .build())
                         .build(),
                 Account.builder()
                         .withUsername("user")
                         .withPassword(passwordEncoder.encode("user123"))
                         .withEmail("user@gmail.com")
                         .withAccountRole(AccountRole.USER)
-                        .withEnableToken("user321")
-                        .withEmailConfirmed(true)
-                        .withAdminActivation(true)
+                        .withAccountConfiguration(
+                                AccountConfiguration.builder()
+                                        .withAdminActivation(true)
+                                        .withEmailConfirmed(true)
+                                        .withEnableToken("user123123")
+                                        .build())
+
                         .build(),
                 Account.builder()
                         .withUsername("userWithoutActivation")
                         .withPassword(passwordEncoder.encode("user123"))
                         .withEmail("userWithoutActivation@gmail.com")
                         .withAccountRole(AccountRole.USER)
-                        .withEnableToken("user321")
-                        .withEmailConfirmed(true)
-                        .withAdminActivation(false)
+                        .withAccountConfiguration(
+                                AccountConfiguration.builder()
+                                        .withAdminActivation(false)
+                                        .withEmailConfirmed(false)
+                                        .withEnableToken("withoutActivation")
+                                        .build())
                         .build()
         );
     }

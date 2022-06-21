@@ -30,7 +30,7 @@ class AccountUseCaseCreateImpl implements AccountUseCaseCreate {
                 });
         Account newAccount = Account.create(accountCreateCmdDto, hashPasswordFunction);
         accountPortSave.saveAccount(newAccount);
-        accountPortCreateNotifier.notifyAboutNewAccount(newAccount.getEmail(), newAccount.getEnableToken());
+        accountPortCreateNotifier.notifyAboutNewAccount(newAccount.getEmail(), newAccount.getAccountConfiguration().getEnableToken());
         return newAccount;
     }
 }

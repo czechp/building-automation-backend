@@ -4,6 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseAdminActivation;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountConfiguration;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,13 +39,17 @@ class AccountUseCaseAdminActivationImplTest {
         final long id = 1L;
         final boolean activation = true;
         final Account fetchedAccount = Account.builder()
-                .withAdminActivation(false)
+                .withAccountConfiguration(
+                        AccountConfiguration.builder()
+                                .withAdminActivation(false)
+                                .build()
+                )
                 .build();
         //when
         when(accountPortFindById.findAccountById(anyLong())).thenReturn(Optional.of(fetchedAccount));
         Account activatedAccount = accountUseCaseAdminActivation.accountAdminActivation(id, activation);
         //then
-        assertEquals(activation, activatedAccount.isAdminActivation());
+        assertEquals(activation, activatedAccount.getAccountConfiguration().isAdminActivation());
         verify(accountPortSave, times(1)).saveAccount(fetchedAccount);
     }
 

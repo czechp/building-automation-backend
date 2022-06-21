@@ -16,21 +16,20 @@ import java.util.function.Function;
 @Builder(access = AccessLevel.PUBLIC, setterPrefix = "with")
 public class Account {
     private long id;
+    private long version;
     private String username;
     private String password;
     private String email;
-    private String enableToken;
-    private boolean adminActivation;
-    private boolean emailConfirmed;
+
     private AccountRole accountRole;
-    private long version;
+    private AccountConfiguration accountConfiguration;
 
     Account(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.enableToken = UUID.randomUUID().toString();
         this.accountRole = AccountRole.USER;
+        this.accountConfiguration = new AccountConfiguration();
     }
 
 
@@ -42,18 +41,16 @@ public class Account {
     }
 
     public static Account mapFromEntity(AccountEntity entity) {
-        Account account = new Account(
-                entity.getId(),
-                entity.getUsername(),
-                entity.getPassword(),
-                entity.getEmail(),
-                entity.getEnableToken(),
-                entity.isAdminConfirmed(),
-                entity.isEmailConfirmed(),
-                entity.getAccountRole(),
-                entity.getVersion()
-        );
-        return account;
+        return Account.builder()
+                .withId(entity.getId())
+                .withUsername(entity.getUsername())
+                .withPassword(entity.getPassword())
+                .withEmail(entity.getEmail())
+                .withVersion(entity.getVersion())
+                .withAccountRole(entity.getAccountRole())
+                .withAccountConfiguration(AccountConfiguration.mapFromEntity(entity.getAccountConfigurationEmb()))
+                .build();
+
     }
 
 
@@ -63,16 +60,16 @@ public class Account {
     }
 
     public void adminActivate() {
-        this.adminActivation = true;
+        this.accountConfiguration.setAdminActivation(true);
     }
 
     public void adminDeactivate() {
-        this.adminActivation = false;
+        this.accountConfiguration.setAdminActivation(false);
     }
 
     public void confirmEmail(String token) {
-        if (this.enableToken.equals(token)) {
-            this.setEmailConfirmed(true);
+        if (this.accountConfiguration.getEnableToken().equals(token)) {
+            this.accountConfiguration.setEmailConfirmed(true);
         } else
             throw new ConditionsNotFulFiledException("Email confirmation token is wrong");
     }
@@ -80,4 +77,7 @@ public class Account {
     public void hashPassword(Function<String, String> hashPasswordSupplier) {
         this.password = hashPasswordSupplier.apply(this.password);
     }
+
+
+
 }

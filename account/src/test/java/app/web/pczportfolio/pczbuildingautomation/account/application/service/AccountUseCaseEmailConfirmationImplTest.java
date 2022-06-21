@@ -4,6 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseEmailConfirmation;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountConfiguration;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,14 +39,18 @@ class AccountUseCaseEmailConfirmationImplTest {
         //given
         final String token = "123321";
         final Account fetchedAccount = Account.builder()
-                .withEnableToken(token)
-                .withEmailConfirmed(false)
+                .withAccountConfiguration(
+                        AccountConfiguration.builder()
+                                .withEmailConfirmed(false)
+                                .withEnableToken(token)
+                                .build()
+                )
                 .build();
         //when
         when(accountPortFindByEnableToken.findAccountByEnableToken(anyString())).thenReturn(Optional.of(fetchedAccount));
         final Account accountEmailConfirmed = accountUseCaseEmailConfirmation.accountEmailConfirmation(token);
         //then
-        assertTrue(accountEmailConfirmed.isEmailConfirmed());
+        assertTrue(accountEmailConfirmed.getAccountConfiguration().isEmailConfirmed());
         verify(accountPortSave, times(1)).saveAccount(fetchedAccount);
     }
 
@@ -65,8 +70,12 @@ class AccountUseCaseEmailConfirmationImplTest {
         //given
         final String token = "123321";
         final Account fetchedAccount = Account.builder()
-                .withEnableToken("differentToken")
-                .withEmailConfirmed(false)
+                .withAccountConfiguration(
+                        AccountConfiguration.builder()
+                                .withEmailConfirmed(false)
+                                .withEnableToken("differentToken")
+                                .build()
+                )
                 .build();
         //when
         when(accountPortFindByEnableToken.findAccountByEnableToken(anyString())).thenReturn(Optional.of(fetchedAccount));

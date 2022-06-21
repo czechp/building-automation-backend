@@ -59,9 +59,9 @@ class AccountUseCaseCreateImplTest {
         verify(passwordEncoder, times(1)).encode(anyString());
         assertEquals(accountToCreate.getUsername(), newAccount.getUsername());
         assertEquals(accountToCreate.getEmail(), newAccount.getEmail());
-        assertNotNull(newAccount.getEnableToken());
-        assertFalse(newAccount.isEmailConfirmed());
-        assertFalse(newAccount.isAdminActivation());
+        assertNotNull(newAccount.getAccountConfiguration().getEnableToken());
+        assertFalse(newAccount.getAccountConfiguration().isEmailConfirmed());
+        assertFalse(newAccount.getAccountConfiguration().isAdminActivation());
     }
 
     @Test
