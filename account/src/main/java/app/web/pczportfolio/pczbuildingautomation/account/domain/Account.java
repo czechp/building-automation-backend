@@ -79,5 +79,7 @@ public class Account {
     }
 
 
-
+    public void assignRole(AccountRole newRole) {
+        this.accountRole = newRole;
+    }
 }
