@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.domain;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountConfigurationEmb;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -11,22 +12,32 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
-public  class AccountConfiguration {
+public class AccountConfiguration {
     private boolean adminActivation;
     private String enableToken;
     private boolean emailConfirmed;
+    private String newPasswordToken;
+    private LocalDateTime newPasswordTokenExpiration;
 
-     AccountConfiguration() {
+    private boolean restorePasswordActivated;
+
+    AccountConfiguration() {
         this.adminActivation = false;
         this.enableToken = UUID.randomUUID().toString();
-        this.emailConfirmed =  false;
+        this.emailConfirmed = false;
+        this.newPasswordToken = "";
+        this.restorePasswordActivated = false;
+        this.newPasswordTokenExpiration = LocalDateTime.now();
     }
 
-    static AccountConfiguration mapFromEntity(AccountConfigurationEmb accountConfigurationEmb){
-         return AccountConfiguration.builder()
-                 .withAdminActivation(accountConfigurationEmb.isAdminActivation())
-                 .withEnableToken(accountConfigurationEmb.getEnableToken())
-                 .withEmailConfirmed(accountConfigurationEmb.isEmailConfirmed())
-                 .build();
+    static AccountConfiguration mapFromEntity(AccountConfigurationEmb accountConfigurationEmb) {
+        return AccountConfiguration.builder()
+                .withAdminActivation(accountConfigurationEmb.isAdminActivation())
+                .withEnableToken(accountConfigurationEmb.getEnableToken())
+                .withEmailConfirmed(accountConfigurationEmb.isEmailConfirmed())
+                .withNewPasswordToken(accountConfigurationEmb.getNewPasswordToken())
+                .withRestorePasswordActivated(accountConfigurationEmb.isRestorePasswordActivated())
+                .withNewPasswordTokenExpiration(accountConfigurationEmb.getNewPasswordTokenExpiration())
+                .build();
     }
 }

@@ -14,7 +14,10 @@ class AccountEntityMapper {
                 new AccountConfigurationEmb(
                         account.getAccountConfiguration().isAdminActivation(),
                         account.getAccountConfiguration().getEnableToken(),
-                        account.getAccountConfiguration().isEmailConfirmed()
+                        account.getAccountConfiguration().isEmailConfirmed(),
+                        account.getAccountConfiguration().getNewPasswordToken(),
+                        account.getAccountConfiguration().getNewPasswordTokenExpiration(),
+                        account.getAccountConfiguration().isRestorePasswordActivated()
                 )
         );
         return accountEntity;

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter(AccessLevel.PACKAGE)
@@ -15,4 +16,7 @@ public class AccountConfigurationEmb {
     @NotBlank(message = "Enable token cannot be blank")
     private String enableToken;
     private boolean emailConfirmed;
+    private String newPasswordToken;
+    private LocalDateTime newPasswordTokenExpiration;
+    private boolean restorePasswordActivated;
 }
