@@ -33,13 +33,13 @@ class AccountUseCaseRestorePasswordImpl implements AccountUseCaseRestorePassword
     }
 
     @Override
-    public Account setNewPassword(String token, String password) {
+    public Account setNewPassword(String token, String newPassword) {
         final Function<String, String> passwordGenerator = passwordEncoder::encode;
         Account account = accountPortFindByNewPasswordToken.findAccountByNewPasswordToken(token)
                 .orElseThrow(() -> new NotFoundException(
                         "Account with such new password token: " + token + " does not exist")
                 );
-        account.generateNewPassword(token, password, passwordGenerator);
+        account.generateNewPassword(token, newPassword, passwordGenerator);
         accountPortSave.saveAccount(account);
         return account;
     }

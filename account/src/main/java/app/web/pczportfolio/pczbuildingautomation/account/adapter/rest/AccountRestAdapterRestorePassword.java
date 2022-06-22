@@ -15,8 +15,17 @@ class AccountRestAdapterRestorePassword {
     @GetMapping("/token")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void generateTokenToRestorePassword(
-        @RequestParam(name = "email") String email
+            @RequestParam(name = "email") String email
     ) {
         accountUseCaseRestorePassword.generateTokenToRestorePassword(email);
+    }
+
+    @PatchMapping("/new-password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void setNewPassword(
+            @RequestParam(name = "token") String token,
+            @RequestParam(name = "password") String newPassword
+    ) {
+        accountUseCaseRestorePassword.setNewPassword(token, newPassword);
     }
 }

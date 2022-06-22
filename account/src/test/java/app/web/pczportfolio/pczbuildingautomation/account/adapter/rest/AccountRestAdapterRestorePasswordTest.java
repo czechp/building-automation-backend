@@ -56,7 +56,7 @@ class AccountRestAdapterRestorePasswordTest {
                 .param("email", email);
         //when
         doThrow(NotFoundException.class).when(accountUseCaseRestorePassword)
-                        .generateTokenToRestorePassword(email);
+                .generateTokenToRestorePassword(email);
         //then
         mockMvc.perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -76,5 +76,47 @@ class AccountRestAdapterRestorePasswordTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
+    @Test
+    void setNewPasswordTest() throws Exception {
+        //given
+        final var token = "123token123";
+        final var newPassword = "newPassword123";
+        final var requestBuilder = MockMvcRequestBuilders.patch(URL + "/new-password")
+                .param("token", token)
+                .param("password", newPassword);
+        //when
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 
+    @Test
+    void setNewPasswordNotFoundTest() throws Exception {
+        //given
+        final var token = "123token123";
+        final var newPassword = "newPassword123";
+        final var requestBuilder = MockMvcRequestBuilders.patch(URL + "/new-password")
+                .param("token", token)
+                .param("password", newPassword);
+        //when
+        doThrow(NotFoundException.class).when(accountUseCaseRestorePassword).setNewPassword(anyString(), anyString());
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void setNewPasswordConditionsNotFulfilledTest() throws Exception {
+        //given
+        final var token = "123token123";
+        final var newPassword = "newPassword123";
+        final var requestBuilder = MockMvcRequestBuilders.patch(URL + "/new-password")
+                .param("token", token)
+                .param("password", newPassword);
+        //when
+        doThrow(ConditionsNotFulFiledException.class).when(accountUseCaseRestorePassword).setNewPassword(anyString(), anyString());
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
 }
