@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.dto.Accoun
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -81,5 +82,13 @@ public class Account {
 
     public void assignRole(AccountRole newRole) {
         this.accountRole = newRole;
+    }
+
+    public String generateNewPasswordToken(String email) {
+        if (this.email.equals(email)) {
+            this.accountConfiguration.setNewPasswordToken(UUID.randomUUID().toString());
+            this.accountConfiguration.setNewPasswordTokenExpiration(LocalDateTime.now().plusMinutes(AccountConfiguration.NEW_PASSWORD_TOKEN_LIVING_MINUTES_DURATION));
+            return this.accountConfiguration.getNewPasswordToken();
+        } else throw new ConditionsNotFulFiledException("Emails do not match");
     }
 }

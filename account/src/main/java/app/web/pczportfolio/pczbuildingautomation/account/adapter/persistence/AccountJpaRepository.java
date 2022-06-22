@@ -13,4 +13,6 @@ interface AccountJpaRepository extends JpaRepository<AccountEntity, Long> {
     Optional<AccountEntity> findByUsername(String username);
 
     Optional<AccountEntity> findByAccountConfigurationEmbEnableToken(String token);
+
+    Optional<AccountEntity> findByEmail(String email);
 }

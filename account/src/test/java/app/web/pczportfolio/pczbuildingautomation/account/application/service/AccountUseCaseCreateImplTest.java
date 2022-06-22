@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCreateCmdDto;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortCreateNotifier;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortNotifierCreate;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByUsernameOrEmail;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseCreate;
@@ -28,7 +28,7 @@ class AccountUseCaseCreateImplTest {
     @Mock
     AccountPortSave accountPortSave;
     @Mock
-    AccountPortCreateNotifier accountPortCreateNotifier;
+    AccountPortNotifierCreate accountPortCreateNotifier;
     @Mock
     PasswordEncoder passwordEncoder;
     AccountUseCaseCreate accountUseCaseCreate;

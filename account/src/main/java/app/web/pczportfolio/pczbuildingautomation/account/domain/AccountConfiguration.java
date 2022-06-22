@@ -13,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
 public class AccountConfiguration {
+    public static final int NEW_PASSWORD_TOKEN_LIVING_MINUTES_DURATION = 10;
     private boolean adminActivation;
     private String enableToken;
     private boolean emailConfirmed;

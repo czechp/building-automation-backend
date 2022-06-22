@@ -2,10 +2,8 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.useCase;
 
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 
-interface AccountUseCaseRestorePassword {
-    Account generateTokenToRestorePassword(long accountId);
+public interface AccountUseCaseRestorePassword {
+    Account generateTokenToRestorePassword(String email);
 
-    Account activateRestoringNewPassword(String restoreToken);
-
-    Account setNewPassword(long accountId, String newPassword);
+    Account setNewPassword(String token, String password);
 }

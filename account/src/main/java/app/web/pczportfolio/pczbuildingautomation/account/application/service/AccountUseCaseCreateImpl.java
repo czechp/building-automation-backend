@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCreateCmdDto;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortCreateNotifier;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortNotifierCreate;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByUsernameOrEmail;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseCreate;
@@ -18,7 +18,7 @@ import java.util.function.Function;
 class AccountUseCaseCreateImpl implements AccountUseCaseCreate {
     private final PasswordEncoder passwordEncoder;
     private final AccountPortFindByUsernameOrEmail accountPortFindByUsernameOrEmail;
-    private final AccountPortCreateNotifier accountPortCreateNotifier;
+    private final AccountPortNotifierCreate accountPortNotifierCreate;
     private final AccountPortSave accountPortSave;
 
     @Override
@@ -30,7 +30,7 @@ class AccountUseCaseCreateImpl implements AccountUseCaseCreate {
                 });
         Account newAccount = Account.create(accountCreateCmdDto, hashPasswordFunction);
         accountPortSave.saveAccount(newAccount);
-        accountPortCreateNotifier.notifyAboutNewAccount(newAccount.getEmail(), newAccount.getAccountConfiguration().getEnableToken());
+        accountPortNotifierCreate.notifyAboutNewAccount(newAccount.getEmail(), newAccount.getAccountConfiguration().getEnableToken());
         return newAccount;
     }
 }
