@@ -4,23 +4,19 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 
 class AccountEntityMapper {
     static AccountEntity toEntity(Account account) {
-        AccountEntity accountEntity = AccountEntity.builder()
-                .withId(account.getId())
-                .withVersion(account.getVersion())
-                .withUsername(account.getUsername())
-                .withPassword(account.getPassword())
-                .withEmail(account.getEmail())
-                .withAccountRole(account.getAccountRole())
-                .withAccountConfigurationEmb(
-                        AccountConfigurationEmb.builder()
-                                .withAdminActivation(account.getAccountConfiguration().isAdminActivation())
-                                .withEmailConfirmed(account.getAccountConfiguration().isEmailConfirmed())
-                                .withEnableToken(account.getAccountConfiguration().getEnableToken())
-                                .build()
+        AccountEntity accountEntity = new AccountEntity(
+                account.getId(),
+                account.getVersion(),
+                account.getUsername(),
+                account.getPassword(),
+                account.getEmail(),
+                account.getAccountRole(),
+                new AccountConfigurationEmb(
+                        account.getAccountConfiguration().isAdminActivation(),
+                        account.getAccountConfiguration().getEnableToken(),
+                        account.getAccountConfiguration().isEmailConfirmed()
                 )
-                .build();
-
-        accountEntity.setId(account.getId());
+        );
         return accountEntity;
     }
 

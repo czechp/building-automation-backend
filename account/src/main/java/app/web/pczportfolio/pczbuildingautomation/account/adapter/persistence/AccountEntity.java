@@ -17,7 +17,6 @@ import java.util.List;
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PACKAGE)
 @EqualsAndHashCode()
-@Builder(access = AccessLevel.PACKAGE, setterPrefix = "with")
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountEntity implements UserDetails {
