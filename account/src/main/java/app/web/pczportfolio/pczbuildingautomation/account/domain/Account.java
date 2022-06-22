@@ -75,8 +75,8 @@ public class Account {
             throw new ConditionsNotFulFiledException("Email confirmation token is wrong");
     }
 
-    public void hashPassword(Function<String, String> hashPasswordSupplier) {
-        this.password = hashPasswordSupplier.apply(this.password);
+    public void hashPassword(Function<String, String> hashPasswordSupplier, String password) {
+        this.password = hashPasswordSupplier.apply(password);
     }
 
 
@@ -86,9 +86,32 @@ public class Account {
 
     public String generateNewPasswordToken(String email) {
         if (this.email.equals(email)) {
-            this.accountConfiguration.setNewPasswordToken(UUID.randomUUID().toString());
+            generateNewPasswordToken();
             this.accountConfiguration.setNewPasswordTokenExpiration(LocalDateTime.now().plusMinutes(AccountConfiguration.NEW_PASSWORD_TOKEN_LIVING_MINUTES_DURATION));
             return this.accountConfiguration.getNewPasswordToken();
         } else throw new ConditionsNotFulFiledException("Emails do not match");
+    }
+
+    public void generateNewPassword(String token, String password, Function<String, String> passwordGenerator) {
+        newPasswordTokenAreEqual(token);
+        newPasswordTokenIsNotExpired();
+        generateNewPasswordToken();
+        this.accountConfiguration.setNewPasswordTokenExpiration(LocalDateTime.now());
+        hashPassword(passwordGenerator, password);
+    }
+
+    private void generateNewPasswordToken() {
+        this.accountConfiguration.setNewPasswordToken(UUID.randomUUID().toString());
+    }
+
+    private void newPasswordTokenAreEqual(String token) {
+        if (!this.accountConfiguration.getNewPasswordToken().equals(token))
+            throw new ConditionsNotFulFiledException("New password tokens do not match");
+    }
+
+    private void newPasswordTokenIsNotExpired() {
+        final var now = LocalDateTime.now();
+        if (now.isAfter(this.accountConfiguration.getNewPasswordTokenExpiration()))
+            throw new ConditionsNotFulFiledException("Token is expired");
     }
 }

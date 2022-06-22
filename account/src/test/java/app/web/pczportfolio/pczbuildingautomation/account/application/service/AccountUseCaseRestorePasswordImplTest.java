@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByEmail;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByNewPasswordToken;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortNotifierRestorePasswordToken;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
@@ -12,12 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -25,6 +26,10 @@ import static org.mockito.Mockito.*;
 class AccountUseCaseRestorePasswordImplTest {
     @Mock
     AccountPortFindByEmail accountPortFindByEmail;
+    @Mock
+    AccountPortFindByNewPasswordToken accountPortFindByNewPasswordToken;
+    @Mock
+    PasswordEncoder passwordEncoder;
     @Mock
     AccountPortSave accountPortSave;
     @Mock
@@ -36,8 +41,10 @@ class AccountUseCaseRestorePasswordImplTest {
     void init() {
         this.accountUseCaseRestorePassword = new AccountUseCaseRestorePasswordImpl(
                 accountPortFindByEmail,
+                accountPortFindByNewPasswordToken,
                 accountPortSave,
-                accountPortNotifierRestorePasswordToken
+                accountPortNotifierRestorePasswordToken,
+                passwordEncoder
         );
     }
 
@@ -101,5 +108,89 @@ class AccountUseCaseRestorePasswordImplTest {
         //then
         assertThrows(ConditionsNotFulFiledException.class, () -> accountUseCaseRestorePassword.generateTokenToRestorePassword(email));
     }
+
+    @Test
+    void setNewPasswordTest() {
+        //given
+        final var token = "123321";
+        final var newPassword = "newPassword";
+        final var oldPassword = "oldPassword";
+        final var fetchedAccount = Account.builder()
+                .withPassword(oldPassword)
+                .withAccountConfiguration(
+                        AccountConfiguration.builder()
+                                .withNewPasswordToken(token)
+                                .withNewPasswordTokenExpiration(LocalDateTime.now().plusMinutes(2))
+                                .build()
+                )
+                .build();
+        //when
+        when(accountPortFindByNewPasswordToken.findAccountByNewPasswordToken(anyString()))
+                .thenReturn(Optional.of(fetchedAccount));
+        final var accountWithNewPassword = accountUseCaseRestorePassword.setNewPassword(token, newPassword);
+        //then
+        assertNotEquals(oldPassword, accountWithNewPassword.getPassword());
+        assertNotEquals(token, accountWithNewPassword.getAccountConfiguration().getNewPasswordToken());
+        verify(passwordEncoder, times(1)).encode(anyString());
+        verify(accountPortSave, times(1)).saveAccount(any());
+    }
+
+    @Test
+    void setNewPasswordNotFoundTest() {
+        //given
+        final var token = "123321";
+        final var newPassword = "newPassword";
+
+        //when
+        when(accountPortFindByNewPasswordToken.findAccountByNewPasswordToken(anyString()))
+                .thenReturn(Optional.empty());
+        //then
+        assertThrows(NotFoundException.class, () -> accountUseCaseRestorePassword.setNewPassword(token, newPassword));
+    }
+
+    @Test
+    void setNewPasswordTokenNotEqualsTest() {
+        //given
+        final var token = "123321";
+        final var newPassword = "newPassword";
+        final var oldPassword = "oldPassword";
+        final var fetchedAccount = Account.builder()
+                .withPassword(oldPassword)
+                .withAccountConfiguration(
+                        AccountConfiguration.builder()
+                                .withNewPasswordToken("321321")
+                                .withNewPasswordTokenExpiration(LocalDateTime.now().plusMinutes(2))
+                                .build()
+                )
+                .build();
+        //when
+        when(accountPortFindByNewPasswordToken.findAccountByNewPasswordToken(anyString()))
+                .thenReturn(Optional.of(fetchedAccount));
+        //then
+        assertThrows(ConditionsNotFulFiledException.class, () -> accountUseCaseRestorePassword.setNewPassword(token, newPassword));
+    }
+
+    @Test
+    void setNewPasswordTokenExpiredTest() {
+        //given
+        final var token = "123321";
+        final var newPassword = "newPassword";
+        final var oldPassword = "oldPassword";
+        final var fetchedAccount = Account.builder()
+                .withPassword(oldPassword)
+                .withAccountConfiguration(
+                        AccountConfiguration.builder()
+                                .withNewPasswordToken(token)
+                                .withNewPasswordTokenExpiration(LocalDateTime.now().minusMinutes(2))
+                                .build()
+                )
+                .build();
+        //when
+        when(accountPortFindByNewPasswordToken.findAccountByNewPasswordToken(anyString()))
+                .thenReturn(Optional.of(fetchedAccount));
+        //then
+        assertThrows(ConditionsNotFulFiledException.class, () -> accountUseCaseRestorePassword.setNewPassword(token, newPassword));
+    }
+
 
 }
