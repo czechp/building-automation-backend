@@ -16,8 +16,7 @@ class AccountEntityMapper {
                         account.getAccountConfiguration().getEnableToken(),
                         account.getAccountConfiguration().isEmailConfirmed(),
                         account.getAccountConfiguration().getNewPasswordToken(),
-                        account.getAccountConfiguration().getNewPasswordTokenExpiration(),
-                        account.getAccountConfiguration().isRestorePasswordActivated()
+                        account.getAccountConfiguration().getNewPasswordTokenExpiration()
                 )
         );
         return accountEntity;

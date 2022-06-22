@@ -20,14 +20,12 @@ public class AccountConfiguration {
     private String newPasswordToken;
     private LocalDateTime newPasswordTokenExpiration;
 
-    private boolean restorePasswordActivated;
 
     AccountConfiguration() {
         this.adminActivation = false;
         this.enableToken = UUID.randomUUID().toString();
         this.emailConfirmed = false;
         this.newPasswordToken = "";
-        this.restorePasswordActivated = false;
         this.newPasswordTokenExpiration = LocalDateTime.now();
     }
 
@@ -37,7 +35,6 @@ public class AccountConfiguration {
                 .withEnableToken(accountConfigurationEmb.getEnableToken())
                 .withEmailConfirmed(accountConfigurationEmb.isEmailConfirmed())
                 .withNewPasswordToken(accountConfigurationEmb.getNewPasswordToken())
-                .withRestorePasswordActivated(accountConfigurationEmb.isRestorePasswordActivated())
                 .withNewPasswordTokenExpiration(accountConfigurationEmb.getNewPasswordTokenExpiration())
                 .build();
     }

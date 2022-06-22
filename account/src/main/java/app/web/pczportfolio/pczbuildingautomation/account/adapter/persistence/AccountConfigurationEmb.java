@@ -18,5 +18,4 @@ public class AccountConfigurationEmb {
     private boolean emailConfirmed;
     private String newPasswordToken;
     private LocalDateTime newPasswordTokenExpiration;
-    private boolean restorePasswordActivated;
 }
