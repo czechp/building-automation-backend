@@ -1,6 +1,5 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
-import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +14,6 @@ interface AccountJpaRepository extends JpaRepository<AccountEntity, Long> {
     Optional<AccountEntity> findByAccountConfigurationEmbEnableToken(String token);
 
     Optional<AccountEntity> findByEmail(String email);
+
+    Optional<AccountEntity> findByAccountConfigurationEmbNewPasswordToken(String newPasswordToken);
 }
