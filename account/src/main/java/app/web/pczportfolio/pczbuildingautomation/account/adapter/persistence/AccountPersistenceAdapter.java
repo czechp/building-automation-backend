@@ -5,7 +5,9 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -17,8 +19,8 @@ class AccountPersistenceAdapter implements
         AccountPortSave,
         AccountPortFindByEnableToken,
         AccountPortFindByEmail,
-        AccountPortFindByNewPasswordToken
-    {
+        AccountPortFindByNewPasswordToken,
+        AccountPortFindAll {
     private final AccountJpaRepository accountJpaRepository;
 
     @Override
@@ -56,15 +58,23 @@ class AccountPersistenceAdapter implements
                 .map(AccountEntityMapper::toDomain);
     }
 
-        @Override
-        public Optional<Account> findAccountByEmail(String email) {
-            return accountJpaRepository.findByEmail(email)
-                    .map(AccountEntityMapper::toDomain);
-        }
-
-        @Override
-        public Optional<Account> findAccountByNewPasswordToken(String newPasswordToken) {
-            return accountJpaRepository.findByAccountConfigurationEmbNewPasswordToken(newPasswordToken)
-                    .map(AccountEntityMapper::toDomain);
-        }
+    @Override
+    public Optional<Account> findAccountByEmail(String email) {
+        return accountJpaRepository.findByEmail(email)
+                .map(AccountEntityMapper::toDomain);
     }
+
+    @Override
+    public Optional<Account> findAccountByNewPasswordToken(String newPasswordToken) {
+        return accountJpaRepository.findByAccountConfigurationEmbNewPasswordToken(newPasswordToken)
+                .map(AccountEntityMapper::toDomain);
+    }
+
+    @Override
+    public List<Account> findAllAccounts() {
+        return accountJpaRepository.findAll()
+                .stream()
+                .map(AccountEntityMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+}
