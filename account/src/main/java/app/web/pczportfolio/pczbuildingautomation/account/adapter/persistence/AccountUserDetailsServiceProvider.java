@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityUserDetailsService;
-import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityUtilities;
+import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityCurrentUser;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class AccountUserDetailsServiceProvider implements  SecurityUserDetailsService {
     private final AccountJpaRepository accountJpaRepository;
-    private final SecurityUtilities securityUtilities;
+    private final SecurityCurrentUser securityCurrentUser;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
