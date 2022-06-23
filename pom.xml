@@ -7,6 +7,7 @@
         <module>core</module>
         <module>account</module>
         <module>common</module>
+        <module>location</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
