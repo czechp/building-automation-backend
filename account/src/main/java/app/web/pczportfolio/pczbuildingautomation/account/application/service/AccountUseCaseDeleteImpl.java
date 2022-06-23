@@ -6,7 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.application.port.Accou
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByUsername;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseDelete;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
-import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityUtilities;
+import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ class AccountUseCaseDeleteImpl implements AccountUseCaseDelete {
     private final AccountPortFindById accountPortFindById;
     private final AccountPortDelete accountPortDelete;
     private final AccountPortFindByUsername accountFindByUsername;
-    private final SecurityUtilities securityUtilities;
+    private final SecurityCurrentUser securityCurrentUser;
 
     @Transactional
     @Override
@@ -32,7 +32,7 @@ class AccountUseCaseDeleteImpl implements AccountUseCaseDelete {
     }
 
     private void checkOwningAndDelete(Account account) {
-        String currentUser = securityUtilities.getCurrentUser();
+        String currentUser = securityCurrentUser.getCurrentUser();
         boolean userIsAccountOwner = userIsAccountOwner(account, currentUser);
         boolean userIsAdmin = userIsAdmin(currentUser);
         if (userIsAccountOwner || userIsAdmin) {
