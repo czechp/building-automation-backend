@@ -1,6 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence;
 
-import app.web.pczportfolio.pczbuildingautomation.account.AccountSimpleEntity;
+import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountSimpleEntity;
 import lombok.*;
 
 import javax.persistence.*;

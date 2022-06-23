@@ -1,4 +1,4 @@
-package app.web.pczportfolio.pczbuildingautomation.account;
+package app.web.pczportfolio.pczbuildingautomation.account.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
