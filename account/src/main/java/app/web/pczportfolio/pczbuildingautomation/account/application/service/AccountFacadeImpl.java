@@ -21,6 +21,6 @@ class AccountFacadeImpl implements AccountFacade {
     }
 
     private AccountFacadeDto toFacadeDto(Account account) {
-        return new AccountFacadeDto(account.getId(), account.getUsername());
+        return new AccountFacadeDto(account.getId(), account.getUsername(), account.getAccountRole().toString());
     }
 }
