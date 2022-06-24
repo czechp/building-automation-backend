@@ -10,9 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocationCommandDto {
-    @NotNull(message = "Account id cannot be null")
-    private long accountId;
+public class LocationCreateCommandDto {
     @NotNull(message = "Location name cannot be null")
     @NotBlank(message = "Location name cannot be blank")
     private String name;

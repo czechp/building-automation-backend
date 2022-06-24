@@ -4,6 +4,6 @@ import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 
 import java.util.Optional;
 
-public interface LocationPortFindAccountById {
-    Optional<AccountFacadeDto> findAccountById(long accountId);
+public interface LocationPortFindAccountUsername {
+    Optional<AccountFacadeDto> findAccountByUsername(String username);
 }
