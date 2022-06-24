@@ -2,6 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.AccountFacade;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindById;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByUsername;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import lombok.AllArgsConstructor;
@@ -12,15 +13,14 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 class AccountFacadeImpl implements AccountFacade {
-    private final AccountPortFindById accountPortFindById;
-
+    private AccountPortFindByUsername accountPortFindByUsername;
     @Override
-    public Optional<AccountFacadeDto> findAccountFacadeDtoById(long id) {
-        return accountPortFindById.findAccountById(id)
+    public Optional<AccountFacadeDto> findAccountFacadeDtoByUsername(String username) {
+        return accountPortFindByUsername.findAccountByUsername(username)
                 .map(this::toFacadeDto);
     }
 
     private AccountFacadeDto toFacadeDto(Account account) {
-        return new AccountFacadeDto(account.getId(), account.getUsername());
+        return new AccountFacadeDto(account.getId(), account.getUsername(), account.getAccountRole().toString());
     }
 }

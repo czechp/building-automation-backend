@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class AccountFacadeDto {
     private long id;
     private String username;
+    private String role;
 }
