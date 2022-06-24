@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 interface LocationJpaRepository extends JpaRepository<LocationEntity, Long> {
-    List<Location> findByAccountSimpleEntity_Id(long accountId);
+    List<LocationEntity> findByAccountSimpleEntity_Id(long accountId);
 }

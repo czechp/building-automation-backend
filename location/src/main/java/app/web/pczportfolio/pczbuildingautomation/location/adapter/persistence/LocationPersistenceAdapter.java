@@ -37,7 +37,11 @@ class LocationPersistenceAdapter implements
 
     @Override
     public List<Location> findLocationsByAccountId(long accountId) {
-        return locationJpaRepository.findByAccountSimpleEntity_Id(accountId);
+        return locationJpaRepository.findByAccountSimpleEntity_Id(accountId)
+                .stream()
+                .map(LocationEntityMapper::mapToDomain)
+                .collect(Collectors.toList());
+
     }
 
     @Override

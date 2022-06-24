@@ -1,10 +1,9 @@
 package app.web.pczportfolio.pczbuildingautomation.location.application.query;
 
-import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationQueryDto;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountUsername;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountByUsername;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAll;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindByAccountId;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindById;
@@ -21,7 +20,7 @@ class LocationQueryImpl implements LocationQuery {
     private final LocationPortFindAll locationPortFindAll;
     private final LocationPortFindByAccountId locationPortFindByAccountId;
     private final SecurityCurrentUser securityCurrentUser;
-    private final LocationPortFindAccountUsername locationPortFindAccountUsername;
+    private final LocationPortFindAccountByUsername locationPortFindAccountByUsername;
     private final LocationPortFindById locationPortFindById;
 
     @Override
@@ -35,8 +34,8 @@ class LocationQueryImpl implements LocationQuery {
 
     @Override
     public List<LocationQueryDto> findLocationsByCurrentUser() {
-        String currentUser = securityCurrentUser.getCurrentUser();
-        AccountFacadeDto currentUserAccount = locationPortFindAccountUsername.findAccountByUsername(currentUser)
+        final var currentUser = securityCurrentUser.getCurrentUser();
+        final var currentUserAccount = locationPortFindAccountByUsername.findAccountByUsername(currentUser)
                 .orElseThrow(() -> new ConditionsNotFulFiledException("This user has no account."));
         return locationPortFindByAccountId.findLocationsByAccountId(currentUserAccount.getId())
                 .stream()

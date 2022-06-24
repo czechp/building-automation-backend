@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.location.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountUsername;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountByUsername;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.AccountParent;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
@@ -19,10 +19,10 @@ import java.util.List;
 @Service
 class LocationWarmup {
     private final LocationPortSave locationPortSave;
-    private final LocationPortFindAccountUsername locationPortFindAccountUsername;
+    private final LocationPortFindAccountByUsername locationPortFindAccountUsername;
     private final Logger logger;
 
-    public LocationWarmup(LocationPortSave locationPortSave, LocationPortFindAccountUsername locationPortFindAccountUsername) {
+    public LocationWarmup(LocationPortSave locationPortSave, LocationPortFindAccountByUsername locationPortFindAccountUsername) {
         this.locationPortSave = locationPortSave;
         this.locationPortFindAccountUsername = locationPortFindAccountUsername;
         this.logger = LoggerFactory.getLogger(LocationWarmup.class);
