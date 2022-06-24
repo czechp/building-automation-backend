@@ -4,7 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountUsername;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountByUsername;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.application.useCase.LocationUseCaseCreate;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +24,7 @@ class LocationUseCaseCreateImplTest {
     @Mock
     LocationPortSave locationPortSave;
     @Mock
-    LocationPortFindAccountUsername locationPortFindAccountUsername;
+    LocationPortFindAccountByUsername locationPortFindAccountUsername;
     @Mock
     SecurityCurrentUser securityCurrentUser;
 
