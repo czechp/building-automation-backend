@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.location.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountById;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountUsername;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.AccountParent;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
@@ -19,19 +19,19 @@ import java.util.List;
 @Service
 class LocationWarmup {
     private final LocationPortSave locationPortSave;
-    private final LocationPortFindAccountById locationPortFindAccountById;
+    private final LocationPortFindAccountUsername locationPortFindAccountUsername;
     private final Logger logger;
 
-    public LocationWarmup(LocationPortSave locationPortSave, LocationPortFindAccountById locationPortFindAccountById) {
+    public LocationWarmup(LocationPortSave locationPortSave, LocationPortFindAccountUsername locationPortFindAccountUsername) {
         this.locationPortSave = locationPortSave;
-        this.locationPortFindAccountById = locationPortFindAccountById;
+        this.locationPortFindAccountUsername = locationPortFindAccountUsername;
         this.logger = LoggerFactory.getLogger(LocationWarmup.class);
     }
 
     @EventListener(ApplicationReadyEvent.class)
     void init() {
         logger.info("<>--------------------------Warmup for LOCATION ENTITY--------------------------<>");
-        locationPortFindAccountById.findAccountById(1L)
+        locationPortFindAccountUsername.findAccountByUsername("user")
                 .ifPresent((accountFacadeDto) -> {
                     locationForDevelopment(accountFacadeDto)
                             .forEach(locationPortSave::saveLocation);

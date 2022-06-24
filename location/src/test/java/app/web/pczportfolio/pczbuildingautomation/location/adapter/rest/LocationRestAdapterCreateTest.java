@@ -42,7 +42,6 @@ class LocationRestAdapterCreateTest {
     void createLocationTest() throws Exception {
         //given
         final var locationToCreateDto = new LocationCreateCommandDto(
-                1L,
                 "Some new location"
         );
         final var requestBody = objectMapper.writeValueAsString(locationToCreateDto);
@@ -58,7 +57,6 @@ class LocationRestAdapterCreateTest {
     void createLocationAccountNotFoundTest() throws Exception {
         //given
         final var locationToCreateDto = new LocationCreateCommandDto(
-                1L,
                 "Some new location"
         );
         final var requestBody = objectMapper.writeValueAsString(locationToCreateDto);
