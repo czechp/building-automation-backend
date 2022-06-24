@@ -2,7 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.location.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
-import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCommandDto;
+import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountById;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.application.useCase.LocationUseCaseCreate;
@@ -37,7 +37,7 @@ class LocationUseCaseCreateImplTest {
     void createLocationTest() {
         //given
         final var accountId = 1L;
-        final var locationCommandDto = new LocationCommandDto(
+        final var locationCommandDto = new LocationCreateCommandDto(
                 accountId,
                 "Some location name"
         );
@@ -55,7 +55,7 @@ class LocationUseCaseCreateImplTest {
     void createLocationTestAccountNotExists() {
         //given
         final var accountId = 1L;
-        final var locationCommandDto = new LocationCommandDto(
+        final var locationCommandDto = new LocationCreateCommandDto(
                 accountId,
                 "Some location name"
         );

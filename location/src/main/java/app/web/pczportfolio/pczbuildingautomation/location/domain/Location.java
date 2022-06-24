@@ -2,7 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.location.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence.LocationEntity;
-import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCommandDto;
+import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
 import lombok.*;
 
 @Getter
@@ -28,7 +28,7 @@ public class Location {
                 .build();
     }
 
-    public static Location create(LocationCommandDto locationCommandDto, AccountFacadeDto accountFacadeDto) {
+    public static Location create(LocationCreateCommandDto locationCommandDto, AccountFacadeDto accountFacadeDto) {
         return new Location(
                 0L,
                 locationCommandDto.getName(),
