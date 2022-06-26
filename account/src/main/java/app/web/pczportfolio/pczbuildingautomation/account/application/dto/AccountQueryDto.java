@@ -4,22 +4,14 @@ import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class AccountQueryDto {
-    private long id;
-    private String username;
-    private String email;
-    private String role;
+public interface  AccountQueryDto {
+     long getId();
+     String getUsername();
+     String getEmail();
 
-    public static AccountQueryDto toAccountQueryDto(Account account){
-        return new AccountQueryDto(
-                account.getId(),
-                account.getUsername(),
-                account.getEmail(),
-                account.getAccountRole().toString()
-        );
-    }
+     @Value("#{target.accountRole}")
+     String getRole();
+
 }

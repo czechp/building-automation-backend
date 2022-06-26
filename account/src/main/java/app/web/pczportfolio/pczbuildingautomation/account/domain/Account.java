@@ -15,6 +15,8 @@ import java.util.function.Function;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PUBLIC, setterPrefix = "with")
+@EqualsAndHashCode
+@ToString
 public class Account {
     private long id;
     private long version;
