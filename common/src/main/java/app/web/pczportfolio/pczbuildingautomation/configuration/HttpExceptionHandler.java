@@ -15,22 +15,31 @@ import java.util.HashMap;
 public class HttpExceptionHandler {
     @ExceptionHandler({ConditionsNotFulFiledException.class})
     ResponseEntity<HashMap<String, String>> conditionsNotFulFilledHandler(Exception exception) {
-        return buildResponse(exception, HttpStatus.BAD_REQUEST);
+        return buildResponse(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({NotFoundException.class})
     ResponseEntity<HashMap<String, String>> notFoundHandler(Exception exception) {
-        return buildResponse(exception, HttpStatus.NOT_FOUND);
+        return buildResponse(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({NotEnoughPrivilegesException.class})
     ResponseEntity<HashMap<String, String>> notEnoughPrivilegesHandler(Exception exception) {
-        return buildResponse(exception, HttpStatus.FORBIDDEN);
+        return buildResponse(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
 
-    private ResponseEntity<HashMap<String, String>> buildResponse(Exception exception, HttpStatus httpStatus) {
+    @ExceptionHandler({javax.validation.ConstraintViolationException.class})
+    ResponseEntity<HashMap<String, String>> constraintViolationException(Exception exception) {
+        final var exceptionMessage = exception.getMessage();
+        final var responseMessage = exceptionMessage
+                .substring(exceptionMessage.indexOf(": ") + 2);
+
+        return buildResponse(responseMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<HashMap<String, String>> buildResponse(String message, HttpStatus httpStatus) {
         HashMap<String, String> responseBody = new HashMap<>();
-        responseBody.put("message", exception.getMessage());
+        responseBody.put("message", message);
         responseBody.put("timestamp", LocalDateTime.now().toString());
         return ResponseEntity
                 .status(httpStatus)

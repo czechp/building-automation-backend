@@ -1,15 +1,18 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.account.adapter.validator.AccountOwnerValidator;
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountQueryDto;
 import app.web.pczportfolio.pczbuildingautomation.account.application.query.AccountQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
@@ -23,7 +26,7 @@ class AccountRestAdapterQuery {
         return accountQuery.findAccountsAll(pageable);
     }
 
-    @Secured({"ROLE_ADMIN"})
+    @AccountOwnerValidator()
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     AccountQueryDto findAccountById(@PathVariable(name = "id") long accountId) {
