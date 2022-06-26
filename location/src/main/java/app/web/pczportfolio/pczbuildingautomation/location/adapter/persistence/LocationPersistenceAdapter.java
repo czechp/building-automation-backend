@@ -1,9 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence;
 
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAll;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindByAccountId;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindById;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,8 @@ class LocationPersistenceAdapter implements
         LocationPortSave,
         LocationPortFindAll,
         LocationPortFindByAccountId,
-        LocationPortFindById {
+        LocationPortFindById
+{
     private final LocationJpaRepository locationJpaRepository;
 
     @Override
@@ -41,7 +39,6 @@ class LocationPersistenceAdapter implements
                 .stream()
                 .map(LocationEntityMapper::mapToDomain)
                 .collect(Collectors.toList());
-
     }
 
     @Override

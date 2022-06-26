@@ -4,7 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountByUsername;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindCurrentUserAccount;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.application.useCase.LocationUseCaseCreate;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +24,8 @@ class LocationUseCaseCreateImplTest {
     @Mock
     LocationPortSave locationPortSave;
     @Mock
-    LocationPortFindAccountByUsername locationPortFindAccountUsername;
+    LocationPortFindCurrentUserAccount locationPortFindAccountUsername;
     @Mock
-    SecurityCurrentUser securityCurrentUser;
 
     LocationUseCaseCreate locationUseCaseCreate;
 
@@ -34,8 +33,7 @@ class LocationUseCaseCreateImplTest {
     void init() {
         this.locationUseCaseCreate = new LocationUseCaseCreateImpl(
                 locationPortSave,
-                locationPortFindAccountUsername,
-                securityCurrentUser
+                locationPortFindAccountUsername
         );
     }
 
@@ -49,8 +47,7 @@ class LocationUseCaseCreateImplTest {
         final var fetchedAccountFacadeDto = new AccountFacadeDto(accountId, "Some username", "USER");
         final var currentAccountUsername = "Some user";
         //when
-        when(locationPortFindAccountUsername.findAccountByUsername(anyString())).thenReturn(Optional.of(fetchedAccountFacadeDto));
-        when(securityCurrentUser.getCurrentUser()).thenReturn(currentAccountUsername);
+        when(locationPortFindAccountUsername.findAccountOfCurrentUser()).thenReturn(Optional.of(fetchedAccountFacadeDto));
         final var createdLocation = locationUseCaseCreate.createLocation(locationCommandDto);
         //then
         verify(locationPortSave, times(1)).saveLocation(any());
@@ -67,8 +64,7 @@ class LocationUseCaseCreateImplTest {
         );
         final var currentAccountUsername = "Some user";
         //when
-        when(locationPortFindAccountUsername.findAccountByUsername(anyString())).thenReturn(Optional.empty());
-        when(securityCurrentUser.getCurrentUser()).thenReturn(currentAccountUsername);
+        when(locationPortFindAccountUsername.findAccountOfCurrentUser()).thenReturn(Optional.empty());
 
         //then
         assertThrows(NotFoundException.class, () -> locationUseCaseCreate.createLocation(locationCommandDto));
