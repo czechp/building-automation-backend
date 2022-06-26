@@ -5,8 +5,8 @@ import app.web.pczportfolio.pczbuildingautomation.configuration.security.Securit
 import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationQueryDto;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountByUsername;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortQuery;
+import app.web.pczportfolio.pczbuildingautomation.location.application.service.LocationCurrentUserOwnChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 class LocationQueryImpl implements LocationQuery {
     private final LocationPortQuery locationPortQuery;
+    private final LocationCurrentUserOwnChecker locationCurrentUserOwnChecker;
     private final SecurityCurrentUser securityCurrentUser;
-    private final LocationPortFindAccountByUsername locationPortFindAccountByUsername;
 
     @Override
     public List<LocationQueryDto> findLocationsAll(Pageable pageable) {
@@ -33,15 +33,12 @@ class LocationQueryImpl implements LocationQuery {
 
     @Override
     public LocationQueryDto findLocationById(long locationId) {
-        final var currentUser = securityCurrentUser.getCurrentUser();
-        final var currentUserAccount = locationPortFindAccountByUsername.findAccountByUsername(currentUser)
-                .orElseThrow(() -> new NotFoundException("There is no account with username: " + currentUser));
-        final var location = locationPortQuery.findLocationById(locationId)
-                .orElseThrow(() -> new NotFoundException("Location with id: " + locationId + " does not exist"));
+        LocationQueryDto locationQueryDto = locationPortQuery.findLocationById(locationId)
+                .orElseThrow(() -> new NotFoundException("There is no location with id: " + locationId));
 
-        if (currentUserIsAdmin(currentUserAccount) || currentUserIsOwner(currentUserAccount, location))
-            return location;
-        else throw new NotEnoughPrivilegesException("You are not owner of location or admin");
+        if (locationCurrentUserOwnChecker.checkCurrentUserOwning(locationQueryDto))
+            return locationQueryDto;
+        else throw new NotEnoughPrivilegesException("You are not owner of location with id: " + locationId);
     }
 
     private boolean currentUserIsOwner(AccountFacadeDto currentUserAccount, LocationQueryDto location) {

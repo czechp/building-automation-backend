@@ -2,6 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.location.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountByUsername;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindCurrentUserAccount;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.AccountParent;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
@@ -19,19 +20,19 @@ import java.util.List;
 @Service
 class LocationWarmup {
     private final LocationPortSave locationPortSave;
-    private final LocationPortFindAccountByUsername locationPortFindAccountUsername;
+    private final LocationPortFindAccountByUsername locationPortFindAccountByUsername;
     private final Logger logger;
 
-    public LocationWarmup(LocationPortSave locationPortSave, LocationPortFindAccountByUsername locationPortFindAccountUsername) {
+    public LocationWarmup(LocationPortSave locationPortSave, LocationPortFindAccountByUsername locationPortFindAccountByUsername) {
         this.locationPortSave = locationPortSave;
-        this.locationPortFindAccountUsername = locationPortFindAccountUsername;
+        this.locationPortFindAccountByUsername = locationPortFindAccountByUsername;
         this.logger = LoggerFactory.getLogger(LocationWarmup.class);
     }
 
     @EventListener(ApplicationReadyEvent.class)
     void init() {
         logger.info("<>--------------------------Warmup for LOCATION ENTITY--------------------------<>");
-        locationPortFindAccountUsername.findAccountByUsername("user")
+        locationPortFindAccountByUsername.findAccountByUsername("user")
                 .ifPresent((accountFacadeDto) -> {
                     locationForDevelopment(accountFacadeDto)
                             .forEach(locationPortSave::saveLocation);

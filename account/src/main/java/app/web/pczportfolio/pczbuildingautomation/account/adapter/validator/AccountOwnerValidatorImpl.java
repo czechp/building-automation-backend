@@ -26,10 +26,6 @@ class AccountOwnerValidatorImpl implements ConstraintValidator<AccountOwnerValid
         this.accountPortFindByUsername = accountPortFindByUsername;
     }
 
-    @Override
-    public void initialize(AccountOwnerValidator constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
 
     @Override
     public boolean isValid(Object[] parameters, ConstraintValidatorContext constraintValidatorContext) {
