@@ -1,32 +1,28 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.query;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountQueryDto;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindAll;
-import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindById;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortQuery;
+import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 class AccountQueryImpl implements AccountQuery {
-    private final AccountPortFindById accountPortFindById;
-    private final AccountPortFindAll accountPortFindAll;
+    private final AccountPortQuery accountPortQuery;
 
     @Override
-    public Optional<AccountQueryDto> findAccountById(long accountId) {
-        return accountPortFindById.findAccountById(accountId)
-                .map(AccountQueryDto::toAccountQueryDto);
+    public AccountQueryDto findAccountById(long accountId) {
+        //TODO: check owning
+        return accountPortQuery.findAccountByIdQuery(accountId)
+                .orElseThrow(() -> new NotFoundException("There is no account with id:" + accountId));
     }
 
     @Override
-    public List<AccountQueryDto> findAccountsAll() {
-        return accountPortFindAll.findAllAccounts()
-                .stream()
-                .map(AccountQueryDto::toAccountQueryDto)
-                .collect(Collectors.toList());
+    public List<AccountQueryDto> findAccountsAll(Pageable pageable) {
+        return accountPortQuery.findAllAccountQuery(pageable);
     }
 }
