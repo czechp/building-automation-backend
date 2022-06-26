@@ -16,11 +16,6 @@ class AccountFacadeImpl implements AccountFacade {
     private AccountPortFindByUsername accountPortFindByUsername;
     private SecurityCurrentUser securityCurrentUser;
 
-    @Override
-    public Optional<AccountFacadeDto> findAccountFacadeDtoByUsername(String username) {
-        return accountPortFindByUsername.findAccountByUsername(username)
-                .map(this::toFacadeDto);
-    }
 
     @Override
     public Optional<AccountFacadeDto> findCurrentUserAccount() {
@@ -29,15 +24,17 @@ class AccountFacadeImpl implements AccountFacade {
                 .map(this::toDto);
     }
 
-    private AccountFacadeDto toFacadeDto(Account account) {
-        return new AccountFacadeDto(account.getId(), account.getUsername(), account.getAccountRole().toString());
-    }
 
     @Override
     public Optional<AccountFacadeDto> findAccountByUsername(String username) {
         return accountPortFindByUsername.findAccountByUsername(username)
                 .map(this::toDto);
     }
+
+    private AccountFacadeDto toFacadeDto(Account account) {
+        return new AccountFacadeDto(account.getId(), account.getUsername(), account.getAccountRole().toString());
+    }
+
 
     private AccountFacadeDto toDto(Account account) {
         return new AccountFacadeDto(

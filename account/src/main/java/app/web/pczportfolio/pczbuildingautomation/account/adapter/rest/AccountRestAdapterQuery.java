@@ -1,6 +1,5 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
-import app.web.pczportfolio.pczbuildingautomation.account.adapter.validator.AccountOwnerValidator;
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountQueryDto;
 import app.web.pczportfolio.pczbuildingautomation.account.application.query.AccountQuery;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,6 @@ class AccountRestAdapterQuery {
         return accountQuery.findAccountsAll(pageable);
     }
 
-    @AccountOwnerValidator()
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     AccountQueryDto findAccountById(@PathVariable(name = "id") long accountId) {
