@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/accounts/admin-activation")
 class AccountRestAdapterAdminActivation {
     private final AccountUseCaseAdminActivation accountUseCaseAdminActivation;
 
     @Secured({"ROLE_ADMIN"})
-    @PatchMapping("/admin-activation/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void accountAdminActivation(
             @PathVariable(name = "id") final long id,

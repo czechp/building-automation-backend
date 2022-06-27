@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
+@Builder(setterPrefix = "with")
 public class AccountConfigurationEmb {
     private boolean adminActivation;
     @NotBlank(message = "Enable token cannot be blank")
