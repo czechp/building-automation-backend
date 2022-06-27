@@ -29,9 +29,9 @@ class AccountRestAdapterRestorePasswordTest {
     void generateTokenToRestorePasswordTest() throws Exception {
         //given
         final var accountToGeneratingToken = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername("userNew")
+                .withUsername("userNew123")
                 .withPassword(("user123"))
-                .withEmail("userWithoutActivation@gmail.com")
+                .withEmail("userWithoutActivationqwer@gmail.com")
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
