@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("development")
+@ActiveProfiles("test")
 class AccountRestAdapterAdminActivationTest {
     private static final String URL = "/api/accounts/admin-activation";
 

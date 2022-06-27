@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("development")
+@ActiveProfiles("test")
 class AccountRestAdapterAssignRoleTest {
     private static final String URl = "/api/accounts/role";
 
