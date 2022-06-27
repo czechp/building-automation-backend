@@ -4,6 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountJpaRepository;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,22 +18,20 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("development")
-class AccountRestAdapterAdminActivationTest {
-    private static final String URL = "/api/accounts/admin-activation";
+class AccountRestAdapterAssignRoleTest {
+    private static final String URl = "/api/accounts/role";
 
     @Autowired
     AccountJpaRepository accountJpaRepository;
 
-
     @Autowired
     MockMvc mockMvc;
 
-
     @Test
-    @WithMockUser(roles = {"ADMIN"})
-    void accountAdminActivation() throws Exception {
+    @WithMockUser(roles = "ADMIN")
+    void accountAssignRoleTest() throws Exception {
         //given
-        final var accountToAdminActivation = accountJpaRepository.save(AccountEntity.builder()
+        final var accountToAssignRole = accountJpaRepository.save(AccountEntity.builder()
                 .withUsername("userNew")
                 .withPassword(("user123"))
                 .withEmail("userWithoutActivation@gmail.com")
@@ -44,10 +43,11 @@ class AccountRestAdapterAdminActivationTest {
                                 .withEnableToken("withoutActivation")
                                 .build())
                 .build());
-        final var activation = true;
-        final var requestBuilder = MockMvcRequestBuilders
-                .patch(URL + "/{id}", accountToAdminActivation.getId())
-                .param("activation", String.valueOf(activation));
+
+        final var requestId = accountToAssignRole.getId();
+        final var requestNewRole = AccountRole.ADMIN.toString();
+        final var requestBuilder = MockMvcRequestBuilders.patch(URl+"/{id}", requestId)
+                .param("role", requestNewRole);
         //when
         //then
         mockMvc.perform(requestBuilder)
@@ -55,14 +55,13 @@ class AccountRestAdapterAdminActivationTest {
     }
 
     @Test
-    @WithMockUser(roles = {"ADMIN"})
-    void accountAdminActivationNotFound() throws Exception {
+    @WithMockUser(roles = "ADMIN")
+    void accountAssignRoleNotFoundTest() throws Exception {
         //given
-        final var accountId = Integer.MAX_VALUE;
-        final var activation = true;
-        final var requestBuilder = MockMvcRequestBuilders
-                .patch(URL + "/{id}", accountId)
-                .param("activation", String.valueOf(activation));
+        final var requestId = Integer.MAX_VALUE;
+        final var requestNewRole = AccountRole.ADMIN.toString();
+        final var requestBuilder = MockMvcRequestBuilders.patch(URl+"/{id}", requestId)
+                .param("role", requestNewRole);
         //when
         //then
         mockMvc.perform(requestBuilder)

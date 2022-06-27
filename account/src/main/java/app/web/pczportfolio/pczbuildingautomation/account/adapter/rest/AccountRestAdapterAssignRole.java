@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/accounts/role")
 class AccountRestAdapterAssignRole {
     private final AccountUseCaseAssignRole accountUseCaseAssignRole;
 
     @Secured({"ROLE_ADMIN"})
-    @PatchMapping("/role/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void accountAssignRole(@PathVariable(name = "id") long accountId,
                            @RequestParam(name = "role") AccountRole newRole) {
