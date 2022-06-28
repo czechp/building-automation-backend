@@ -80,15 +80,15 @@ class AccountRestAdapterDeleteTest {
     void deleteAccountByNotOwnerTest() throws Exception {
         //given
         final var accountToDelete = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername(RandomStringGenerator.randomString())
-                .withPassword(RandomStringGenerator.randomString())
-                .withEmail(RandomStringGenerator.randomEmail())
+                .withUsername(RandomStringGenerator.getRandomString())
+                .withPassword(RandomStringGenerator.getRandomString())
+                .withEmail(RandomStringGenerator.getRandomEmail())
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
                                 .withAdminActivation(false)
                                 .withEmailConfirmed(false)
-                                .withEnableToken(RandomStringGenerator.randomString())
+                                .withEnableToken(RandomStringGenerator.getRandomString())
                                 .build())
                 .build());
         final var requestId = accountToDelete.getId();

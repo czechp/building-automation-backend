@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountConfigurationEmb;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountJpaRepository;
@@ -13,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,15 +31,15 @@ class AccountRestAdapterRestorePasswordTest {
     void generateTokenToRestorePasswordTest() throws Exception {
         //given
         final var accountToGeneratingToken = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername("userNew123")
-                .withPassword(("user123"))
-                .withEmail("userWithoutActivationqwer@gmail.com")
+                .withUsername(RandomStringGenerator.getRandomString())
+                .withPassword(RandomStringGenerator.getRandomString())
+                .withEmail(RandomStringGenerator.getRandomEmail())
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
                                 .withAdminActivation(false)
                                 .withEmailConfirmed(false)
-                                .withEnableToken("withoutActivation1233567")
+                                .withEnableToken(RandomStringGenerator.getRandomString())
                                 .build())
                 .build());
         final var emailRequestParameter = accountToGeneratingToken.getEmail();
@@ -53,15 +55,15 @@ class AccountRestAdapterRestorePasswordTest {
     void generateTokenToRestorePasswordEmailNotFoundTest() throws Exception {
         //given
         final var accountToGeneratingToken = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername("userNew9")
-                .withPassword(("user123"))
-                .withEmail("userWithoutActivation9@gmail.com")
+                .withUsername(RandomStringGenerator.getRandomString())
+                .withPassword(RandomStringGenerator.getRandomString())
+                .withEmail(RandomStringGenerator.getRandomEmail())
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
                                 .withAdminActivation(false)
                                 .withEmailConfirmed(false)
-                                .withEnableToken("withoutActivation123456")
+                                .withEnableToken(RandomStringGenerator.getRandomString())
                                 .build())
                 .build());
         final var emailRequestParameter = "differentEmail@gmail.com";
@@ -77,21 +79,21 @@ class AccountRestAdapterRestorePasswordTest {
     void setNewPasswordTokenTest() throws Exception {
         //given
         final var accountToSetPassword = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername("userNew8")
-                .withPassword(("user123"))
-                .withEmail("userWithoutActivation8@gmail.com")
+                .withUsername(RandomStringGenerator.getRandomString())
+                .withPassword(RandomStringGenerator.getRandomString())
+                .withEmail(RandomStringGenerator.getRandomEmail())
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
                                 .withAdminActivation(false)
                                 .withEmailConfirmed(false)
-                                .withEnableToken("withoutActivation1234")
-                                .withNewPasswordToken("newPasswordToken1234")
+                                .withEnableToken(RandomStringGenerator.getRandomString())
+                                .withNewPasswordToken(RandomStringGenerator.getRandomString())
                                 .withNewPasswordTokenExpiration(LocalDateTime.now().plusMinutes(2))
                                 .build())
                 .build());
         final var requestTokenParameter = accountToSetPassword.getAccountConfigurationEmb().getNewPasswordToken();
-        final var requestNewPwdParameter = "newPassword123321";
+        final var requestNewPwdParameter = RandomStringGenerator.getRandomString();
         final var requestBuilder = MockMvcRequestBuilders.patch(URL + "/new-password")
                 .param("token", requestTokenParameter)
                 .param("password", requestNewPwdParameter);
@@ -105,21 +107,21 @@ class AccountRestAdapterRestorePasswordTest {
     void setNewPasswordTokenDoesNotMatch() throws Exception {
         //given
         final var accountToSetPassword = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername("userNew123")
-                .withPassword(("user123"))
-                .withEmail("userWithoutActivation123@gmail.com")
+                .withUsername(RandomStringGenerator.getRandomString())
+                .withPassword(RandomStringGenerator.getRandomString())
+                .withEmail(RandomStringGenerator.getRandomEmail())
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
                                 .withAdminActivation(false)
                                 .withEmailConfirmed(false)
-                                .withEnableToken("withoutActivation123")
-                                .withNewPasswordToken("newPasswordToken12345")
+                                .withEnableToken(RandomStringGenerator.getRandomString())
+                                .withNewPasswordToken(RandomStringGenerator.getRandomString())
                                 .withNewPasswordTokenExpiration(LocalDateTime.now().plusMinutes(2))
                                 .build())
                 .build());
-        final var requestTokenParameter = "differentToken";
-        final var requestNewPwdParameter = "newPassword123321";
+        final var requestTokenParameter = RandomStringGenerator.getRandomString();
+        final var requestNewPwdParameter = RandomStringGenerator.getRandomString();
         final var requestBuilder = MockMvcRequestBuilders.patch(URL + "/new-password")
                 .param("token", requestTokenParameter)
                 .param("password", requestNewPwdParameter);

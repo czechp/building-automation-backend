@@ -1,10 +1,10 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountConfigurationEmb;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountJpaRepository;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
-import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,15 +32,15 @@ class AccountRestAdapterAssignRoleTest {
     void accountAssignRoleTest() throws Exception {
         //given
         final var accountToAssignRole = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername("userNew")
-                .withPassword(("user123"))
-                .withEmail("userWithoutActivation@gmail.com")
+                .withUsername(RandomStringGenerator.getRandomString())
+                .withPassword(RandomStringGenerator.getRandomString())
+                .withEmail(RandomStringGenerator.getRandomEmail())
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
                                 .withAdminActivation(false)
                                 .withEmailConfirmed(false)
-                                .withEnableToken("withoutActivation")
+                                .withEnableToken(RandomStringGenerator.getRandomString())
                                 .build())
                 .build());
 

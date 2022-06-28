@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.rest.dto.LoginDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,8 +44,8 @@ class AccountRestAdapterLoginTest {
     void loginFailedTest() throws Exception {
         //given
         final var loginDto = LoginDto.builder()
-                .withUsername("user")
-                .withPassword("user1234567")
+                .withUsername(RandomStringGenerator.getRandomString())
+                .withPassword(RandomStringGenerator.getRandomString())
                 .build();
         final var requestBody = objectMapper.writeValueAsString(loginDto);
         final var requestBuilder = MockMvcRequestBuilders.post(URL)
