@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.location.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class LocationRestAdapterCreateTest {
     @WithMockUser
     void createLocationTest() throws Exception {
         //given
-        final var locationToCreate = new LocationCreateCommandDto("Some location name");
+        final var locationToCreate = new LocationCreateCommandDto(RandomStringGenerator.getRandomString());
         final var requestBody = objectMapper.writeValueAsString(locationToCreate);
         final var requestBuilder = MockMvcRequestBuilders.post(URL)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

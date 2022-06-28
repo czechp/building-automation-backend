@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountConfigurationEmb;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountJpaRepository;
@@ -27,20 +28,20 @@ class AccountRestAdapterEmailConfirmationTest {
     MockMvc mockMvc;
 
     @Test
-    @WithMockUser(username = ACCOUNT_OWNER)
+    @WithMockUser(username = "user")
     void accountEmailConfirmationTest() throws Exception {
         //given
         final var accountToEmailConfirmation = accountJpaRepository.save(
                 AccountEntity.builder()
                         .withUsername(ACCOUNT_OWNER)
-                        .withPassword(("user123"))
-                        .withEmail("userWithoutActivation@gmail.com")
+                        .withPassword(RandomStringGenerator.getRandomString())
+                        .withEmail(RandomStringGenerator.getRandomEmail())
                         .withAccountRole(AccountRole.USER)
                         .withAccountConfigurationEmb(
                                 AccountConfigurationEmb.builder()
                                         .withAdminActivation(false)
                                         .withEmailConfirmed(false)
-                                        .withEnableToken("SomeEnableToken")
+                                        .withEnableToken(RandomStringGenerator.getRandomString())
                                         .build())
                         .build()
         );
@@ -54,20 +55,20 @@ class AccountRestAdapterEmailConfirmationTest {
     }
 
     @Test
-    @WithMockUser(username = ACCOUNT_OWNER)
+    @WithMockUser(username = "user")
     void accountEmailConfirmationTokenNotFoundTest() throws Exception {
         //given
         final var accountToEmailConfirmation = accountJpaRepository.save(
                 AccountEntity.builder()
-                        .withUsername(ACCOUNT_OWNER)
-                        .withPassword(("user123"))
-                        .withEmail("userWithoutActivation@gmail.com")
+                        .withUsername(RandomStringGenerator.getRandomString())
+                        .withPassword(RandomStringGenerator.getRandomString())
+                        .withEmail(RandomStringGenerator.getRandomEmail())
                         .withAccountRole(AccountRole.USER)
                         .withAccountConfigurationEmb(
                                 AccountConfigurationEmb.builder()
                                         .withAdminActivation(false)
                                         .withEmailConfirmed(false)
-                                        .withEnableToken("SomeEnableToken")
+                                        .withEnableToken(RandomStringGenerator.getRandomString())
                                         .build())
                         .build()
         );

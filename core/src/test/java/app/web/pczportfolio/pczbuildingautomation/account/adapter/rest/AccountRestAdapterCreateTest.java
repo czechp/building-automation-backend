@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCreateCmdDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -24,13 +25,13 @@ class AccountRestAdapterCreateTest {
 
     @Test
     @WithMockUser
-    void someTest() throws Exception {
+    void createAccountTest() throws Exception {
         //given
         final var accountCreateDto = new AccountCreateCmdDto(
-                "someUsername",
-                "someEmail@gmail.com",
-                "somePassword",
-                "somePassword"
+                RandomStringGenerator.getRandomString(),
+                RandomStringGenerator.getRandomEmail(),
+                "SomePassword",
+                "SomePassword"
         );
 
         final var requestBody = objectMapper.writeValueAsString(accountCreateDto);
