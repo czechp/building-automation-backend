@@ -6,7 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesE
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationQueryDto;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortQuery;
-import app.web.pczportfolio.pczbuildingautomation.location.application.service.LocationCurrentUserOwnChecker;
+import app.web.pczportfolio.pczbuildingautomation.location.application.service.LocationOwnerValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 class LocationQueryImpl implements LocationQuery {
     private final LocationPortQuery locationPortQuery;
-    private final LocationCurrentUserOwnChecker locationCurrentUserOwnChecker;
+    private final LocationOwnerValidator locationOwnerValidator;
     private final SecurityCurrentUser securityCurrentUser;
 
     @Override
@@ -36,7 +36,7 @@ class LocationQueryImpl implements LocationQuery {
         LocationQueryDto locationQueryDto = locationPortQuery.findLocationById(locationId)
                 .orElseThrow(() -> new NotFoundException("There is no location with id: " + locationId));
 
-        if (locationCurrentUserOwnChecker.checkCurrentUserOwning(locationQueryDto))
+        if (locationOwnerValidator.currentUserIsOwner(locationQueryDto))
             return locationQueryDto;
         else throw new NotEnoughPrivilegesException("You are not owner of location with id: " + locationId);
     }

@@ -19,7 +19,10 @@ import java.util.function.Function;
 @ToString
 public class Account {
     private long id;
+
     private long version;
+
+    private LocalDateTime creationTimestamp;
     private String username;
     private String password;
     private String email;
@@ -40,16 +43,18 @@ public class Account {
         comparePasswords(dto.getPassword(), dto.getPasswordConfirm());
         Account newAccount = new Account(dto.getUsername(), dto.getPassword(), dto.getEmail());
         newAccount.setPassword(hashPasswordFunction.apply(dto.getPassword()));
+        newAccount.creationTimestamp = LocalDateTime.now();
         return newAccount;
     }
 
     public static Account mapFromEntity(AccountEntity entity) {
         return Account.builder()
                 .withId(entity.getId())
+                .withVersion(entity.getVersion())
+                .withCreationTimestamp(entity.getCreationTimestamp())
                 .withUsername(entity.getUsername())
                 .withPassword(entity.getPassword())
                 .withEmail(entity.getEmail())
-                .withVersion(entity.getVersion())
                 .withAccountRole(entity.getAccountRole())
                 .withAccountConfiguration(AccountConfiguration.mapFromEntity(entity.getAccountConfigurationEmb()))
                 .build();

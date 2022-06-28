@@ -5,6 +5,8 @@ import app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence.L
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder(setterPrefix = "with")
@@ -13,12 +15,24 @@ import lombok.*;
 @EqualsAndHashCode
 public class Location {
     private long id;
+
+    private long version;
+
     private String name;
+
+    private LocalDateTime creationTimestamp;
     private AccountParent accountParent;
+
+    public Location(String name, AccountParent accountParent) {
+        this.name = name;
+        this.accountParent = accountParent;
+    }
 
     public static Location mapFromEntity(LocationEntity locationEntity) {
         return Location.builder()
                 .withId(locationEntity.getId())
+                .withVersion(locationEntity.getVersion())
+                .withCreationTimestamp(locationEntity.getCreationTimestamp())
                 .withName(locationEntity.getName())
                 .withAccountParent(
                         AccountParent.builder()
@@ -30,7 +44,6 @@ public class Location {
 
     public static Location create(LocationCreateCommandDto locationCommandDto, AccountFacadeDto accountFacadeDto) {
         return new Location(
-                0L,
                 locationCommandDto.getName(),
                 new AccountParent(accountFacadeDto.getId(), accountFacadeDto.getUsername())
         );
