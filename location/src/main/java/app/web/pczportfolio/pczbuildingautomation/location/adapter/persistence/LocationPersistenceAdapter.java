@@ -15,8 +15,8 @@ class LocationPersistenceAdapter implements
         LocationPortSave,
         LocationPortFindAll,
         LocationPortFindByAccountId,
-        LocationPortFindById
-{
+        LocationPortFindById,
+        LocationPortDelete {
     private final LocationJpaRepository locationJpaRepository;
 
     @Override
@@ -45,5 +45,10 @@ class LocationPersistenceAdapter implements
     public Optional<Location> findLocationById(long locationId) {
         return locationJpaRepository.findById(locationId)
                 .map(LocationEntityMapper::mapToDomain);
+    }
+
+    @Override
+    public void deleteLocation(Location location) {
+        locationJpaRepository.delete(LocationEntityMapper.mapToEntity(location));
     }
 }

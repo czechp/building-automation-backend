@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@Profile("development")
+@Profile({"development", "test"})
 class AccountWarmup {
     private final AccountPortSave accountPortSave;
     final private Logger logger;
@@ -73,18 +73,6 @@ class AccountWarmup {
                                         .withEnableToken("user123123")
                                         .build())
 
-                        .build(),
-                Account.builder()
-                        .withUsername("userWithoutActivation")
-                        .withPassword(passwordEncoder.encode("user123"))
-                        .withEmail("userWithoutActivation@gmail.com")
-                        .withAccountRole(AccountRole.USER)
-                        .withAccountConfiguration(
-                                AccountConfiguration.builder()
-                                        .withAdminActivation(false)
-                                        .withEmailConfirmed(false)
-                                        .withEnableToken("withoutActivation")
-                                        .build())
                         .build()
         );
     }

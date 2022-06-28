@@ -19,6 +19,7 @@ import java.util.List;
 @EqualsAndHashCode()
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(setterPrefix = "with")
 public class AccountEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
