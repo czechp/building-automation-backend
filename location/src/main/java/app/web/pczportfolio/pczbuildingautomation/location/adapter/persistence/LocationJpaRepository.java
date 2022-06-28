@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-interface LocationJpaRepository extends JpaRepository<LocationEntity, Long> {
+public interface LocationJpaRepository extends JpaRepository<LocationEntity, Long> {
     List<LocationEntity> findByAccountSimpleEntity_Id(long accountId);
 
     @Query("SELECT l from LocationEntity l")
