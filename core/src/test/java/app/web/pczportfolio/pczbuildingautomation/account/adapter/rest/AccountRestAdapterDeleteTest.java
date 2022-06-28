@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
+import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountConfigurationEmb;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountJpaRepository;
@@ -75,19 +76,19 @@ class AccountRestAdapterDeleteTest {
     }
 
     @Test
-    @WithMockUser(username = "someUser")
+    @WithMockUser(username = "user")
     void deleteAccountByNotOwnerTest() throws Exception {
         //given
         final var accountToDelete = accountJpaRepository.save(AccountEntity.builder()
-                .withUsername("someUser")
-                .withPassword(("user123"))
-                .withEmail("userWithoutActivation@gmail.com")
+                .withUsername(RandomStringGenerator.randomString())
+                .withPassword(RandomStringGenerator.randomString())
+                .withEmail(RandomStringGenerator.randomEmail())
                 .withAccountRole(AccountRole.USER)
                 .withAccountConfigurationEmb(
                         AccountConfigurationEmb.builder()
                                 .withAdminActivation(false)
                                 .withEmailConfirmed(false)
-                                .withEnableToken("withoutActivation")
+                                .withEnableToken(RandomStringGenerator.randomString())
                                 .build())
                 .build());
         final var requestId = accountToDelete.getId();
@@ -95,7 +96,7 @@ class AccountRestAdapterDeleteTest {
         //when
         //then
         mockMvc.perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
+                .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
 
     @Test
