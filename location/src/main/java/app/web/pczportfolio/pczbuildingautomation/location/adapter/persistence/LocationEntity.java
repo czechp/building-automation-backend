@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Setter(AccessLevel.PACKAGE)
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(setterPrefix = "with")
 public class LocationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
