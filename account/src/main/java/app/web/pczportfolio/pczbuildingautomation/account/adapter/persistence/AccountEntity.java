@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,6 +29,10 @@ public class AccountEntity implements UserDetails {
 
     @Version
     private long version;
+
+    @CreationTimestamp
+    private LocalDateTime creationTimestamp;
+
     @NotNull(message = "Username cannot be null")
     @NotBlank(message = "Username cannot be blank")
     private String username;

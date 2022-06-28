@@ -1,17 +1,19 @@
 package app.web.pczportfolio.pczbuildingautomation.account.application.dto;
 
-import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
-public interface  AccountQueryDto {
-     long getId();
-     String getUsername();
-     String getEmail();
+import java.time.LocalDateTime;
 
-     @Value("#{target.accountRole}")
-     String getRole();
+public interface AccountQueryDto {
+    long getId();
+
+    String getUsername();
+
+    String getEmail();
+
+    LocalDateTime getCreationTimestamp();
+
+    @Value("#{target.accountRole}")
+    String getRole();
 
 }
