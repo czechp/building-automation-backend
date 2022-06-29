@@ -20,7 +20,9 @@ public class SwitchDevice {
 
     private boolean expectedState;
 
-    private boolean currentState;
+    private boolean state;
+
+    private boolean deviceError;
 
     private LocationParent locationParent;
 }
