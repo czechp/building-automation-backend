@@ -1,10 +1,11 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
+import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountConfiguration;
 
 class AccountEntityMapper {
     static AccountEntity toEntity(Account account) {
-        AccountEntity accountEntity = new AccountEntity(
+        return new AccountEntity(
                 account.getId(),
                 account.getVersion(),
                 account.getCreationTimestamp(),
@@ -20,10 +21,26 @@ class AccountEntityMapper {
                         account.getAccountConfiguration().getNewPasswordTokenExpiration()
                 )
         );
-        return accountEntity;
     }
 
     static Account toDomain(AccountEntity accountEntity) {
-        return Account.mapFromEntity(accountEntity);
+        return Account.builder()
+                .withId(accountEntity.getId())
+                .withVersion(accountEntity.getVersion())
+                .withCreationTimestamp(accountEntity.getCreationTimestamp())
+                .withUsername(accountEntity.getUsername())
+                .withPassword(accountEntity.getPassword())
+                .withEmail(accountEntity.getEmail())
+                .withAccountRole(accountEntity.getAccountRole())
+                .withAccountConfiguration(
+                        AccountConfiguration.builder()
+                                .withAdminActivation(accountEntity.getAccountConfigurationEmb().isAdminActivation())
+                                .withEnableToken(accountEntity.getAccountConfigurationEmb().getEnableToken())
+                                .withEmailConfirmed(accountEntity.getAccountConfigurationEmb().isEmailConfirmed())
+                                .withNewPasswordToken(accountEntity.getAccountConfigurationEmb().getNewPasswordToken())
+                                .withNewPasswordTokenExpiration(accountEntity.getAccountConfigurationEmb().getNewPasswordTokenExpiration())
+                                .build()
+                )
+                .build();
     }
 }

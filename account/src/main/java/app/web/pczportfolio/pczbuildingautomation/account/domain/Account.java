@@ -46,22 +46,7 @@ public class Account {
         newAccount.creationTimestamp = LocalDateTime.now();
         return newAccount;
     }
-
-    public static Account mapFromEntity(AccountEntity entity) {
-        return Account.builder()
-                .withId(entity.getId())
-                .withVersion(entity.getVersion())
-                .withCreationTimestamp(entity.getCreationTimestamp())
-                .withUsername(entity.getUsername())
-                .withPassword(entity.getPassword())
-                .withEmail(entity.getEmail())
-                .withAccountRole(entity.getAccountRole())
-                .withAccountConfiguration(AccountConfiguration.mapFromEntity(entity.getAccountConfigurationEmb()))
-                .build();
-
-    }
-
-
+    
     private static void comparePasswords(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm))
             throw new ConditionsNotFulFiledException("Passwords are not equal");
