@@ -1,12 +1,10 @@
 package app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountSimpleEntity;
+import app.web.pczportfolio.pczbuildingautomation.location.domain.AccountParent;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
 
 class LocationEntityMapper {
-    static Location mapToDomain(LocationEntity locationEntity) {
-        return Location.mapFromEntity(locationEntity);
-    }
 
     static LocationEntity mapToEntity(Location location) {
         return new LocationEntity(
@@ -19,5 +17,21 @@ class LocationEntityMapper {
                         location.getAccountParent().getUsername()
                 )
         );
+    }
+
+
+    static Location mapToDomain(LocationEntity locationEntity) {
+        return Location.builder()
+                .withId(locationEntity.getId())
+                .withVersion(locationEntity.getVersion())
+                .withCreationTimestamp(locationEntity.getCreationTimestamp())
+                .withName(locationEntity.getName())
+                .withAccountParent(
+                        AccountParent.builder()
+                                .withId(locationEntity.getAccountSimpleEntity().getId())
+                                .withUsername(locationEntity.getAccountSimpleEntity().getUsername())
+                                .build()
+                )
+                .build();
     }
 }

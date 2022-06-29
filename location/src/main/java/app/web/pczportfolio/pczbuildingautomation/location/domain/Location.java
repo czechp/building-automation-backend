@@ -28,20 +28,6 @@ public class Location {
         this.accountParent = accountParent;
     }
 
-    public static Location mapFromEntity(LocationEntity locationEntity) {
-        return Location.builder()
-                .withId(locationEntity.getId())
-                .withVersion(locationEntity.getVersion())
-                .withCreationTimestamp(locationEntity.getCreationTimestamp())
-                .withName(locationEntity.getName())
-                .withAccountParent(
-                        AccountParent.builder()
-                                .withId(locationEntity.getAccountSimpleEntity().getId())
-                                .withUsername(locationEntity.getAccountSimpleEntity().getUsername())
-                                .build())
-                .build();
-    }
-
     public static Location create(LocationCreateCommandDto locationCommandDto, AccountFacadeDto accountFacadeDto) {
         return new Location(
                 locationCommandDto.getName(),
