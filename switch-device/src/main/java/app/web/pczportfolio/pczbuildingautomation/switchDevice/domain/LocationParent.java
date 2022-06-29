@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(setterPrefix = "with")
-class LocationParent {
+public class LocationParent {
     private long id;
     private String name;
 }
