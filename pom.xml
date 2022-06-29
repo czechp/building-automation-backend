@@ -8,6 +8,7 @@
         <module>account</module>
         <module>common</module>
         <module>location</module>
+        <module>switch-device</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

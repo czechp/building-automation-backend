@@ -29,6 +29,11 @@
         </dependency>
         <dependency>
             <groupId>app.web.pcz-portfolio</groupId>
+            <artifactId>switch-device</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>app.web.pcz-portfolio</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
