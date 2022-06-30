@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface LocationFacade {
     Optional<LocationFacadeDto> findLocationByCurrentUserAndId(long locationId);
+
+    Optional<LocationFacadeDto> findLocationById(long locationId);
 }
