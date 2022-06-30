@@ -24,5 +24,5 @@ public interface LocationJpaRepository extends JpaRepository<LocationEntity, Lon
     @Query("SELECT l FROM LocationEntity l WHERE l.id=:id")
     Optional<LocationQueryDto> findByIdQuery(@Param("id") long locationId);
 
-    Optional<Location> findByIdAndAccountSimpleEntity_Username(long locationId, String username);
+    Optional<LocationEntity> findByIdAndAccountSimpleEntity_Username(long locationId, String username);
 }
