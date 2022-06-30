@@ -11,6 +11,7 @@ class SwitchDeviceEntityMapper {
                 switchDevice.getVersion(),
                 switchDevice.getCreationTimestamp(),
                 switchDevice.getName(),
+                switchDevice.getOwner(),
                 switchDevice.isExpectedState(),
                 switchDevice.isState(),
                 switchDevice.isDeviceError(),
@@ -27,6 +28,7 @@ class SwitchDeviceEntityMapper {
                 .withVersion(switchDeviceEntity.getVersion())
                 .withCreationTimestamp(switchDeviceEntity.getCreationTimestamp())
                 .withName(switchDeviceEntity.getName())
+                .withOwner(switchDeviceEntity.getOwner())
                 .withExpectedState(switchDeviceEntity.isExpectedState())
                 .withState(switchDeviceEntity.isState())
                 .withDeviceError(switchDeviceEntity.isDeviceError())

@@ -32,6 +32,11 @@ public class SwitchDeviceEntity {
     @Length(min = 2, max = 200, message = "Name of switch device has to have length between 2 and 200 characters")
     private String name;
 
+
+    @NotNull(message = "Name of switch device cannot be null")
+    @Length(min = 2, max = 200, message = "Name of switch device has to have length between 2 and 200 characters")
+    private String owner;
+
     private boolean expectedState;
 
     private boolean state;
