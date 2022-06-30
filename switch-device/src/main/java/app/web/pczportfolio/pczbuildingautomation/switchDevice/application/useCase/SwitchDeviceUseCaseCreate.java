@@ -4,5 +4,5 @@ import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.S
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
 
 public interface SwitchDeviceUseCaseCreate {
-    SwitchDevice create(SwitchDeviceCreateDto switchDeviceCreateDto);
+    SwitchDevice createSwitchDevice(SwitchDeviceCreateDto switchDeviceCreateDto);
 }
