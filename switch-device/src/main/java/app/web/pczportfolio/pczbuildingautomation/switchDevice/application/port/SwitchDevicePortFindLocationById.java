@@ -1,11 +1,9 @@
-package app.web.pczportfolio.pczbuildingautomation.location;
+package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port;
 
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 
 import java.util.Optional;
 
-public interface LocationFacade {
-    Optional<LocationFacadeDto> findLocationByCurrentUserAndId(long locationId);
-
+public interface SwitchDevicePortFindLocationById {
     Optional<LocationFacadeDto> findLocationById(long locationId);
 }
