@@ -20,6 +20,8 @@ public class SwitchDevice {
 
     private String name;
 
+    private String owner;
+
     private boolean expectedState;
 
     private boolean state;

@@ -29,6 +29,6 @@ class LocationFacadeImpl implements LocationFacade {
                 location.getId(),
                 location.getName(),
                 location.getAccountParent().getUsername()
-        )
+        );
     }
 }
