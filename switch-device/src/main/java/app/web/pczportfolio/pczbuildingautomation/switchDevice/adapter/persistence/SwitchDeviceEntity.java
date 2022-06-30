@@ -5,8 +5,10 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,6 +27,10 @@ public class SwitchDeviceEntity {
 
     @CreationTimestamp
     private LocalDateTime creationTimestamp;
+
+    @NotNull(message = "Name of switch device cannot be null")
+    @Length(min = 2, max = 200, message = "Name of switch device has to have length between 2 and 200 characters")
+    private String name;
 
     private boolean expectedState;
 

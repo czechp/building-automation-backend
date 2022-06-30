@@ -18,6 +18,8 @@ public class SwitchDevice {
 
     private LocalDateTime creationTimestamp;
 
+    private String name;
+
     private boolean expectedState;
 
     private boolean state;
