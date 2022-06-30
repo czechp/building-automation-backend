@@ -13,4 +13,6 @@ import lombok.NoArgsConstructor;
 public class LocationFacadeDto {
     private long id;
     private String name;
+
+    private String ownerUsername;
 }

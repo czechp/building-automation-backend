@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationQueryDto;
+import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,6 @@ public interface LocationJpaRepository extends JpaRepository<LocationEntity, Lon
 
     @Query("SELECT l FROM LocationEntity l WHERE l.id=:id")
     Optional<LocationQueryDto> findByIdQuery(@Param("id") long locationId);
+
+    Optional<Location> findByIdAndAccountSimpleEntity_Username(long locationId, String username);
 }
