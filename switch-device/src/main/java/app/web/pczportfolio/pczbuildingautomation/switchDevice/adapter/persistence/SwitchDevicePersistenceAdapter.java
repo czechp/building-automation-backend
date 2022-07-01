@@ -1,9 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.persistence;
 
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindAll;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindById;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindByOwner;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +15,8 @@ import java.util.stream.Collectors;
 class SwitchDevicePersistenceAdapter implements SwitchDevicePortSave,
         SwitchDevicePortFindAll,
         SwitchDevicePortFindByOwner,
-        SwitchDevicePortFindById
-{
+        SwitchDevicePortFindById,
+        SwitchDevicePortDelete {
     private final SwitchDeviceJpaRepository switchDeviceJpaRepository;
 
     @Override
@@ -47,5 +44,11 @@ class SwitchDevicePersistenceAdapter implements SwitchDevicePortSave,
     public Optional<SwitchDevice> findSwitchDeviceById(long switchDeviceId) {
         return switchDeviceJpaRepository.findById(switchDeviceId)
                 .map(SwitchDeviceEntityMapper::toDomain);
+    }
+
+    @Override
+    public void deleteSwitchDevice(SwitchDevice switchDevice) {
+        final var switchDeviceToDelete = SwitchDeviceEntityMapper.toEntity(switchDevice);
+        switchDeviceJpaRepository.delete(switchDeviceToDelete);
     }
 }
