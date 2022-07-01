@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-class LocationProvider implements SwitchDevicePortFindLocationByIdAndCurrentUser, SwitchDevicePortFindLocationById {
+class SwitchDeviceLocationProvider implements SwitchDevicePortFindLocationByIdAndCurrentUser, SwitchDevicePortFindLocationById {
     private final LocationFacade locationFacade;
 
     @Override

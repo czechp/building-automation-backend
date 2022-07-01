@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-class AccountProvider implements LocationPortFindCurrentUserAccount, LocationPortFindAccountByUsername {
+class LocationAccountProvider implements LocationPortFindCurrentUserAccount, LocationPortFindAccountByUsername {
     private final AccountFacade accountFacade;
 
     @Override

@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto;
 
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,22 @@ public class SwitchDeviceQueryDto {
     private boolean state;
     private boolean deviceError;
     private LocationParentQueryDto location;
+
+    public static SwitchDeviceQueryDto toQueryDto(SwitchDevice switchDevice) {
+        return new SwitchDeviceQueryDto(
+                switchDevice.getId(),
+                switchDevice.getCreationTimestamp(),
+                switchDevice.getName(),
+                switchDevice.getOwner(),
+                switchDevice.isExpectedState(),
+                switchDevice.isState(),
+                switchDevice.isDeviceError(),
+                new LocationParentQueryDto(
+                        switchDevice.getLocationParent().getId(),
+                        switchDevice.getLocationParent().getName()
+                )
+        );
+    }
 }
 
 @Data
