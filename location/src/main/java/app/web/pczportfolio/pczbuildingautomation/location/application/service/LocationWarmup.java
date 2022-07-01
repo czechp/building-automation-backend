@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 
-@Profile("development")
+@Profile({"development", "test"})
 @Service
 class LocationWarmup {
     private final LocationPortSave locationPortSave;

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.stream.Stream;
 
 @Service
-@Profile("development")
+@Profile({"development", "test"})
 class SwitchDeviceWarmup {
     private final SwitchDevicePortFindLocationById switchDevicePortFindLocationById;
     private final SwitchDevicePortSave switchDevicePortSave;
