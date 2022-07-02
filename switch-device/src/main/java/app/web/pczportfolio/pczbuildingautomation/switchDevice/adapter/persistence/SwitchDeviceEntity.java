@@ -28,6 +28,10 @@ public class SwitchDeviceEntity {
     @CreationTimestamp
     private LocalDateTime creationTimestamp;
 
+    @NotNull(message = "Date of last state update cannot be null")
+    private LocalDateTime lastStateUpdate;
+
+
     @NotNull(message = "Name of switch device cannot be null")
     @Length(min = 2, max = 200, message = "Name of switch device has to have length between 2 and 200 characters")
     private String name;

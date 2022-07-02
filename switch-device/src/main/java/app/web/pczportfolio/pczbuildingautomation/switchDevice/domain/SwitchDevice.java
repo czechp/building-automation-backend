@@ -20,6 +20,8 @@ public class SwitchDevice {
 
     private LocalDateTime creationTimestamp;
 
+    private LocalDateTime lastStateUpdate;
+
     private String name;
 
     private String owner;
@@ -37,6 +39,7 @@ public class SwitchDevice {
                 0L,
                 0L,
                 null,
+                LocalDateTime.now(),
                 switchDeviceCreateDto.getName(),
                 locationToAssign.getOwnerUsername(),
                 false,
