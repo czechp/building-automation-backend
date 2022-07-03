@@ -8,6 +8,7 @@ import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.S
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetStateDto;
 import lombok.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Getter
@@ -65,6 +66,7 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
     public void receiveFeedback(SwitchDeviceFeedbackDto feedbackDto) {
         stateFromFeedbackMatchToExpectedState(feedbackDto);
         this.deviceError = false;
+        this.lastFeedBackTimestamp = LocalDateTime.now();
         this.state = this.expectedState;
     }
 
@@ -75,6 +77,20 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
 
     @Override
     public boolean checkDeviceError() {
-        return false;
+        if (!expectedStateAndStateEquals())
+            this.deviceError = examineTimeBetweenLastStateUpdate();
+
+        return this.isDeviceError();
+
     }
+
+    private boolean expectedStateAndStateEquals() {
+        return this.expectedState == this.state;
+    }
+
+    private boolean examineTimeBetweenLastStateUpdate() {
+        final long minutesSinceLastUpdate = Duration.between(this.lastSetCommandTimestamp, LocalDateTime.now()).toMinutes();
+        return minutesSinceLastUpdate > SwitchDeviceConfiguration.MINUTES_TO_DEVICE_ERROR;
+    }
+
 }
