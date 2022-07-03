@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(setterPrefix = "with")
-public class SwitchDevice implements Device<SwitchDevice, SwitchDeviceSetStateDto, SwitchDeviceFeedbackDto> {
+public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDeviceFeedbackDto> {
     private long id;
 
     private long version;
@@ -53,13 +53,14 @@ public class SwitchDevice implements Device<SwitchDevice, SwitchDeviceSetStateDt
     }
 
     @Override
-    public SwitchDevice setState(SwitchDeviceSetStateDto setStateDto) {
-        return null;
+    public void setState(SwitchDeviceSetStateDto setStateDto) {
+
     }
 
     @Override
-    public SwitchDevice receiveFeedback(SwitchDeviceFeedbackDto feedbackDto) {
-        return null;
+    public void receiveFeedback(SwitchDeviceFeedbackDto feedbackDto) {
+        this.deviceError  = false;
+        this.state = feedbackDto.isNewState();
     }
 
     @Override

@@ -1,8 +1,8 @@
 package app.web.pczportfolio.pczbuildingautomation.device;
 
-public interface Device <T, S, F> {
-    T setState(S setStateDto);
-    T receiveFeedback(F feedbackDto);
+public interface Device <S, F> {
+    void setState(S setStateDto);
+    void receiveFeedback(F feedbackDto);
     boolean checkDeviceError();
 
 }
