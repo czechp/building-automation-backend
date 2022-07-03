@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.device.Device;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
@@ -62,8 +63,14 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
 
     @Override
     public void receiveFeedback(SwitchDeviceFeedbackDto feedbackDto) {
-        this.deviceError  = false;
-        this.state = feedbackDto.isNewState();
+        stateFromFeedbackMatchToExpectedState(feedbackDto);
+        this.deviceError = false;
+        this.state = this.expectedState;
+    }
+
+    private void stateFromFeedbackMatchToExpectedState(SwitchDeviceFeedbackDto switchDeviceFeedbackDto) {
+        if (switchDeviceFeedbackDto.isNewState() != this.expectedState)
+            throw new ConditionsNotFulFiledException("State from feedback does not match to feedback value");
     }
 
     @Override

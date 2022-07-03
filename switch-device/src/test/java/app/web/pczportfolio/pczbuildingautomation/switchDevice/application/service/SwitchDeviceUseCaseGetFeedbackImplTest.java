@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
@@ -45,6 +46,7 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
         final var dtoWithFeedbackInfo = new SwitchDeviceFeedbackDto(switchDeviceId, switchDeviceNewState);
         final var fetchedSwitchDevice = SwitchDevice.builder()
                 .withId(switchDeviceId)
+                .withExpectedState(switchDeviceNewState)
                 .withState(!switchDeviceNewState)
                 .withDeviceError(true)
                 .build();
@@ -89,5 +91,21 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
         assertThrows(NotEnoughPrivilegesException.class, ()->switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
     }
 
+    @Test
+    void receiveFeedbackFromDeviceStateDoesNotMatchTest() {
+        //given
+        final var switchDeviceId = 1L;
+        final var switchDeviceNewState = true;
+        final var dtoWithFeedbackInfo = new SwitchDeviceFeedbackDto(switchDeviceId, switchDeviceNewState);
+        final var fetchedSwitchDevice = SwitchDevice.builder()
+                .withId(switchDeviceId)
+                .withExpectedState(!switchDeviceNewState)
+                .withDeviceError(true)
+                .build();
+        //when
+        when(switchDevicePortFindById.findSwitchDeviceById(switchDeviceId)).thenReturn(Optional.of(fetchedSwitchDevice));
+        //then
+        assertThrows(ConditionsNotFulFiledException.class, ()->switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
+    }
 
 }
