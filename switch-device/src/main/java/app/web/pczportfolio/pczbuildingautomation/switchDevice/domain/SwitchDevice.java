@@ -23,7 +23,9 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
 
     private LocalDateTime creationTimestamp;
 
-    private LocalDateTime lastStateUpdate;
+    private LocalDateTime lastFeedBackTimestamp;
+
+    private LocalDateTime lastSetCommandTimestamp;
 
     private String name;
 
@@ -42,6 +44,7 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
                 0L,
                 0L,
                 null,
+                LocalDateTime.now(),
                 LocalDateTime.now(),
                 switchDeviceCreateDto.getName(),
                 locationToAssign.getOwnerUsername(),

@@ -10,7 +10,8 @@ class SwitchDeviceEntityMapper {
                 switchDevice.getId(),
                 switchDevice.getVersion(),
                 switchDevice.getCreationTimestamp(),
-                switchDevice.getLastStateUpdate(),
+                switchDevice.getLastFeedBackTimestamp(),
+                switchDevice.getLastSetCommandTimestamp(),
                 switchDevice.getName(),
                 switchDevice.getOwner(),
                 switchDevice.isExpectedState(),
@@ -28,7 +29,8 @@ class SwitchDeviceEntityMapper {
                 .withId(switchDeviceEntity.getId())
                 .withVersion(switchDeviceEntity.getVersion())
                 .withCreationTimestamp(switchDeviceEntity.getCreationTimestamp())
-                .withLastStateUpdate(switchDeviceEntity.getLastStateUpdate())
+                .withLastFeedBackTimestamp(switchDeviceEntity.getLastFeedbackTimeStamp())
+                .withLastSetCommandTimestamp(switchDeviceEntity.getLastSetCommandTimestamp())
                 .withName(switchDeviceEntity.getName())
                 .withOwner(switchDeviceEntity.getOwner())
                 .withExpectedState(switchDeviceEntity.isExpectedState())
