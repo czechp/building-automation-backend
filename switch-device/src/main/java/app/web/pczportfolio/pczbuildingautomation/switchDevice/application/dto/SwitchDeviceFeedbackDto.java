@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SwitchDeviceFeedbackDto {
     private long id;
-    private long currentState;
+    private boolean currentState;
 }
