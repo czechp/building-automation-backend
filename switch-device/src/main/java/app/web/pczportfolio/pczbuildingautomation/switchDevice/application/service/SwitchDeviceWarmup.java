@@ -13,6 +13,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @Service
@@ -37,16 +38,22 @@ class SwitchDeviceWarmup {
         Stream.of(
                 SwitchDevice.builder()
                         .withName("Switch device 1")
+                        .withLastSetCommandTimestamp(LocalDateTime.now())
+                        .withLastFeedBackTimestamp(LocalDateTime.now())
                         .withOwner(locationParent.getOwnerUsername())
                         .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
                         .build(),
                 SwitchDevice.builder()
                         .withName("Switch device 2")
+                        .withLastSetCommandTimestamp(LocalDateTime.now())
+                        .withLastFeedBackTimestamp(LocalDateTime.now())
                         .withOwner(locationParent.getOwnerUsername())
                         .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
                         .build(),
                 SwitchDevice.builder()
                         .withName("Switch device 3")
+                        .withLastSetCommandTimestamp(LocalDateTime.now())
+                        .withLastFeedBackTimestamp(LocalDateTime.now())
                         .withOwner(locationParent.getOwnerUsername())
                         .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
                         .build()

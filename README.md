@@ -17,6 +17,7 @@ can cooperate with that system.
 ## TODO:
 
 ### Switch device:
+- [ ] global interface to bound all devices,
 - [ ] receive feedback from switch device,
 - [ ] set state of switch device, 
 - [ ] check time since set a new state and set error if is longer that predicted,

@@ -1,7 +1,10 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.domain;
 
+import app.web.pczportfolio.pczbuildingautomation.device.Device;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetStateDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,12 +16,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(setterPrefix = "with")
-public class SwitchDevice {
+public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDeviceFeedbackDto> {
     private long id;
 
     private long version;
 
     private LocalDateTime creationTimestamp;
+
+    private LocalDateTime lastFeedBackTimestamp;
+
+    private LocalDateTime lastSetCommandTimestamp;
 
     private String name;
 
@@ -37,6 +44,8 @@ public class SwitchDevice {
                 0L,
                 0L,
                 null,
+                LocalDateTime.now(),
+                LocalDateTime.now(),
                 switchDeviceCreateDto.getName(),
                 locationToAssign.getOwnerUsername(),
                 false,
@@ -44,5 +53,21 @@ public class SwitchDevice {
                 false,
                 new LocationParent(locationToAssign.getId(), locationToAssign.getName())
         );
+    }
+
+    @Override
+    public void setState(SwitchDeviceSetStateDto setStateDto) {
+
+    }
+
+    @Override
+    public void receiveFeedback(SwitchDeviceFeedbackDto feedbackDto) {
+        this.deviceError  = false;
+        this.state = feedbackDto.isNewState();
+    }
+
+    @Override
+    public boolean checkDeviceError() {
+        return false;
     }
 }
