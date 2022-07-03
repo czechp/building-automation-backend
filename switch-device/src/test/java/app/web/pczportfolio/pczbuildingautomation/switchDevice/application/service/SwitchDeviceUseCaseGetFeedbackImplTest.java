@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
+import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindById;
@@ -22,6 +23,8 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
     @Mock
     SwitchDevicePortFindById switchDevicePortFindById;
     @Mock
+    SwitchDeviceOwnerValidator switchDeviceOwnerValidator;
+    @Mock
     SwitchDevicePortSave switchDevicePortSave;
     SwitchDeviceUseCaseGetFeedback switchDeviceUseCaseGetFeedback;
 
@@ -29,6 +32,7 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
     void init() {
         this.switchDeviceUseCaseGetFeedback = new SwitchDeviceUseCaseGetFeedbackImpl(
                 switchDevicePortFindById,
+                switchDeviceOwnerValidator,
                 switchDevicePortSave
         );
     }
@@ -64,5 +68,26 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
         //then
         assertThrows(NotFoundException.class, ()->switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
     }
+
+    @Test
+    void receiveFeedbackFromDeviceUserIsNotOwnerTest() {
+        //given
+        final var switchDeviceId = 1L;
+        final var switchDeviceNewState = true;
+        final var dtoWithFeedbackInfo = new SwitchDeviceFeedbackDto(switchDeviceId, switchDeviceNewState);
+        final var fetchedSwitchDevice = SwitchDevice.builder()
+                .withId(switchDeviceId)
+                .withState(!switchDeviceNewState)
+                .withDeviceError(true)
+                .build();
+        //when
+        when(switchDevicePortFindById.findSwitchDeviceById(switchDeviceId)).thenReturn(Optional.of(fetchedSwitchDevice));
+        doThrow(NotEnoughPrivilegesException.class)
+                .when(switchDeviceOwnerValidator)
+                .currentUserIsOwnerOrElseThrowException(fetchedSwitchDevice);
+        //then
+        assertThrows(NotEnoughPrivilegesException.class, ()->switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
+    }
+
 
 }

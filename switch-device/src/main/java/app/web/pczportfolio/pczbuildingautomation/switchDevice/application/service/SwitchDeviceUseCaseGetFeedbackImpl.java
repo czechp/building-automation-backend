@@ -14,12 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 class SwitchDeviceUseCaseGetFeedbackImpl implements SwitchDeviceUseCaseGetFeedback {
     private final SwitchDevicePortFindById switchDevicePortFindById;
+    private final SwitchDeviceOwnerValidator switchDeviceOwnerValidator;
     private final SwitchDevicePortSave switchDevicePortSave;
 
     @Transactional
     @Override
     public SwitchDevice receiveFeedbackFromDevice(SwitchDeviceFeedbackDto switchDeviceFeedbackDto) {
         final var  switchDeviceToUpdate = findSwitchDeviceOrThrowException(switchDeviceFeedbackDto);
+        switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDeviceToUpdate);
         switchDeviceToUpdate.receiveFeedback(switchDeviceFeedbackDto);
         switchDevicePortSave.saveSwitchDevice(switchDeviceToUpdate);
         return switchDeviceToUpdate;
