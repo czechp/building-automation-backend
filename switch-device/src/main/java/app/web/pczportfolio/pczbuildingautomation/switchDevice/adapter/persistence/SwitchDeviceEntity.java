@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter(AccessLevel.PACKAGE)
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@Builder(setterPrefix = "with")
 public class SwitchDeviceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +41,8 @@ public class SwitchDeviceEntity {
     private String name;
 
 
-    @NotNull(message = "Name of switch device cannot be null")
-    @Length(min = 2, max = 200, message = "Name of switch device has to have length between 2 and 200 characters")
+    @NotNull(message = "Owner of switch device cannot be null")
+    @Length(min = 2, max = 200, message = "Owner of switch device has to have length between 2 and 200 characters")
     private String owner;
 
     private boolean expectedState;
