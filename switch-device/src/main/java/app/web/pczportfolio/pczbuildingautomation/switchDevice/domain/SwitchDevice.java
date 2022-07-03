@@ -65,6 +65,7 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
     public void receiveFeedback(SwitchDeviceFeedbackDto feedbackDto) {
         stateFromFeedbackMatchToExpectedState(feedbackDto);
         this.deviceError = false;
+        this.lastFeedBackTimestamp = LocalDateTime.now();
         this.state = this.expectedState;
     }
 
