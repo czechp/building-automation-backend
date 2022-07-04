@@ -19,5 +19,9 @@ can cooperate with that system.
 ### Switch device:
 - [x] global interface to bound all devices,
 - [x] receive feedback from switch device,
-- [ ] check time since set a new state and set error if is longer that specific value,
+- [x] check time since set a new state and set error if is longer that specific value,
+- [ ] docker container with RabbitMq,
+- [ ] maven dependency to rabbit mq,
+- [ ] service to making queue during switch device creation,
+- [ ] service to posting message in queue when switch device state was changed,
 - [ ] set state of switch device,
