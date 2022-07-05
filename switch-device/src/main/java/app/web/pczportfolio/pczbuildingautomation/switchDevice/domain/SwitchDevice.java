@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.device.Device;
+import app.web.pczportfolio.pczbuildingautomation.configuration.messaging.MessagingChannel;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
@@ -18,7 +19,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(setterPrefix = "with")
-public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDeviceFeedbackDto> {
+public class SwitchDevice implements
+        Device<SwitchDeviceSetStateDto, SwitchDeviceFeedbackDto>,
+        MessagingChannel {
     private long id;
 
     private long version;
@@ -76,11 +79,9 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
     }
 
     @Override
-    public boolean checkDeviceError() {
+    public void checkDeviceError() {
         if (!expectedStateAndStateEquals())
             this.deviceError = examineTimeBetweenLastStateUpdate();
-
-        return this.isDeviceError();
 
     }
 
@@ -93,4 +94,8 @@ public class SwitchDevice implements Device<SwitchDeviceSetStateDto, SwitchDevic
         return minutesSinceLastUpdate > SwitchDeviceConfiguration.MINUTES_TO_DEVICE_ERROR;
     }
 
+    @Override
+    public String getChannelRootName() {
+        return SwitchDeviceConfiguration.SWITCH_DEVICE_QUEUE_NAME;
+    }
 }
