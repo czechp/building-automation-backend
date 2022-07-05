@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.messaging.SwitchDeviceExchangeInitializer;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.messaging.SwitchDeviceMessagingInitializer;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindLocationById;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.LocationParent;
@@ -23,13 +23,13 @@ class SwitchDeviceWarmup {
     private final SwitchDevicePortFindLocationById switchDevicePortFindLocationById;
     private final SwitchDevicePortSave switchDevicePortSave;
 
-    private final SwitchDeviceExchangeInitializer switchDeviceExchangeInitializer;
+    private final SwitchDeviceMessagingInitializer switchDeviceMessagingInitializer;
     private final Logger logger = LoggerFactory.getLogger(SwitchDeviceWarmup.class);
 
-    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave, SwitchDeviceExchangeInitializer switchDeviceExchangeInitializer) {
+    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave, SwitchDeviceMessagingInitializer switchDeviceMessagingInitializer) {
         this.switchDevicePortFindLocationById = switchDevicePortFindLocationById;
         this.switchDevicePortSave = switchDevicePortSave;
-        this.switchDeviceExchangeInitializer = switchDeviceExchangeInitializer;
+        this.switchDeviceMessagingInitializer = switchDeviceMessagingInitializer;
     }
 
     @EventListener(ApplicationReadyEvent.class)
