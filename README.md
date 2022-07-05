@@ -21,7 +21,7 @@ can cooperate with that system.
 - [x] receive feedback from switch device,
 - [x] check time since set a new state and set error if is longer that specific value,
 - [x] docker container with RabbitMq,
-- [ ] maven dependency to rabbit mq,
+- [x] maven dependency to rabbit mq,
 - [ ] service to making queue during switch device creation,
 - [ ] service to posting message in queue when switch device state was changed,
 - [ ] set state of switch device,
