@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.messaging.SwitchDeviceExchangeInitializer;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindLocationById;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.LocationParent;
@@ -21,11 +22,14 @@ import java.util.stream.Stream;
 class SwitchDeviceWarmup {
     private final SwitchDevicePortFindLocationById switchDevicePortFindLocationById;
     private final SwitchDevicePortSave switchDevicePortSave;
+
+    private final SwitchDeviceExchangeInitializer switchDeviceExchangeInitializer;
     private final Logger logger = LoggerFactory.getLogger(SwitchDeviceWarmup.class);
 
-    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave) {
+    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave, SwitchDeviceExchangeInitializer switchDeviceExchangeInitializer) {
         this.switchDevicePortFindLocationById = switchDevicePortFindLocationById;
         this.switchDevicePortSave = switchDevicePortSave;
+        this.switchDeviceExchangeInitializer = switchDeviceExchangeInitializer;
     }
 
     @EventListener(ApplicationReadyEvent.class)
