@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.LocationParent;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
+import app.web.pczportfolio.pczbuildingautomation.utilities.LoggerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -35,7 +36,7 @@ class SwitchDeviceWarmup {
     @EventListener(ApplicationReadyEvent.class)
     @Transactional
     public void init() {
-        logger.info("<>--------------------------Warmup for SWITCH DEVICE ENTITY--------------------------<>");
+        LoggerInfo.showInfo(logger, "Warmup for Switch Device Entity");
         LocationFacadeDto locationParent = switchDevicePortFindLocationById.findLocationById(1L)
                 .orElseThrow(() -> new RuntimeException("Cannot making warmup for SWITCH DEVICE ENTITY"));
 

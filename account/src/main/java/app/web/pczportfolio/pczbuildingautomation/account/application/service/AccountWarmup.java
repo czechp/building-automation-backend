@@ -4,6 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.Ac
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortSave;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.Account;
 import app.web.pczportfolio.pczbuildingautomation.account.domain.AccountConfiguration;
+import app.web.pczportfolio.pczbuildingautomation.utilities.LoggerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -30,7 +31,7 @@ class AccountWarmup {
 
     @EventListener(ApplicationReadyEvent.class)
     void init() {
-        logger.info("<>--------------------------Warmup for ACCOUNT ENTITY--------------------------<>");
+        LoggerInfo.showInfo(logger, "Warmup for Account entity");
         accountForDevelopment()
                 .forEach(accountPortSave::saveAccount);
     }
