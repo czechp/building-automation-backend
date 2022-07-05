@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 class MessagingDirectExchangeCreator {
-    private static final String EXCHANGE_PREFIX = "x.";
     private final RabbitAdmin rabbitAdmin;
 
     String createDirectExchange(MessagingChannel messagingChannel) {
         final var exchangeName = new MessagingNameSetCreator(messagingChannel).getExchangeName();
+        rabbitAdmin.deleteExchange(exchangeName);
         rabbitAdmin.declareExchange(new DirectExchange(exchangeName));
         return exchangeName;
     }
-
 }
