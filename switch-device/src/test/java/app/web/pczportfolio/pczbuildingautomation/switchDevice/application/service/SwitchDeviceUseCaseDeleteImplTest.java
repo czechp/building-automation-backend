@@ -1,10 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
-import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortDelete;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortDeleteChannel;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindById;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseDelete;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.LocationParent;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
@@ -17,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -25,6 +21,12 @@ import static org.mockito.Mockito.*;
 class SwitchDeviceUseCaseDeleteImplTest {
     @Mock
     SwitchDevicePortFindById switchDevicePortFindById;
+
+    @Mock
+    SwitchDevicePortFindByLocationId switchDevicePortFindByLocationId;
+
+    @Mock
+    SwitchDevicePortFindByOwner switchDevicePortFindByOwner;
     @Mock
     SwitchDevicePortDelete switchDevicePortDelete;
     @Mock
@@ -35,6 +37,8 @@ class SwitchDeviceUseCaseDeleteImplTest {
     void init() {
         this.switchDeviceUseCaseDelete = new SwitchDeviceUseCaseDeleteImpl(
                 switchDevicePortFindById,
+                switchDevicePortFindByLocationId,
+                switchDevicePortFindByOwner,
                 switchDevicePortDelete,
                 switchDevicePortDeleteChannel
         );

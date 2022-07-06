@@ -7,4 +7,5 @@ public interface SwitchDeviceUseCaseDelete {
     void deleteSwitchDeviceById(long switchDeviceId);
     void deleteSwitchDevicesLocationRemoved(LocationFacadeDto locationFacadeDto);
 
+    void deleteSwitchDevicesAccountRemoved(AccountFacadeDto accountFacadeDto);
 }

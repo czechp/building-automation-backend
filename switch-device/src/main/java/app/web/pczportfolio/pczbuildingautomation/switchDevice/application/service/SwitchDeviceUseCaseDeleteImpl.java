@@ -1,14 +1,13 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
+import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortDelete;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortDeleteChannel;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindById;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindByLocationId;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseDelete;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
     private final SwitchDevicePortFindById switchDevicePortFindById;
-
     private final SwitchDevicePortFindByLocationId switchDevicePortFindByLocationId;
+
+    private final SwitchDevicePortFindByOwner switchDevicePortFindByOwner;
     private final SwitchDevicePortDelete switchDevicePortDelete;
     private final SwitchDevicePortDeleteChannel switchDevicePortDeleteChannel;
 
@@ -34,6 +34,11 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
                 .forEach(this::deleteSwitchDevice);
     }
 
+    @Override
+    public void deleteSwitchDevicesAccountRemoved(AccountFacadeDto accountFacadeDto) {
+        switchDevicePortFindByOwner.findSwitchDevicesByOwner(accountFacadeDto.getUsername(), Pageable.unpaged())
+                .forEach(this::deleteSwitchDevice);
+    }
 
     private SwitchDevice getSwitchDevice(long switchDeviceId) {
         return switchDevicePortFindById.findSwitchDeviceById(switchDeviceId)
