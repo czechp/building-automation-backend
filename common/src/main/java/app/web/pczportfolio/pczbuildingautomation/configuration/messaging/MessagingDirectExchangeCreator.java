@@ -32,6 +32,7 @@ class MessagingDirectExchangeCreator {
         rabbitAdmin.declareExchange(fanoutDlxExchange);
 
         final var queueDlx = new Queue(names.getQueueDlxName());
+        rabbitAdmin.deleteQueue(names.getQueueDlxName());
         rabbitAdmin.declareQueue(queueDlx);
 
         final var binding = BindingBuilder.bind(queueDlx)
