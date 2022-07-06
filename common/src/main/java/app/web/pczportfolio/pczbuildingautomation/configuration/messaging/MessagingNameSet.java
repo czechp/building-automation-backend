@@ -3,7 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.configuration.messaging;
 import lombok.Getter;
 
 @Getter
-class MessagingNameSetCreator {
+class MessagingNameSet {
     private static final String EXCHANGE_PREFIX = "x.";
     private static final String QUEUE_PREFIX = "q.";
     private static final String ROUTING_KEY_PREFIX = "r.";
@@ -12,7 +12,7 @@ class MessagingNameSetCreator {
     private String queueName;
     private String routingKeyName;
 
-    public MessagingNameSetCreator(MessagingChannel messagingChannel) {
+    public MessagingNameSet(MessagingChannel messagingChannel) {
         this.exchangeName = createExchangeName(messagingChannel);
         this.queueName = createQueueName(messagingChannel);
         this.routingKeyName  = createRoutingKey(messagingChannel);

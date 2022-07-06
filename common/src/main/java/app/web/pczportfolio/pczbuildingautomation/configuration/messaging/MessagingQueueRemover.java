@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-class MessaginQueueRemover {
+class MessagingQueueRemover {
     private final RabbitAdmin rabbitAdmin;
 
     void removeChannel(MessagingChannel messagingChannel) {
-        final var nameOfChannel = new MessagingNameSetCreator(messagingChannel).getQueueName();
+        final var nameOfChannel = new MessagingNameSet(messagingChannel).getQueueName();
         rabbitAdmin.deleteQueue(nameOfChannel);
     }
 }
