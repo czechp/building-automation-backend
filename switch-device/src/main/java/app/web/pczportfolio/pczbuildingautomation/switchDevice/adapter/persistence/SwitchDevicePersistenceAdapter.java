@@ -16,7 +16,8 @@ class SwitchDevicePersistenceAdapter implements SwitchDevicePortSave,
         SwitchDevicePortFindAll,
         SwitchDevicePortFindByOwner,
         SwitchDevicePortFindById,
-        SwitchDevicePortDelete {
+        SwitchDevicePortDelete,
+        SwitchDevicePortFindByLocationId {
     private final SwitchDeviceJpaRepository switchDeviceJpaRepository;
 
     @Override
@@ -50,5 +51,13 @@ class SwitchDevicePersistenceAdapter implements SwitchDevicePortSave,
     public void deleteSwitchDevice(SwitchDevice switchDevice) {
         final var switchDeviceToDelete = SwitchDeviceEntityMapper.toEntity(switchDevice);
         switchDeviceJpaRepository.delete(switchDeviceToDelete);
+    }
+
+    @Override
+    public List<SwitchDevice> findSwitchDevicesByLocationId(long locationId) {
+        return switchDeviceJpaRepository.findByLocationSimpleEntity_Id(locationId)
+                .stream()
+                .map(SwitchDeviceEntityMapper::toDomain)
+                .collect(Collectors.toList());
     }
 }
