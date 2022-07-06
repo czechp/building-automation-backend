@@ -12,15 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SwitchDeviceMessagingInitializer {
+public class SwitchDeviceMsgAdapterInitializer {
     private final MessagingService messagingService;
     private final SwitchDevicePortFindAll switchDevicePortFindAll;
     private final Logger logger;
 
-    public SwitchDeviceMessagingInitializer(MessagingService messagingService, SwitchDevicePortFindAll switchDevicePortFindAll) {
+    public SwitchDeviceMsgAdapterInitializer(MessagingService messagingService, SwitchDevicePortFindAll switchDevicePortFindAll) {
         this.messagingService = messagingService;
         this.switchDevicePortFindAll = switchDevicePortFindAll;
-        this.logger = LoggerFactory.getLogger(SwitchDeviceMessagingInitializer.class);
+        this.logger = LoggerFactory.getLogger(SwitchDeviceMsgAdapterInitializer.class);
     }
 
     @EventListener(ApplicationReadyEvent.class)
