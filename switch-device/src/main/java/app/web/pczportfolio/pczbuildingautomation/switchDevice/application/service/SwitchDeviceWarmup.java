@@ -2,6 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.serv
 
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.messaging.SwitchDeviceMsgAdapterInitializer;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortCreateChannel;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindLocationById;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.LocationParent;
@@ -24,12 +25,14 @@ class SwitchDeviceWarmup {
     private final SwitchDevicePortFindLocationById switchDevicePortFindLocationById;
     private final SwitchDevicePortSave switchDevicePortSave;
 
+    private final SwitchDevicePortCreateChannel switchDevicePortCreateChannel;
     private final SwitchDeviceMsgAdapterInitializer switchDeviceMsgAdapterInitializer;
     private final Logger logger = LoggerFactory.getLogger(SwitchDeviceWarmup.class);
 
-    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave, SwitchDeviceMsgAdapterInitializer switchDeviceMsgAdapterInitializer) {
+    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave, SwitchDevicePortCreateChannel switchDevicePortCreateChannel, SwitchDeviceMsgAdapterInitializer switchDeviceMsgAdapterInitializer) {
         this.switchDevicePortFindLocationById = switchDevicePortFindLocationById;
         this.switchDevicePortSave = switchDevicePortSave;
+        this.switchDevicePortCreateChannel = switchDevicePortCreateChannel;
         this.switchDeviceMsgAdapterInitializer = switchDeviceMsgAdapterInitializer;
     }
 
@@ -41,27 +44,29 @@ class SwitchDeviceWarmup {
                 .orElseThrow(() -> new RuntimeException("Cannot making warmup for SWITCH DEVICE ENTITY"));
 
         Stream.of(
-                SwitchDevice.builder()
-                        .withName("Switch device 1")
-                        .withLastSetCommandTimestamp(LocalDateTime.now())
-                        .withLastFeedBackTimestamp(LocalDateTime.now())
-                        .withOwner(locationParent.getOwnerUsername())
-                        .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
-                        .build(),
-                SwitchDevice.builder()
-                        .withName("Switch device 2")
-                        .withLastSetCommandTimestamp(LocalDateTime.now())
-                        .withLastFeedBackTimestamp(LocalDateTime.now())
-                        .withOwner(locationParent.getOwnerUsername())
-                        .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
-                        .build(),
-                SwitchDevice.builder()
-                        .withName("Switch device 3")
-                        .withLastSetCommandTimestamp(LocalDateTime.now())
-                        .withLastFeedBackTimestamp(LocalDateTime.now())
-                        .withOwner(locationParent.getOwnerUsername())
-                        .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
-                        .build()
-        ).forEach(switchDevicePortSave::saveSwitchDevice);
+                        SwitchDevice.builder()
+                                .withName("Switch device 1")
+                                .withLastSetCommandTimestamp(LocalDateTime.now())
+                                .withLastFeedBackTimestamp(LocalDateTime.now())
+                                .withOwner(locationParent.getOwnerUsername())
+                                .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
+                                .build(),
+                        SwitchDevice.builder()
+                                .withName("Switch device 2")
+                                .withLastSetCommandTimestamp(LocalDateTime.now())
+                                .withLastFeedBackTimestamp(LocalDateTime.now())
+                                .withOwner(locationParent.getOwnerUsername())
+                                .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
+                                .build(),
+                        SwitchDevice.builder()
+                                .withName("Switch device 3")
+                                .withLastSetCommandTimestamp(LocalDateTime.now())
+                                .withLastFeedBackTimestamp(LocalDateTime.now())
+                                .withOwner(locationParent.getOwnerUsername())
+                                .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
+                                .build()
+                ).map(switchDevicePortSave::saveSwitchDevice)
+                .forEach(switchDevicePortCreateChannel::createChannelForSwitchDevice);
+
     }
 }
