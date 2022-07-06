@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.location.application.port.Loca
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.AccountParent;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
+import app.web.pczportfolio.pczbuildingautomation.utilities.LoggerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -31,7 +32,7 @@ class LocationWarmup {
 
     @EventListener(ApplicationReadyEvent.class)
     void init() {
-        logger.info("<>--------------------------Warmup for LOCATION ENTITY--------------------------<>");
+        LoggerInfo.showInfo(logger, "Warmup for Location Entity");
         locationPortFindAccountByUsername.findAccountByUsername("user")
                 .ifPresent((accountFacadeDto) -> {
                     locationForDevelopment(accountFacadeDto)

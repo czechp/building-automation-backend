@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.serv
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortCreateChannel;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindLocationByIdAndCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseCreate;
@@ -24,13 +25,17 @@ class SwitchDeviceUseCaseCreateImplTest {
     @Mock
     SwitchDevicePortFindLocationByIdAndCurrentUser switchDevicePortFindLocationByIdAndCurrentUser;
 
+    @Mock
+    SwitchDevicePortCreateChannel switchDevicePortCreateChannel;
+
     SwitchDeviceUseCaseCreate switchDeviceUseCaseCreate;
 
     @BeforeEach
     void init() {
         this.switchDeviceUseCaseCreate = new SwitchDeviceUseCaseCreateImpl(
                 switchDevicePortSave,
-                switchDevicePortFindLocationByIdAndCurrentUser
+                switchDevicePortFindLocationByIdAndCurrentUser,
+                switchDevicePortCreateChannel
         );
     }
 
@@ -40,6 +45,7 @@ class SwitchDeviceUseCaseCreateImplTest {
         final var locationId = 1L;
         final var switchDeviceToCreate = new SwitchDeviceCreateDto(locationId, "New switch device");
         final var fetchedLocation = new LocationFacadeDto(locationId, "Some location", "Some owner");
+        final var createdSwitchDevice =
         //when
         when(switchDevicePortFindLocationByIdAndCurrentUser.findLocationByIdAndCurrentUser(locationId))
                 .thenReturn(Optional.of(fetchedLocation));
