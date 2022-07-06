@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.serv
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortCreateChannel;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindLocationByIdAndCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseCreate;
@@ -15,13 +16,14 @@ import org.springframework.stereotype.Service;
 class SwitchDeviceUseCaseCreateImpl implements SwitchDeviceUseCaseCreate {
     private final SwitchDevicePortSave switchDevicePortSave;
     private final SwitchDevicePortFindLocationByIdAndCurrentUser switchDevicePortFindLocationByIdAndCurrentUser;
-
+    private final SwitchDevicePortCreateChannel switchDevicePortCreateChannel;
     @Override
     public SwitchDevice createSwitchDevice(SwitchDeviceCreateDto switchDeviceCreateDto) {
         final var locationToAssign = findLocationToAssign(switchDeviceCreateDto);
         final var createdSwitchDevice = SwitchDevice.create(switchDeviceCreateDto, locationToAssign);
-        switchDevicePortSave.saveSwitchDevice(createdSwitchDevice);
-        return  createdSwitchDevice;
+        final var savedSwitchDevice = switchDevicePortSave.saveSwitchDevice(createdSwitchDevice);
+        switchDevicePortCreateChannel.createChannelForSwitchDevice(savedSwitchDevice);
+        return createdSwitchDevice;
     }
 
     private LocationFacadeDto findLocationToAssign(SwitchDeviceCreateDto switchDeviceCreateDto) {
