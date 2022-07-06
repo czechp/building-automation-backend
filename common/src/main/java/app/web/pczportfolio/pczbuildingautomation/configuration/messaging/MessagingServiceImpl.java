@@ -12,7 +12,7 @@ class MessagingServiceImpl implements MessagingService {
 
     @Override
     public String createDeviceDirectExchange(MessagingChannel messagingChannel) {
-        return messagingDirectExchangeCreator.createDirectExchange(messagingChannel);
+        return messagingDirectExchangeCreator.createDirectExchangeWithDlx(messagingChannel);
     }
 
     @Override

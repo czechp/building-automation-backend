@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MessagingNameSetCreatorTest {
+class MessagingNameSetTest {
     @Test
     void correctOfNameTest(){
         //given
@@ -26,9 +26,11 @@ class MessagingNameSetCreatorTest {
             }
         };
         //when
-        final var setOfNames = new MessagingNameSetCreator(messagingChannel);
+        final var setOfNames = new MessagingNameSet(messagingChannel);
         //then
         assertEquals("x.someRoot", setOfNames.getExchangeName());
+        assertEquals("x.someRoot.dlx", setOfNames.getExchangeDlxName());
+        assertEquals("q.someRoot.dlx", setOfNames.getQueueDlxName());
         assertEquals("q.someRoot-someOwner-1", setOfNames.getQueueName());
         assertEquals("r.someRoot-1", setOfNames.getRoutingKeyName());
     }
