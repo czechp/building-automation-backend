@@ -21,7 +21,7 @@ class MessagingServiceImpl implements MessagingService {
     }
 
     @Override
-    public String createDeviceQueue(MessagingChannel messagingChannel) {
+    public String createDeviceChannel(MessagingChannel messagingChannel) {
         return messagingQueueCreator.createDeviceQueue(messagingChannel);
     }
 }

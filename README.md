@@ -23,6 +23,7 @@ can cooperate with that system.
 - [x] docker container with RabbitMq,
 - [x] maven dependency to rabbit mq,
 - [ ] service to making queue during switch device creation,
-- [ ] trim all whitespaces from username in account
+- [ ] delete queue when device is removing,
+- [ ] trim all whitespaces from username in account,
 - [ ] service to posting message in queue when switch device state was changed,
 - [ ] set state of switch device,
