@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class MessagingServiceImpl implements MessagingService {
     private final MessagingDirectExchangeCreator messagingDirectExchangeCreator;
-    private final MessagingChannelRemover messagingChannelRemover;
+    private final MessaginQueueRemover messaginQueueRemover;
 
     @Override
     public String createDeviceDirectExchange(MessagingChannel messagingChannel) {
@@ -16,6 +16,11 @@ class MessagingServiceImpl implements MessagingService {
 
     @Override
     public void deleteDeviceChannel(MessagingChannel messagingChannel) {
-        messagingChannelRemover.removeChannel(messagingChannel);
+        messaginQueueRemover.removeChannel(messagingChannel);
+    }
+
+    @Override
+    public String createDeviceQueue(MessagingChannel messagingChannel) {
+        return null;
     }
 }

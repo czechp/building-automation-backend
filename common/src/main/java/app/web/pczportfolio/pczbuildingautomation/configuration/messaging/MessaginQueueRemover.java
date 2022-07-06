@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-class MessagingChannelRemover {
+class MessaginQueueRemover {
     private final RabbitAdmin rabbitAdmin;
 
     void removeChannel(MessagingChannel messagingChannel) {
