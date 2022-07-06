@@ -24,6 +24,7 @@ can cooperate with that system.
 - [x] maven dependency to rabbit mq,
 - [x] service to making queue during switch device creation,
 - [ ] delete queue when device is removing (delete switch device by event),
+- [ ] validate permission to delete switch device in adapter
 - [ ] trim all whitespaces from username in account,
 - [ ] service to posting message in queue when switch device state was changed,
 - [ ] set state of switch device,

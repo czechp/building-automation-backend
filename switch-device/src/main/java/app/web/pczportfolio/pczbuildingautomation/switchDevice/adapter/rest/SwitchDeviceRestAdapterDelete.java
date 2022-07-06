@@ -15,6 +15,6 @@ class SwitchDeviceRestAdapterDelete {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteSwitchDevice(@PathVariable(name = "id") long switchDeviceId) {
-        switchDeviceUseCaseDelete.deleteSwitchDevice(switchDeviceId);
+        switchDeviceUseCaseDelete.deleteSwitchDeviceById(switchDeviceId);
     }
 }

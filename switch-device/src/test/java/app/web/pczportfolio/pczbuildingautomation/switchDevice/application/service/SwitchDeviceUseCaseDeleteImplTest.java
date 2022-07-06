@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.serv
 import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortDelete;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortDeleteChannel;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindById;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseDelete;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.LocationParent;
@@ -27,7 +28,7 @@ class SwitchDeviceUseCaseDeleteImplTest {
     @Mock
     SwitchDevicePortDelete switchDevicePortDelete;
     @Mock
-    SwitchDeviceOwnerValidator switchDeviceOwnerValidator;
+    SwitchDevicePortDeleteChannel switchDevicePortDeleteChannel;
     SwitchDeviceUseCaseDelete switchDeviceUseCaseDelete;
 
     @BeforeEach
@@ -35,12 +36,12 @@ class SwitchDeviceUseCaseDeleteImplTest {
         this.switchDeviceUseCaseDelete = new SwitchDeviceUseCaseDeleteImpl(
                 switchDevicePortFindById,
                 switchDevicePortDelete,
-                switchDeviceOwnerValidator
+                switchDevicePortDeleteChannel
         );
     }
 
     @Test
-    void deleteSwitchDeviceTest() {
+    void deleteSwitchDeviceByIdTest() {
         //given
         final var switchDeviceId = 1L;
         final var switchDeviceToDelete = SwitchDevice.builder()
@@ -49,35 +50,20 @@ class SwitchDeviceUseCaseDeleteImplTest {
                 .build();
         //when
         when(switchDevicePortFindById.findSwitchDeviceById(anyLong())).thenReturn(Optional.of(switchDeviceToDelete));
-        when(switchDeviceOwnerValidator.currentUserIsOwner(any())).thenReturn(true);
-        switchDeviceUseCaseDelete.deleteSwitchDevice(switchDeviceId);
+        switchDeviceUseCaseDelete.deleteSwitchDeviceById(switchDeviceId);
         //then
         verify(switchDevicePortDelete, times(1)).deleteSwitchDevice(switchDeviceToDelete);
     }
 
 
     @Test
-    void deleteSwitchDeviceNotFoundTest() {
+    void deleteSwitchDeviceByIdNotFoundTest() {
         //given
         final var switchDeviceId = 1L;
         when(switchDevicePortFindById.findSwitchDeviceById(anyLong())).thenReturn(Optional.empty());
         //then
-        assertThrows(NotFoundException.class, () -> switchDeviceUseCaseDelete.deleteSwitchDevice(switchDeviceId));
+        assertThrows(NotFoundException.class, () -> switchDeviceUseCaseDelete.deleteSwitchDeviceById(switchDeviceId));
     }
 
 
-    @Test
-    void deleteSwitchDeviceUserNotOwnerTest() {
-        //given
-        final var switchDeviceId = 1L;
-        final var switchDeviceToDelete = SwitchDevice.builder()
-                .withId(switchDeviceId)
-                .withLocationParent(LocationParent.builder().build())
-                .build();
-        //when
-        when(switchDevicePortFindById.findSwitchDeviceById(anyLong())).thenReturn(Optional.of(switchDeviceToDelete));
-        when(switchDeviceOwnerValidator.currentUserIsOwner(any())).thenReturn(false);
-        //then
-        assertThrows(NotEnoughPrivilegesException.class, () -> switchDeviceUseCaseDelete.deleteSwitchDevice(switchDeviceId));
-    }
 }
