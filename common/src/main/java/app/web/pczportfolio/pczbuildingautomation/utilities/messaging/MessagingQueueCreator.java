@@ -1,4 +1,4 @@
-package app.web.pczportfolio.pczbuildingautomation.configuration.messaging;
+package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.BindingBuilder;

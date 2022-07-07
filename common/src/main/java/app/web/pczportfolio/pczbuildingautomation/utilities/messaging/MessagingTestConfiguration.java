@@ -1,4 +1,4 @@
-package app.web.pczportfolio.pczbuildingautomation.configuration.messaging;
+package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
 import com.github.fridujo.rabbitmq.mock.compatibility.MockConnectionFactoryFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;

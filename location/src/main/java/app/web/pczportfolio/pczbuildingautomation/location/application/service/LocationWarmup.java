@@ -2,11 +2,10 @@ package app.web.pczportfolio.pczbuildingautomation.location.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindAccountByUsername;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindCurrentUserAccount;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortSave;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.AccountParent;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
-import app.web.pczportfolio.pczbuildingautomation.utilities.LoggerInfo;
+import app.web.pczportfolio.pczbuildingautomation.utilities.tools.LoggerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

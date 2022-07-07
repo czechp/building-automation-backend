@@ -1,4 +1,4 @@
-package app.web.pczportfolio.pczbuildingautomation.configuration.messaging;
+package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
 import com.rabbitmq.client.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;

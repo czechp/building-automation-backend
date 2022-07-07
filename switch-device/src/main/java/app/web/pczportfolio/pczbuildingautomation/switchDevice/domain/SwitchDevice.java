@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.device.Device;
-import app.web.pczportfolio.pczbuildingautomation.configuration.messaging.MessagingChannel;
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingChannel;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;

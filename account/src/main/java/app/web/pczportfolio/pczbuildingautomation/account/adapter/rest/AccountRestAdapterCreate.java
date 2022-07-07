@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
+@Validated
 class AccountRestAdapterCreate {
     private final AccountUseCaseCreate accountUseCaseCreate;
 

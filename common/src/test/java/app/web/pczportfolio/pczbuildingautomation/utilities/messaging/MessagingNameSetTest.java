@@ -1,7 +1,8 @@
-package app.web.pczportfolio.pczbuildingautomation.configuration.messaging;
+package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingChannel;
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingNameSet;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
