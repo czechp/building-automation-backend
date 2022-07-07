@@ -2,7 +2,6 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.serv
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
-import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseDelete;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
@@ -30,8 +29,8 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
     }
 
     @Override
-    public void deleteSwitchDevicesLocationRemoved(LocationFacadeDto locationFacadeDto) {
-        switchDevicePortFindByLocationId.findSwitchDevicesByLocationId(locationFacadeDto.getId())
+    public void deleteSwitchDevicesLocationRemoved(long locationId) {
+        switchDevicePortFindByLocationId.findSwitchDevicesByLocationId(locationId)
                 .forEach(this::deleteSwitchDevice);
     }
 

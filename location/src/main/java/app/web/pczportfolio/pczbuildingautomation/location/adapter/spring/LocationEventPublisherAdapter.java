@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-class LocationPublisherAdapter implements LocationPortEmitEventDelete {
+class LocationEventPublisherAdapter implements LocationPortEmitEventDelete {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
