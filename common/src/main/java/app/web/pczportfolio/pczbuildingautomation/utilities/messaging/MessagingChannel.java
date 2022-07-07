@@ -1,4 +1,4 @@
-package app.web.pczportfolio.pczbuildingautomation.configuration.messaging;
+package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
 public interface MessagingChannel {
     long getId();
