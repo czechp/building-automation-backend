@@ -9,7 +9,12 @@ import org.springframework.stereotype.Service;
 class MessagingMessageSender {
     private final RabbitTemplate rabbitTemplate;
 
-    void sendMessageToQueue(MessagingChannel messagingChannel, String  message){
-
+    void sendMessageToQueue(MessagingChannel messagingChannel, String message) {
+        MessagingNameSet names = new MessagingNameSet(messagingChannel);
+        rabbitTemplate.convertAndSend(
+                names.getExchangeName(),
+                names.getRoutingKeyName(),
+                message
+        );
     }
 }
