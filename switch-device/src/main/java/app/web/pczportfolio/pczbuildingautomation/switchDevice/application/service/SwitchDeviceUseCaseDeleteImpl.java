@@ -19,7 +19,7 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
     private final SwitchDevicePortFindByOwner switchDevicePortFindByOwner;
     private final SwitchDeviceOwnerValidator switchDeviceOwnerValidator;
     private final SwitchDevicePortDelete switchDevicePortDelete;
-    private final SwitchDevicePortDeleteChannel switchDevicePortDeleteChannel;
+    private final SwitchDevicePortChannelDelete switchDevicePortChannelDelete;
 
     @Override
     public void deleteSwitchDeviceById(long switchDeviceId) {
@@ -48,7 +48,7 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
 
     void deleteSwitchDevice(SwitchDevice switchDevice) {
         switchDevicePortDelete.deleteSwitchDevice(switchDevice);
-        switchDevicePortDeleteChannel.deleteSwitchDeviceChannel(switchDevice);
+        switchDevicePortChannelDelete.deleteSwitchDeviceChannel(switchDevice);
     }
 
 }

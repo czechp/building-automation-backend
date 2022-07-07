@@ -3,7 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.serv
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortCreateChannel;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortChannelCreate;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindLocationByIdAndCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseCreate;
@@ -26,7 +26,7 @@ class SwitchDeviceUseCaseCreateImplTest {
     SwitchDevicePortFindLocationByIdAndCurrentUser switchDevicePortFindLocationByIdAndCurrentUser;
 
     @Mock
-    SwitchDevicePortCreateChannel switchDevicePortCreateChannel;
+    SwitchDevicePortChannelCreate switchDevicePortChannelCreate;
 
     SwitchDeviceUseCaseCreate switchDeviceUseCaseCreate;
 
@@ -35,7 +35,7 @@ class SwitchDeviceUseCaseCreateImplTest {
         this.switchDeviceUseCaseCreate = new SwitchDeviceUseCaseCreateImpl(
                 switchDevicePortSave,
                 switchDevicePortFindLocationByIdAndCurrentUser,
-                switchDevicePortCreateChannel
+                switchDevicePortChannelCreate
         );
     }
 
