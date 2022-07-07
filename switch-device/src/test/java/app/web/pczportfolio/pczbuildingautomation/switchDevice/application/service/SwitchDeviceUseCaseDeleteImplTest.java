@@ -26,6 +26,8 @@ class SwitchDeviceUseCaseDeleteImplTest {
     SwitchDevicePortFindByLocationId switchDevicePortFindByLocationId;
 
     @Mock
+    SwitchDeviceOwnerValidator switchDeviceOwnerValidator;
+    @Mock
     SwitchDevicePortFindByOwner switchDevicePortFindByOwner;
     @Mock
     SwitchDevicePortDelete switchDevicePortDelete;
@@ -39,6 +41,7 @@ class SwitchDeviceUseCaseDeleteImplTest {
                 switchDevicePortFindById,
                 switchDevicePortFindByLocationId,
                 switchDevicePortFindByOwner,
+                switchDeviceOwnerValidator,
                 switchDevicePortDelete,
                 switchDevicePortDeleteChannel
         );

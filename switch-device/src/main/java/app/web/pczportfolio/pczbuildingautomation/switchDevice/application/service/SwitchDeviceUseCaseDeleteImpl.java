@@ -17,14 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
     private final SwitchDevicePortFindById switchDevicePortFindById;
     private final SwitchDevicePortFindByLocationId switchDevicePortFindByLocationId;
-
     private final SwitchDevicePortFindByOwner switchDevicePortFindByOwner;
+    private final SwitchDeviceOwnerValidator switchDeviceOwnerValidator;
     private final SwitchDevicePortDelete switchDevicePortDelete;
     private final SwitchDevicePortDeleteChannel switchDevicePortDeleteChannel;
 
     @Override
     public void deleteSwitchDeviceById(long switchDeviceId) {
         final SwitchDevice switchDevice = getSwitchDevice(switchDeviceId);
+        switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDevice);
         deleteSwitchDevice(switchDevice);
     }
 
