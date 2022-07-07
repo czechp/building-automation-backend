@@ -26,7 +26,7 @@ can cooperate with that system.
 - [x] service to making queue during switch device creation,
 - [x] delete queue when device is removing (delete switch device by event),
 - [x] trim all whitespaces from username in account,
-- [ ] service to posting message in queue when switch device state was changed,
-- [ ] set state of switch device,
+- [x] service to posting message in queue when switch device state was changed,
+- [x] set state of switch device,
 - [ ] handle ttl and dlx,
 - [ ] device events
