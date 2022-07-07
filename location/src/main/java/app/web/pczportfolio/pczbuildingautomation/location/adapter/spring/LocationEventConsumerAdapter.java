@@ -13,5 +13,6 @@ class LocationEventConsumerAdapter implements ApplicationListener<AccountDeleteE
 
     @Override
     public void onApplicationEvent(AccountDeleteEvent accountDeleteEvent) {
+        locationUseCaseDelete.deleteLocationsAccountRemoved(accountDeleteEvent.getId());
     }
 }

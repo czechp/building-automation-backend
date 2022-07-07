@@ -3,10 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.location.application.service;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortDelete;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortEmitEventDelete;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindById;
-import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindCurrentUserAccount;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.location.application.useCase.LocationUseCaseDelete;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.AccountParent;
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
@@ -34,6 +31,9 @@ class LocationUseCaseDeleteImplTest {
     @Mock
     LocationPortFindCurrentUserAccount locationPortFindCurrentUserAccount;
 
+    @Mock
+    LocationPortFindByAccountId locationPortFindByAccountId;
+
 
     LocationOwnerValidator locationOwnerValidator;
 
@@ -42,7 +42,11 @@ class LocationUseCaseDeleteImplTest {
     @BeforeEach
     void init() {
         this.locationOwnerValidator = new LocationOwnerValidator(locationPortFindCurrentUserAccount);
-        this.locationUseCaseDelete = new LocationUseCaseDeleteImpl(locationPortFindById, locationPortDelete, locationPortEmitEventDelete, locationOwnerValidator);
+        this.locationUseCaseDelete = new LocationUseCaseDeleteImpl(locationPortFindById,
+                locationPortFindByAccountId,
+                locationPortDelete,
+                locationPortEmitEventDelete,
+                locationOwnerValidator);
     }
 
     @Test
