@@ -10,6 +10,7 @@ class MessagingServiceImpl implements MessagingService {
     private final MessagingQueueRemover messagingQueueRemover;
     private final MessagingQueueCreator messagingQueueCreator;
 
+    private final MessagingMessageSender messagingMessageSender;
     @Override
     public String createDeviceDirectExchange(MessagingChannel messagingChannel) {
         return messagingDirectExchangeCreator.createDirectExchangeWithDlx(messagingChannel);
@@ -23,5 +24,10 @@ class MessagingServiceImpl implements MessagingService {
     @Override
     public String createDeviceChannel(MessagingChannel messagingChannel) {
         return messagingQueueCreator.createDeviceQueue(messagingChannel);
+    }
+
+    @Override
+    public void sendMessageToChannel(MessagingChannel messagingChannel, String message) {
+        messagingMessageSender.sendMessageToQueue(messagingChannel, message);
     }
 }
