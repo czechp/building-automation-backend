@@ -8,7 +8,6 @@ import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationSimpleEnt
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.persistence.SwitchDeviceEntity;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.persistence.SwitchDeviceJpaRepository;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

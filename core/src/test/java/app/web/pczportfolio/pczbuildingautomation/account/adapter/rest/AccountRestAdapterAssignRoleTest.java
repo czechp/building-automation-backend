@@ -48,7 +48,7 @@ class AccountRestAdapterAssignRoleTest {
 
         final var requestId = accountToAssignRole.getId();
         final var requestNewRole = AccountRole.ADMIN.toString();
-        final var requestBuilder = MockMvcRequestBuilders.patch(URl+"/{id}", requestId)
+        final var requestBuilder = MockMvcRequestBuilders.patch(URl + "/{id}", requestId)
                 .param("role", requestNewRole);
         //when
         //then
@@ -62,7 +62,7 @@ class AccountRestAdapterAssignRoleTest {
         //given
         final var requestId = Integer.MAX_VALUE;
         final var requestNewRole = AccountRole.ADMIN.toString();
-        final var requestBuilder = MockMvcRequestBuilders.patch(URl+"/{id}", requestId)
+        final var requestBuilder = MockMvcRequestBuilders.patch(URl + "/{id}", requestId)
                 .param("role", requestNewRole);
         //when
         //then

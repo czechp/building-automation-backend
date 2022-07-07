@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -35,7 +34,7 @@ class SwitchDeviceUseCaseCheckErrorImplTest {
     }
 
     @Test
-    void checkSwitchDeviceErrorNotInRangeTest(){
+    void checkSwitchDeviceErrorNotInRangeTest() {
         //given
         final var expectedState = false;
         final var state = true;
@@ -57,7 +56,7 @@ class SwitchDeviceUseCaseCheckErrorImplTest {
 
 
     @Test
-    void checkSwitchDeviceErrorInRangeTest(){
+    void checkSwitchDeviceErrorInRangeTest() {
         //given
         final var expectedState = false;
         final var state = true;
@@ -79,7 +78,7 @@ class SwitchDeviceUseCaseCheckErrorImplTest {
 
 
     @Test
-    void checkSwitchDeviceErrorStatesEqualTest(){
+    void checkSwitchDeviceErrorStatesEqualTest() {
         //given
         final var expectedState = true;
         final var state = true;

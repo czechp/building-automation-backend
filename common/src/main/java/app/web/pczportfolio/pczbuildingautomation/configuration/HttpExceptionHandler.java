@@ -6,7 +6,6 @@ import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,7 +41,7 @@ public class HttpExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponse(exception.getMessage(), HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler({javax.validation.ConstraintViolationException.class, })
+    @ExceptionHandler({javax.validation.ConstraintViolationException.class,})
     ResponseEntity<HashMap<String, String>> constraintViolationException(Exception exception) {
         final var exceptionMessage = exception.getMessage();
         final var responseMessage = exceptionMessage
@@ -50,7 +49,6 @@ public class HttpExceptionHandler extends ResponseEntityExceptionHandler {
 
         return buildResponse(responseMessage, HttpStatus.BAD_REQUEST);
     }
-
 
 
     private ResponseEntity<HashMap<String, String>> buildResponse(String message, HttpStatus httpStatus) {

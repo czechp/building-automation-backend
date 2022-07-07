@@ -51,7 +51,7 @@ class AccountUseCaseDeleteImpl implements AccountUseCaseDelete {
     private boolean userIsAccountOwner(Account account, String currentUser) {
         return account.getUsername().equals(currentUser);
     }
-    
+
     private void deleteAccount(Account account) {
         accountPortEmitDeleteEvent.emitAccountDeleteEvent(account);
         accountPortDelete.deleteAccount(account);

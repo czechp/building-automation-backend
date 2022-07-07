@@ -1,14 +1,12 @@
 package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
-import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingChannel;
-import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingNameSet;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MessagingNameSetTest {
     @Test
-    void correctOfNameTest(){
+    void correctOfNameTest() {
         //given
         final var messagingChannel = new MessagingChannel() {
             @Override

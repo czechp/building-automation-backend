@@ -1,7 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.location.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
-import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityCurrentUser;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindCurrentUserAccount;

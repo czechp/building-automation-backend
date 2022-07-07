@@ -46,9 +46,9 @@ class SwitchDeviceUseCaseCreateImplTest {
         final var switchDeviceToCreate = new SwitchDeviceCreateDto(locationId, "New switch device");
         final var fetchedLocation = new LocationFacadeDto(locationId, "Some location", "Some owner");
         final var createdSwitchDevice =
-        //when
-        when(switchDevicePortFindLocationByIdAndCurrentUser.findLocationByIdAndCurrentUser(locationId))
-                .thenReturn(Optional.of(fetchedLocation));
+                //when
+                when(switchDevicePortFindLocationByIdAndCurrentUser.findLocationByIdAndCurrentUser(locationId))
+                        .thenReturn(Optional.of(fetchedLocation));
         final var switchDeviceCreated = switchDeviceUseCaseCreate.createSwitchDevice(switchDeviceToCreate);
         //then
         verify(switchDevicePortSave, times(1)).saveSwitchDevice(any());

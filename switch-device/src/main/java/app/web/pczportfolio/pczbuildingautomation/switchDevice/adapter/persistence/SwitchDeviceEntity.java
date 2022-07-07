@@ -3,8 +3,6 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.persiste
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationSimpleEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;

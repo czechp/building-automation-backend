@@ -14,7 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 class MessagingQueueCreator {
     private static final String DLX_HEADER = "x-dead-letter-exchange";
-    private static final String TTL_HEADER  = "x-message-ttl";
+    private static final String TTL_HEADER = "x-message-ttl";
     private static final int TTL_SECONDS_VALUE = 60_000;
     private final RabbitAdmin rabbitAdmin;
 

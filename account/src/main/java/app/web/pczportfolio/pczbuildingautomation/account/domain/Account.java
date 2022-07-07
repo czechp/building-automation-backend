@@ -1,6 +1,5 @@
 package app.web.pczportfolio.pczbuildingautomation.account.domain;
 
-import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountEntity;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountCreateCmdDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
@@ -46,7 +45,7 @@ public class Account {
         newAccount.creationTimestamp = LocalDateTime.now();
         return newAccount;
     }
-    
+
     private static void comparePasswords(String password, String passwordConfirm) {
         if (!password.equals(passwordConfirm))
             throw new ConditionsNotFulFiledException("Passwords are not equal");

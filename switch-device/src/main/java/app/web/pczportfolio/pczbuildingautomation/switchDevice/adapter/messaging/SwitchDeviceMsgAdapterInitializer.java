@@ -1,8 +1,8 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.messaging;
 
-import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingService;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindAll;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingService;
 import app.web.pczportfolio.pczbuildingautomation.utilities.tools.LoggerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

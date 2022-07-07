@@ -18,7 +18,7 @@ class LocationRestAdapterCreate {
     @ResponseStatus(HttpStatus.CREATED)
     void createLocation(
             @RequestBody @Valid LocationCreateCommandDto locationCreateCommandDto
-    ){
+    ) {
         locationUseCaseCreate.createLocation(locationCreateCommandDto);
     }
 }

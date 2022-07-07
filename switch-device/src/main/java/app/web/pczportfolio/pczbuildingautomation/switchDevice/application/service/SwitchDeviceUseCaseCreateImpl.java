@@ -17,6 +17,7 @@ class SwitchDeviceUseCaseCreateImpl implements SwitchDeviceUseCaseCreate {
     private final SwitchDevicePortSave switchDevicePortSave;
     private final SwitchDevicePortFindLocationByIdAndCurrentUser switchDevicePortFindLocationByIdAndCurrentUser;
     private final SwitchDevicePortCreateChannel switchDevicePortCreateChannel;
+
     @Override
     public SwitchDevice createSwitchDevice(SwitchDeviceCreateDto switchDeviceCreateDto) {
         final var locationToAssign = findLocationToAssign(switchDeviceCreateDto);

@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Random;
 
 @SpringBootTest
 @AutoConfigureMockMvc

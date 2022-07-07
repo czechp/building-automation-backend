@@ -33,17 +33,17 @@ class AccountRestAdapterDeleteTest {
         //given
         final var accountToDelete = accountJpaRepository.save(
                 AccountEntity.builder()
-                .withUsername("userNew")
-                .withPassword(("user123"))
-                .withEmail("userWithoutActivation@gmail.com")
-                .withAccountRole(AccountRole.USER)
-                .withAccountConfigurationEmb(
-                        AccountConfigurationEmb.builder()
-                                .withAdminActivation(false)
-                                .withEmailConfirmed(false)
-                                .withEnableToken("withoutActivation")
-                                .build())
-                .build());
+                        .withUsername("userNew")
+                        .withPassword(("user123"))
+                        .withEmail("userWithoutActivation@gmail.com")
+                        .withAccountRole(AccountRole.USER)
+                        .withAccountConfigurationEmb(
+                                AccountConfigurationEmb.builder()
+                                        .withAdminActivation(false)
+                                        .withEmailConfirmed(false)
+                                        .withEnableToken("withoutActivation")
+                                        .build())
+                        .build());
         final var requestId = accountToDelete.getId();
         final var requestBuilder = MockMvcRequestBuilders.delete(URL + "/{id}", requestId);
         //when

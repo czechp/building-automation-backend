@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountParent {
-        private long id;
-        private String username;
+    private long id;
+    private String username;
 }

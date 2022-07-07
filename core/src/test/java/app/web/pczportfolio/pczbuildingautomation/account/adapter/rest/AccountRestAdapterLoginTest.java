@@ -2,7 +2,6 @@ package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
 import app.web.pczportfolio.pczbuildingautomation.RandomStringGenerator;
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.rest.dto.LoginDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

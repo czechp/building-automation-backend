@@ -42,7 +42,7 @@ class LocationOwnerValidatorTest {
         final var accountFromFacade = new AccountFacadeDto(10L, commonUsername, "USER");
         //when
         when(locationPortFindCurrentUserAccount.findAccountOfCurrentUser()).thenReturn(Optional.of(accountFromFacade));
-        final var isOwner =locationOwnerValidator.currentUserIsOwner(locationToValidate);
+        final var isOwner = locationOwnerValidator.currentUserIsOwner(locationToValidate);
         //then
         assertTrue(isOwner);
     }
@@ -61,7 +61,7 @@ class LocationOwnerValidatorTest {
         final var accountFromFacade = new AccountFacadeDto(10L, commonUsername, "ADMIN");
         //when
         when(locationPortFindCurrentUserAccount.findAccountOfCurrentUser()).thenReturn(Optional.of(accountFromFacade));
-        final var isOwner =locationOwnerValidator.currentUserIsOwner(locationToValidate);
+        final var isOwner = locationOwnerValidator.currentUserIsOwner(locationToValidate);
         //then
         assertTrue(isOwner);
     }
@@ -80,7 +80,7 @@ class LocationOwnerValidatorTest {
         final var accountFromFacade = new AccountFacadeDto(10L, commonUsername, "USER");
         //when
         when(locationPortFindCurrentUserAccount.findAccountOfCurrentUser()).thenReturn(Optional.of(accountFromFacade));
-        final var isOwner =locationOwnerValidator.currentUserIsOwner(locationToValidate);
+        final var isOwner = locationOwnerValidator.currentUserIsOwner(locationToValidate);
         //then
         assertFalse(isOwner);
     }

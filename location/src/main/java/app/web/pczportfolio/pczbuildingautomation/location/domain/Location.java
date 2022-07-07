@@ -1,7 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.location.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
-import app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence.LocationEntity;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
 import lombok.*;
 

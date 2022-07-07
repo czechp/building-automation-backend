@@ -3,8 +3,6 @@ package app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence;
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountSimpleEntity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

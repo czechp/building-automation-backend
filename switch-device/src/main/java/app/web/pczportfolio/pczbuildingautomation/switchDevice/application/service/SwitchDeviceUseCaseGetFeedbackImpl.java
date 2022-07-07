@@ -20,7 +20,7 @@ class SwitchDeviceUseCaseGetFeedbackImpl implements SwitchDeviceUseCaseGetFeedba
     @Transactional
     @Override
     public SwitchDevice receiveFeedbackFromDevice(SwitchDeviceFeedbackDto switchDeviceFeedbackDto) {
-        final var  switchDeviceToUpdate = findSwitchDeviceOrThrowException(switchDeviceFeedbackDto);
+        final var switchDeviceToUpdate = findSwitchDeviceOrThrowException(switchDeviceFeedbackDto);
         switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDeviceToUpdate);
         switchDeviceToUpdate.receiveFeedback(switchDeviceFeedbackDto);
         switchDevicePortSave.saveSwitchDevice(switchDeviceToUpdate);

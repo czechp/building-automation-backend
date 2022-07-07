@@ -18,6 +18,7 @@ public class LocationOwnerValidator {
     public boolean currentUserIsOwner(LocationQueryDto locationQueryDto) {
         return validateOwning(locationQueryDto.getOwner());
     }
+
     private boolean validateOwning(String locationOwner) {
         return findCurrentUserAccount.findAccountOfCurrentUser()
                 .filter(a -> a.getUsername().equals(locationOwner) || a.getRole().equals("ADMIN"))

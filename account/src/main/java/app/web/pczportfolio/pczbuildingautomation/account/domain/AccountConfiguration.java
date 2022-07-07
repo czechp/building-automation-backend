@@ -29,10 +29,6 @@ public class AccountConfiguration {
         this.newPasswordTokenExpiration = LocalDateTime.now();
     }
 
-    private String generateUniqueToken() {
-        return UUID.randomUUID().toString();
-    }
-
     static AccountConfiguration mapFromEntity(AccountConfigurationEmb accountConfigurationEmb) {
         return AccountConfiguration.builder()
                 .withAdminActivation(accountConfigurationEmb.isAdminActivation())
@@ -41,5 +37,9 @@ public class AccountConfiguration {
                 .withNewPasswordToken(accountConfigurationEmb.getNewPasswordToken())
                 .withNewPasswordTokenExpiration(accountConfigurationEmb.getNewPasswordTokenExpiration())
                 .build();
+    }
+
+    private String generateUniqueToken() {
+        return UUID.randomUUID().toString();
     }
 }

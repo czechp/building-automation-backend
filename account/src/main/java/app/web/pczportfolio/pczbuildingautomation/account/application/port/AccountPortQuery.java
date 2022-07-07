@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface AccountPortQuery {
     List<AccountQueryDto> findAllAccountQuery(Pageable pageable);
+
     Optional<AccountQueryDto> findAccountByIdQuery(long accountId);
 }

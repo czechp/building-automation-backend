@@ -24,7 +24,7 @@ class MessagingNameSet {
         this.queueDlxName = createQueueDlxName(messagingChannel);
         this.routingKeyName = createRoutingKey(messagingChannel);
     }
-    
+
     private String createExchangeName(MessagingChannel messagingChannel) {
         return EXCHANGE_PREFIX + messagingChannel.getChannelRootName();
     }
@@ -32,7 +32,6 @@ class MessagingNameSet {
     private String createExchangeDlxName(MessagingChannel messagingChannel) {
         return EXCHANGE_PREFIX + messagingChannel.getChannelRootName() + DLX_SUFFIX;
     }
-
 
 
     private String createQueueName(MessagingChannel messagingChannel) {
@@ -50,6 +49,7 @@ class MessagingNameSet {
                 DLX_SUFFIX;
 
     }
+
     private String createRoutingKey(MessagingChannel messagingChannel) {
 
         return ROUTING_KEY_PREFIX +

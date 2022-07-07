@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NoWhiteSpacesValidator {
-    String message() default "Filed cannot include white spaces";
+    String message() default "Field cannot include white spaces";
 
     Class<?>[] groups() default {};
 

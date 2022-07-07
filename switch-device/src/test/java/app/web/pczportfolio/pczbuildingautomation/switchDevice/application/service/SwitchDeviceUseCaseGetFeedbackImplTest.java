@@ -68,7 +68,7 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
         //when
         when(switchDevicePortFindById.findSwitchDeviceById(switchDeviceId)).thenReturn(Optional.empty());
         //then
-        assertThrows(NotFoundException.class, ()->switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
+        assertThrows(NotFoundException.class, () -> switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
     }
 
     @Test
@@ -88,7 +88,7 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
                 .when(switchDeviceOwnerValidator)
                 .currentUserIsOwnerOrElseThrowException(fetchedSwitchDevice);
         //then
-        assertThrows(NotEnoughPrivilegesException.class, ()->switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
+        assertThrows(NotEnoughPrivilegesException.class, () -> switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
     }
 
     @Test
@@ -105,7 +105,7 @@ class SwitchDeviceUseCaseGetFeedbackImplTest {
         //when
         when(switchDevicePortFindById.findSwitchDeviceById(switchDeviceId)).thenReturn(Optional.of(fetchedSwitchDevice));
         //then
-        assertThrows(ConditionsNotFulFiledException.class, ()->switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
+        assertThrows(ConditionsNotFulFiledException.class, () -> switchDeviceUseCaseGetFeedback.receiveFeedbackFromDevice(dtoWithFeedbackInfo));
     }
 
 }

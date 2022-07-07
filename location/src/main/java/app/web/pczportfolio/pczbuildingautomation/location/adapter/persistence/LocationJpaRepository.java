@@ -1,7 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.location.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationQueryDto;
-import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,5 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.persistence;
 
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

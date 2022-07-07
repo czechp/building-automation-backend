@@ -56,6 +56,6 @@ class AccountUseCaseAssignRoleImplTest {
         //when
         when(accountPortFindById.findAccountById(anyLong())).thenReturn(Optional.empty());
         //then
-        assertThrows(NotFoundException.class, ()->accountUseCaseAssignRole.accountAssignRole(accountId, newAccountRole));
+        assertThrows(NotFoundException.class, () -> accountUseCaseAssignRole.accountAssignRole(accountId, newAccountRole));
     }
 }
