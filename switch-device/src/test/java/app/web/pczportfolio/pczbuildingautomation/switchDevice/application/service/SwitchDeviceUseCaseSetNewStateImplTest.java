@@ -76,7 +76,6 @@ class SwitchDeviceUseCaseSetNewStateImplTest {
         final var switchDeviceNewStateDto = new SwitchDeviceSetNewStateDto(switchDeviceId, switchDeviceNewState);
         //when
         when(switchDevicePortFindById.findSwitchDeviceById(switchDeviceId)).thenReturn(Optional.empty());
-        final var switchDeviceWithNewState = switchDeviceUseCaseSetNewState.setNewStateForSwitchDevice(switchDeviceNewStateDto);
         //then
         assertThrows(NotFoundException.class, () -> switchDeviceUseCaseSetNewState.setNewStateForSwitchDevice(switchDeviceNewStateDto));
     }
