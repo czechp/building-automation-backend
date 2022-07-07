@@ -1,4 +1,4 @@
-package app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter;
+package app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.spring;
 
 
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindAll;

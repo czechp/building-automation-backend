@@ -52,7 +52,6 @@ public class SwitchDeviceEntity {
     private boolean deviceError;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private LocationSimpleEntity locationSimpleEntity;
 
 }

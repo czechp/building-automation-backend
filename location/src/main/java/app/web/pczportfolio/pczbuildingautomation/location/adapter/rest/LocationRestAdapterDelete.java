@@ -15,6 +15,6 @@ class LocationRestAdapterDelete {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteLocation(@PathVariable(name = "id") long locationId) {
-        locationUseCaseDelete.deleteLocation(locationId);
+        locationUseCaseDelete.deleteLocationById(locationId);
     }
 }

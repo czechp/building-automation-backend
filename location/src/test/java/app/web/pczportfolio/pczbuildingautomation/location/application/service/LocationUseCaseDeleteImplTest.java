@@ -4,6 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotEnoughPrivilegesException;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortDelete;
+import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortEmitEventDelete;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindById;
 import app.web.pczportfolio.pczbuildingautomation.location.application.port.LocationPortFindCurrentUserAccount;
 import app.web.pczportfolio.pczbuildingautomation.location.application.useCase.LocationUseCaseDelete;
@@ -27,8 +28,12 @@ class LocationUseCaseDeleteImplTest {
     LocationPortFindById locationPortFindById;
     @Mock
     LocationPortDelete locationPortDelete;
+
+    @Mock
+    LocationPortEmitEventDelete locationPortEmitEventDelete;
     @Mock
     LocationPortFindCurrentUserAccount locationPortFindCurrentUserAccount;
+
 
     LocationOwnerValidator locationOwnerValidator;
 
@@ -37,7 +42,7 @@ class LocationUseCaseDeleteImplTest {
     @BeforeEach
     void init() {
         this.locationOwnerValidator = new LocationOwnerValidator(locationPortFindCurrentUserAccount);
-        this.locationUseCaseDelete = new LocationUseCaseDeleteImpl(locationPortFindById, locationPortDelete, locationOwnerValidator);
+        this.locationUseCaseDelete = new LocationUseCaseDeleteImpl(locationPortFindById, locationPortDelete, locationPortEmitEventDelete, locationOwnerValidator);
     }
 
     @Test
@@ -57,7 +62,7 @@ class LocationUseCaseDeleteImplTest {
         //when
         when(locationPortFindById.findLocationById(anyLong())).thenReturn(Optional.of(locationToDelete));
         when(locationPortFindCurrentUserAccount.findAccountOfCurrentUser()).thenReturn(Optional.of(currentUserAccount));
-        locationUseCaseDelete.deleteLocation(locationId);
+        locationUseCaseDelete.deleteLocationById(locationId);
         //then
         verify(locationPortFindById, times(1)).findLocationById(locationId);
         verify(locationPortDelete, times(1)).deleteLocation(any());
@@ -71,7 +76,7 @@ class LocationUseCaseDeleteImplTest {
         //when
         when(locationPortFindById.findLocationById(anyLong())).thenReturn(Optional.empty());
         //then
-        assertThrows(NotFoundException.class, () -> locationUseCaseDelete.deleteLocation(locationId));
+        assertThrows(NotFoundException.class, () -> locationUseCaseDelete.deleteLocationById(locationId));
     }
 
     @Test
@@ -91,7 +96,7 @@ class LocationUseCaseDeleteImplTest {
         when(locationPortFindById.findLocationById(anyLong())).thenReturn(Optional.of(locationToDelete));
         when(locationPortFindCurrentUserAccount.findAccountOfCurrentUser()).thenReturn(Optional.of(currentUserAccount));
         //then
-        assertThrows(NotEnoughPrivilegesException.class, () -> locationUseCaseDelete.deleteLocation(locationId));
+        assertThrows(NotEnoughPrivilegesException.class, () -> locationUseCaseDelete.deleteLocationById(locationId));
     }
 
 }
