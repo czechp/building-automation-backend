@@ -32,6 +32,5 @@ public class LocationEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private AccountSimpleEntity accountSimpleEntity;
 }
