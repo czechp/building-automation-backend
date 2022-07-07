@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SwitchDeviceSetStateDto {
+public class SwitchDeviceSetNewStateDto {
     private long switchDeviceId;
     private boolean newState;
 }
