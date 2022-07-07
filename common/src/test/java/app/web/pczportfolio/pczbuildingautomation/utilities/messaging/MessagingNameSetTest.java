@@ -1,4 +1,4 @@
-package app.web.pczportfolio.pczbuildingautomation.configuration.messaging;
+package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingChannel;
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingNameSet;
