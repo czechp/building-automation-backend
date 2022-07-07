@@ -2,7 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.serv
 
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.messaging.SwitchDeviceMsgAdapterInitializer;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortCreateChannel;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortChannelCreate;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindLocationById;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortSave;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.LocationParent;
@@ -25,14 +25,14 @@ class SwitchDeviceWarmup {
     private final SwitchDevicePortFindLocationById switchDevicePortFindLocationById;
     private final SwitchDevicePortSave switchDevicePortSave;
 
-    private final SwitchDevicePortCreateChannel switchDevicePortCreateChannel;
+    private final SwitchDevicePortChannelCreate switchDevicePortChannelCreate;
     private final SwitchDeviceMsgAdapterInitializer switchDeviceMsgAdapterInitializer;
     private final Logger logger = LoggerFactory.getLogger(SwitchDeviceWarmup.class);
 
-    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave, SwitchDevicePortCreateChannel switchDevicePortCreateChannel, SwitchDeviceMsgAdapterInitializer switchDeviceMsgAdapterInitializer) {
+    public SwitchDeviceWarmup(SwitchDevicePortFindLocationById switchDevicePortFindLocationById, SwitchDevicePortSave switchDevicePortSave, SwitchDevicePortChannelCreate switchDevicePortChannelCreate, SwitchDeviceMsgAdapterInitializer switchDeviceMsgAdapterInitializer) {
         this.switchDevicePortFindLocationById = switchDevicePortFindLocationById;
         this.switchDevicePortSave = switchDevicePortSave;
-        this.switchDevicePortCreateChannel = switchDevicePortCreateChannel;
+        this.switchDevicePortChannelCreate = switchDevicePortChannelCreate;
         this.switchDeviceMsgAdapterInitializer = switchDeviceMsgAdapterInitializer;
     }
 
@@ -66,7 +66,7 @@ class SwitchDeviceWarmup {
                                 .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
                                 .build()
                 ).map(switchDevicePortSave::saveSwitchDevice)
-                .forEach(switchDevicePortCreateChannel::createChannelForSwitchDevice);
+                .forEach(switchDevicePortChannelCreate::createChannelForSwitchDevice);
 
     }
 }

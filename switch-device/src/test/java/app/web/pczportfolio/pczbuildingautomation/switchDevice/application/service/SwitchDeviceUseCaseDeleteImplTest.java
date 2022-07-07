@@ -32,7 +32,7 @@ class SwitchDeviceUseCaseDeleteImplTest {
     @Mock
     SwitchDevicePortDelete switchDevicePortDelete;
     @Mock
-    SwitchDevicePortDeleteChannel switchDevicePortDeleteChannel;
+    SwitchDevicePortChannelDelete switchDevicePortChannelDelete;
     SwitchDeviceUseCaseDelete switchDeviceUseCaseDelete;
 
     @BeforeEach
@@ -43,7 +43,7 @@ class SwitchDeviceUseCaseDeleteImplTest {
                 switchDevicePortFindByOwner,
                 switchDeviceOwnerValidator,
                 switchDevicePortDelete,
-                switchDevicePortDeleteChannel
+                switchDevicePortChannelDelete
         );
     }
 

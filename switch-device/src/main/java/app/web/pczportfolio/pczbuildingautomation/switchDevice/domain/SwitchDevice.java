@@ -5,7 +5,7 @@ import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFile
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
-import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetStateDto;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetNewStateDto;
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingChannel;
 import lombok.*;
 
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Builder(setterPrefix = "with")
 public class SwitchDevice implements
-        Device<SwitchDeviceSetStateDto, SwitchDeviceFeedbackDto>,
+        Device<SwitchDeviceSetNewStateDto, SwitchDeviceFeedbackDto>,
         MessagingChannel {
     private long id;
 
@@ -60,9 +60,11 @@ public class SwitchDevice implements
         );
     }
 
-    @Override
-    public void setState(SwitchDeviceSetStateDto setStateDto) {
 
+    @Override
+    public void setNewState(SwitchDeviceSetNewStateDto setStateDto) {
+        this.expectedState = setStateDto.isNewState();
+        this.lastSetCommandTimestamp = LocalDateTime.now();
     }
 
     @Override
