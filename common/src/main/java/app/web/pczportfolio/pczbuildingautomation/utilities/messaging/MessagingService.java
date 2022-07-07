@@ -6,4 +6,6 @@ public interface MessagingService {
     String createDeviceDirectExchange(MessagingChannel messagingChannel);
 
     void deleteDeviceChannel(MessagingChannel messagingChannel);
+
+    void sendMessageToChannel(MessagingChannel messagingChannel, String message);
 }

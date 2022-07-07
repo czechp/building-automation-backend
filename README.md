@@ -28,3 +28,5 @@ can cooperate with that system.
 - [x] trim all whitespaces from username in account,
 - [ ] service to posting message in queue when switch device state was changed,
 - [ ] set state of switch device,
+- [ ] handle ttl and dlx,
+- [ ] device events
