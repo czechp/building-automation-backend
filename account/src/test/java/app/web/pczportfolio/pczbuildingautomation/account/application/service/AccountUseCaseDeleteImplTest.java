@@ -2,6 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortDelete;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortEmitDeleteEvent;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindById;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByUsername;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseDelete;
@@ -29,6 +30,8 @@ class AccountUseCaseDeleteImplTest {
     @Mock
     AccountPortFindByUsername accountPortFindByUsername;
     @Mock
+    AccountPortEmitDeleteEvent accountPortEmitDeleteEvent;
+    @Mock
     AccountPortDelete accountPortDelete;
     @Mock
     SecurityCurrentUser securityCurrentUser;
@@ -42,6 +45,7 @@ class AccountUseCaseDeleteImplTest {
                 accountPortFindById,
                 accountPortDelete,
                 accountPortFindByUsername,
+                accountPortEmitDeleteEvent,
                 securityCurrentUser);
     }
 
@@ -57,7 +61,7 @@ class AccountUseCaseDeleteImplTest {
         //when
         when(accountPortFindById.findAccountById(anyLong())).thenReturn(Optional.of(accountToDelete));
         when(securityCurrentUser.getCurrentUser()).thenReturn(currentLoggedUser);
-        accountUseCaseDelete.deleteAccount(id);
+        accountUseCaseDelete.deleteAccountById(id);
         //then
         verify(accountPortDelete, times(1)).deleteAccount(accountToDelete);
         verify(securityCurrentUser, times(1)).getCurrentUser();
@@ -79,7 +83,7 @@ class AccountUseCaseDeleteImplTest {
         when(accountPortFindById.findAccountById(anyLong())).thenReturn(Optional.of(accountToDelete));
         when(securityCurrentUser.getCurrentUser()).thenReturn(currentLoggedUser);
         when(accountPortFindByUsername.findAccountByUsername(anyString())).thenReturn(Optional.of(currentUserIsAdmin));
-        accountUseCaseDelete.deleteAccount(id);
+        accountUseCaseDelete.deleteAccountById(id);
         //then
         verify(accountPortDelete, times(1)).deleteAccount(accountToDelete);
         verify(securityCurrentUser, times(1)).getCurrentUser();
@@ -92,7 +96,7 @@ class AccountUseCaseDeleteImplTest {
         //when
         when(accountPortFindById.findAccountById(anyLong())).thenReturn(Optional.empty());
         //then
-        assertThrows(NotFoundException.class, () -> accountUseCaseDelete.deleteAccount(id));
+        assertThrows(NotFoundException.class, () -> accountUseCaseDelete.deleteAccountById(id));
     }
 
     @Configuration

@@ -2,6 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.application.service;
 
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence.AccountRole;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortDelete;
+import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortEmitDeleteEvent;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindById;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortFindByUsername;
 import app.web.pczportfolio.pczbuildingautomation.account.application.useCase.AccountUseCaseDelete;
@@ -19,26 +20,25 @@ class AccountUseCaseDeleteImpl implements AccountUseCaseDelete {
     private final AccountPortFindById accountPortFindById;
     private final AccountPortDelete accountPortDelete;
     private final AccountPortFindByUsername accountFindByUsername;
+    private final AccountPortEmitDeleteEvent accountPortEmitDeleteEvent;
     private final SecurityCurrentUser securityCurrentUser;
 
     @Transactional
     @Override
-    public void deleteAccount(long id) {
-        accountPortFindById.findAccountById(id)
-                .ifPresentOrElse(
-                        this::checkOwningAndDelete,
-                        NotFoundException.getRunnable("Account with id: " + id + " not exists")
-                );
+    public void deleteAccountById(long accountId) {
+        Account account = accountPortFindById.findAccountById(accountId)
+                .orElseThrow(() -> new NotFoundException("Account with id: " + accountId + " does not exist."));
+        if (userIsAccountOwner(account))
+            deleteAccount(account);
+        else throw new NotEnoughPrivilegesException("You have no permission to delete this account");
+
     }
 
-    private void checkOwningAndDelete(Account account) {
+    private boolean userIsAccountOwner(Account account) {
         String currentUser = securityCurrentUser.getCurrentUser();
         boolean userIsAccountOwner = userIsAccountOwner(account, currentUser);
         boolean userIsAdmin = userIsAdmin(currentUser);
-        if (userIsAccountOwner || userIsAdmin) {
-            accountPortDelete.deleteAccount(account);
-        } else
-            throw new NotEnoughPrivilegesException("You have no permission to delete this account");
+        return userIsAccountOwner || userIsAdmin;
     }
 
     private boolean userIsAdmin(String currentUser) {
@@ -51,4 +51,11 @@ class AccountUseCaseDeleteImpl implements AccountUseCaseDelete {
     private boolean userIsAccountOwner(Account account, String currentUser) {
         return account.getUsername().equals(currentUser);
     }
+    
+    private void deleteAccount(Account account) {
+        accountPortEmitDeleteEvent.emitAccountDeleteEvent(account);
+        accountPortDelete.deleteAccount(account);
+    }
+
+
 }
