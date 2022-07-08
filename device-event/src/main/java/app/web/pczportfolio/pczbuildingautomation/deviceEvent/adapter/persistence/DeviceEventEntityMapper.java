@@ -6,6 +6,7 @@ class DeviceEventEntityMapper {
     DeviceEventEntity toEntity(DeviceEvent deviceEvent) {
         return new DeviceEventEntity(
                 deviceEvent.getId(),
+                deviceEvent.getVersion(),
                 deviceEvent.getDeviceId(),
                 deviceEvent.getDeviceName(),
                 deviceEvent.getDeviceType(),
@@ -18,6 +19,7 @@ class DeviceEventEntityMapper {
     DeviceEvent toDomain(DeviceEventEntity deviceEventEntity){
         return DeviceEvent.builder()
                 .withId(deviceEventEntity.getId())
+                .withVersion(deviceEventEntity.getVersion())
                 .withDeviceId(deviceEventEntity.getDeviceId())
                 .withDeviceName(deviceEventEntity.getDeviceName())
                 .withDeviceType(deviceEventEntity.getDeviceType())

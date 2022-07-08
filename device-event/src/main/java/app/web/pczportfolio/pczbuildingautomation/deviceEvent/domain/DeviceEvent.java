@@ -10,6 +10,7 @@ import lombok.*;
 public
 class DeviceEvent {
     private long id;
+    private long version;
     private long deviceId;
     private String deviceName;
     private String deviceType;

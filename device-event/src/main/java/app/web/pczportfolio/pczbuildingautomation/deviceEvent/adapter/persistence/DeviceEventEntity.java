@@ -18,6 +18,9 @@ class DeviceEventEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Version
+    private long version;
+
     private long deviceId;
 
     @NotNull(message="Device name cannot be null")
