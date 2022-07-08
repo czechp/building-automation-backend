@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-class EventDeviceEntity {
+class DeviceEventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

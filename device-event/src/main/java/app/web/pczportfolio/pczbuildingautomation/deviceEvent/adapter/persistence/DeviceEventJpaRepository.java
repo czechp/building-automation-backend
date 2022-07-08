@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface DeviceEventJpaRepository extends JpaRepository<EventDeviceEntity, Long> {
+interface DeviceEventJpaRepository extends JpaRepository<DeviceEventEntity, Long> {
 }

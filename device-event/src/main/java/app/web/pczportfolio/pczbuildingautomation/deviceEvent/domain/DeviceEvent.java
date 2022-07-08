@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder(setterPrefix = "with")
 @EqualsAndHashCode
+public
 class DeviceEvent {
     private long id;
     private long deviceId;
