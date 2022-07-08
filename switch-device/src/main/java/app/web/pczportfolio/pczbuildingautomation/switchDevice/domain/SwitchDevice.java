@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Builder(setterPrefix = "with")
 public class SwitchDevice implements
         Device<SwitchDeviceSetNewStateDto, SwitchDeviceFeedbackDto>,
-        DeviceChannel {
+        DeviceChannel<Boolean> {
     private long id;
 
     private long version;
@@ -99,5 +99,20 @@ public class SwitchDevice implements
     @Override
     public String getChannelRootName() {
         return SwitchDeviceConfiguration.SWITCH_DEVICE_QUEUE_NAME;
+    }
+
+    @Override
+    public Boolean getState() {
+        return this.state;
+    }
+
+    @Override
+    public Boolean getExpectedState() {
+        return this.expectedState;
+    }
+
+    @Override
+    public String getDeviceTypeName() {
+        return SwitchDeviceConfiguration.SWITCH_DEVICE_NAME;
     }
 }
