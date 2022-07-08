@@ -102,12 +102,12 @@ public class SwitchDevice implements
     }
 
     @Override
-    public Boolean getState() {
+    public Boolean getDeviceState() {
         return this.state;
     }
 
     @Override
-    public Boolean getExpectedState() {
+    public Boolean getDeviceExpectedState() {
         return this.expectedState;
     }
 
