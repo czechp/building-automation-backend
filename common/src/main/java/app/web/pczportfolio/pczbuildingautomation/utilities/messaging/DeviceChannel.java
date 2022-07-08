@@ -1,6 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
-public interface MessagingChannel {
+public interface DeviceChannel {
     long getId();
 
     String getOwner();

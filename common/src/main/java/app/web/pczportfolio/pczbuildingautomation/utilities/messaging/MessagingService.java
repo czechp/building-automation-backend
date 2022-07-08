@@ -1,11 +1,11 @@
 package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
 public interface MessagingService {
-    String createDeviceChannel(MessagingChannel messagingChannel);
+    String createDeviceChannel(DeviceChannel deviceChannel);
 
-    String createDeviceDirectExchange(MessagingChannel messagingChannel);
+    String createDeviceDirectExchange(DeviceChannel deviceChannel);
 
-    void deleteDeviceChannel(MessagingChannel messagingChannel);
+    void deleteDeviceChannel(DeviceChannel deviceChannel);
 
-    void sendMessageToChannel(MessagingChannel messagingChannel, String message);
+    void sendMessageToChannel(DeviceChannel deviceChannel, String message);
 }

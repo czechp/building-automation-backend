@@ -12,22 +12,22 @@ class MessagingServiceImpl implements MessagingService {
 
     private final MessagingMessageSender messagingMessageSender;
     @Override
-    public String createDeviceDirectExchange(MessagingChannel messagingChannel) {
-        return messagingDirectExchangeCreator.createDirectExchangeWithDlx(messagingChannel);
+    public String createDeviceDirectExchange(DeviceChannel deviceChannel) {
+        return messagingDirectExchangeCreator.createDirectExchangeWithDlx(deviceChannel);
     }
 
     @Override
-    public void deleteDeviceChannel(MessagingChannel messagingChannel) {
-        messagingQueueRemover.removeChannel(messagingChannel);
+    public void deleteDeviceChannel(DeviceChannel deviceChannel) {
+        messagingQueueRemover.removeChannel(deviceChannel);
     }
 
     @Override
-    public String createDeviceChannel(MessagingChannel messagingChannel) {
-        return messagingQueueCreator.createDeviceQueue(messagingChannel);
+    public String createDeviceChannel(DeviceChannel deviceChannel) {
+        return messagingQueueCreator.createDeviceQueue(deviceChannel);
     }
 
     @Override
-    public void sendMessageToChannel(MessagingChannel messagingChannel, String message) {
-        messagingMessageSender.sendMessageToQueue(messagingChannel, message);
+    public void sendMessageToChannel(DeviceChannel deviceChannel, String message) {
+        messagingMessageSender.sendMessageToQueue(deviceChannel, message);
     }
 }

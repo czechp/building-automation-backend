@@ -6,7 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetNewStateDto;
-import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingChannel;
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannel;
 import lombok.*;
 
 import java.time.Duration;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Builder(setterPrefix = "with")
 public class SwitchDevice implements
         Device<SwitchDeviceSetNewStateDto, SwitchDeviceFeedbackDto>,
-        MessagingChannel {
+        DeviceChannel {
     private long id;
 
     private long version;

@@ -32,7 +32,7 @@ can cooperate with that system.
 - [ ] device events
 
 ### Events 
-- [ ] rename MessagingChannel to DeviceChannel,
+- [x] rename MessagingChannel to DeviceChannel,
 - [ ] aop dependency,
 - [ ] additional method in DeviceChannel ( getName(), getState() ),
 - [ ] event entity,

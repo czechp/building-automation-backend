@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 class MessagingDirectExchangeCreator {
     private final RabbitAdmin rabbitAdmin;
 
-    String createDirectExchangeWithDlx(MessagingChannel messagingChannel) {
-        final var names = new MessagingNameSet(messagingChannel);
+    String createDirectExchangeWithDlx(DeviceChannel deviceChannel) {
+        final var names = new MessagingNameSet(deviceChannel);
         createDirectExchange(names);
         createFanoutDlxExchangeWithQueue(names);
         return names.getExchangeName();

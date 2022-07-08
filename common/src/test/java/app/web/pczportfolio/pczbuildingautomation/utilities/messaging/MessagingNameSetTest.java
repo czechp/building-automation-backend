@@ -8,7 +8,7 @@ class MessagingNameSetTest {
     @Test
     void correctOfNameTest() {
         //given
-        final var messagingChannel = new MessagingChannel() {
+        final var messagingChannel = new DeviceChannel() {
             @Override
             public long getId() {
                 return 1L;

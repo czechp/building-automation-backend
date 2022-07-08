@@ -18,8 +18,8 @@ class MessagingQueueCreator {
     private static final int TTL_SECONDS_VALUE = 60_000;
     private final RabbitAdmin rabbitAdmin;
 
-    String createDeviceQueue(MessagingChannel messagingChannel) {
-        final var names = new MessagingNameSet(messagingChannel);
+    String createDeviceQueue(DeviceChannel deviceChannel) {
+        final var names = new MessagingNameSet(deviceChannel);
         deleteQueueIfExists(names);
         final var queue = createQueue(names);
         return queue.getName();

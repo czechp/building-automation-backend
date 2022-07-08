@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 class MessagingMessageSender {
     private final RabbitTemplate rabbitTemplate;
 
-    void sendMessageToQueue(MessagingChannel messagingChannel, String message) {
-        MessagingNameSet names = new MessagingNameSet(messagingChannel);
+    void sendMessageToQueue(DeviceChannel deviceChannel, String message) {
+        MessagingNameSet names = new MessagingNameSet(deviceChannel);
         rabbitTemplate.convertAndSend(
                 names.getExchangeName(),
                 names.getRoutingKeyName(),

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 class MessagingQueueRemover {
     private final RabbitAdmin rabbitAdmin;
 
-    void removeChannel(MessagingChannel messagingChannel) {
-        final var nameOfChannel = new MessagingNameSet(messagingChannel).getQueueName();
+    void removeChannel(DeviceChannel deviceChannel) {
+        final var nameOfChannel = new MessagingNameSet(deviceChannel).getQueueName();
         rabbitAdmin.deleteQueue(nameOfChannel);
     }
 }
