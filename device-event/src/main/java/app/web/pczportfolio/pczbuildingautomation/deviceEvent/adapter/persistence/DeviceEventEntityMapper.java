@@ -3,7 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.deviceEvent.adapter.persisten
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 
 class DeviceEventEntityMapper {
-    DeviceEventEntity toEntity(DeviceEvent deviceEvent) {
+    static DeviceEventEntity toEntity(DeviceEvent deviceEvent) {
         return new DeviceEventEntity(
                 deviceEvent.getId(),
                 deviceEvent.getVersion(),
@@ -17,7 +17,7 @@ class DeviceEventEntityMapper {
         );
     }
 
-    DeviceEvent toDomain(DeviceEventEntity deviceEventEntity){
+    static DeviceEvent toDomain(DeviceEventEntity deviceEventEntity){
         return DeviceEvent.builder()
                 .withId(deviceEventEntity.getId())
                 .withVersion(deviceEventEntity.getVersion())
