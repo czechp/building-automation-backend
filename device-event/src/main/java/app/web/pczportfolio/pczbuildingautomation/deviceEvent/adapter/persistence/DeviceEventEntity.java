@@ -2,10 +2,12 @@ package app.web.pczportfolio.pczbuildingautomation.deviceEvent.adapter.persisten
 
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.EventType;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "device_events")
@@ -20,6 +22,9 @@ class DeviceEventEntity {
 
     @Version
     private long version;
+
+    @CreationTimestamp
+    private LocalDateTime creationTimestamp;
 
     private long deviceId;
 

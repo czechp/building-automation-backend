@@ -7,6 +7,7 @@ class DeviceEventEntityMapper {
         return new DeviceEventEntity(
                 deviceEvent.getId(),
                 deviceEvent.getVersion(),
+                deviceEvent.getCreationTimestamp(),
                 deviceEvent.getDeviceId(),
                 deviceEvent.getDeviceName(),
                 deviceEvent.getDeviceType(),
@@ -20,6 +21,7 @@ class DeviceEventEntityMapper {
         return DeviceEvent.builder()
                 .withId(deviceEventEntity.getId())
                 .withVersion(deviceEventEntity.getVersion())
+                .withCreationTimestamp(deviceEventEntity.getCreationTimestamp())
                 .withDeviceId(deviceEventEntity.getDeviceId())
                 .withDeviceName(deviceEventEntity.getDeviceName())
                 .withDeviceType(deviceEventEntity.getDeviceType())

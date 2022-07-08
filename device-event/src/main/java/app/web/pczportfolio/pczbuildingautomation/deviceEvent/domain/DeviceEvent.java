@@ -2,6 +2,8 @@ package app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,6 +13,7 @@ public
 class DeviceEvent {
     private long id;
     private long version;
+    private LocalDateTime creationTimestamp;
     private long deviceId;
     private String deviceName;
     private String deviceType;
