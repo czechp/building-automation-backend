@@ -35,6 +35,7 @@ can cooperate with that system.
 - [x] rename MessagingChannel to DeviceChannel,
 - [x] aop dependency,
 - [x] additional method in DeviceChannel ( getName(), getState() ),
+- [x] AOP annotations,
 - [ ] event entity,
 - [ ] create case,
 - [ ] delete case,
