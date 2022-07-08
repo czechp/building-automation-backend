@@ -30,3 +30,14 @@ can cooperate with that system.
 - [x] set state of switch device,
 - [ ] handle ttl and dlx,
 - [ ] device events
+
+### Events 
+- [x] rename MessagingChannel to DeviceChannel,
+- [x] aop dependency,
+- [x] additional method in DeviceChannel ( getName(), getState() ),
+- [x] AOP annotations,
+- [x] event package,
+- [x] event entity,
+- [ ] create case,
+- [ ] delete case,
+- [ ] update state case

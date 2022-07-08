@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.CreateDeviceEvent;
 import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.dto.LocationFacadeDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceCreateDto;
@@ -18,6 +19,7 @@ class SwitchDeviceUseCaseCreateImpl implements SwitchDeviceUseCaseCreate {
     private final SwitchDevicePortFindLocationByIdAndCurrentUser switchDevicePortFindLocationByIdAndCurrentUser;
     private final SwitchDevicePortChannelCreate switchDevicePortChannelCreate;
 
+    @CreateDeviceEvent
     @Override
     public SwitchDevice createSwitchDevice(SwitchDeviceCreateDto switchDeviceCreateDto) {
         final var locationToAssign = findLocationToAssign(switchDeviceCreateDto);

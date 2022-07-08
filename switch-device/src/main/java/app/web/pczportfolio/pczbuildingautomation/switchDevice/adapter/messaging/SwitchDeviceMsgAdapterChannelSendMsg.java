@@ -2,7 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.switchDevice.adapter.messagin
 
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetNewStateMsgDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortChannelSendMsg;
-import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingChannel;
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannel;
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.MessagingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,9 +17,9 @@ class SwitchDeviceMsgAdapterChannelSendMsg implements SwitchDevicePortChannelSen
 
 
     @Override
-    public void sendMsgToDeviceChannel(MessagingChannel messagingChannel, SwitchDeviceSetNewStateMsgDto switchDeviceSetNewStateMsgDto) throws JsonProcessingException {
+    public void sendMsgToDeviceChannel(DeviceChannel deviceChannel, SwitchDeviceSetNewStateMsgDto switchDeviceSetNewStateMsgDto) throws JsonProcessingException {
         final var message = objectMapper.writeValueAsString(switchDeviceSetNewStateMsgDto);
-        messagingService.sendMessageToChannel(messagingChannel, message);
+        messagingService.sendMessageToChannel(deviceChannel, message);
 
     }
 }

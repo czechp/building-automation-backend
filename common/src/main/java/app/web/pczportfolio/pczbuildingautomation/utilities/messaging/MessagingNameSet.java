@@ -17,45 +17,45 @@ class MessagingNameSet {
     private String routingKeyName;
 
 
-    public MessagingNameSet(MessagingChannel messagingChannel) {
-        this.exchangeName = createExchangeName(messagingChannel);
-        this.exchangeDlxName = createExchangeDlxName(messagingChannel);
-        this.queueName = createQueueName(messagingChannel);
-        this.queueDlxName = createQueueDlxName(messagingChannel);
-        this.routingKeyName = createRoutingKey(messagingChannel);
+    public MessagingNameSet(DeviceChannel deviceChannel) {
+        this.exchangeName = createExchangeName(deviceChannel);
+        this.exchangeDlxName = createExchangeDlxName(deviceChannel);
+        this.queueName = createQueueName(deviceChannel);
+        this.queueDlxName = createQueueDlxName(deviceChannel);
+        this.routingKeyName = createRoutingKey(deviceChannel);
     }
 
-    private String createExchangeName(MessagingChannel messagingChannel) {
-        return EXCHANGE_PREFIX + messagingChannel.getChannelRootName();
+    private String createExchangeName(DeviceChannel deviceChannel) {
+        return EXCHANGE_PREFIX + deviceChannel.getChannelRootName();
     }
 
-    private String createExchangeDlxName(MessagingChannel messagingChannel) {
-        return EXCHANGE_PREFIX + messagingChannel.getChannelRootName() + DLX_SUFFIX;
+    private String createExchangeDlxName(DeviceChannel deviceChannel) {
+        return EXCHANGE_PREFIX + deviceChannel.getChannelRootName() + DLX_SUFFIX;
     }
 
 
-    private String createQueueName(MessagingChannel messagingChannel) {
+    private String createQueueName(DeviceChannel deviceChannel) {
         return QUEUE_PREFIX +
-                messagingChannel.getChannelRootName() +
+                deviceChannel.getChannelRootName() +
                 "-" +
-                messagingChannel.getOwner() +
+                deviceChannel.getOwner() +
                 "-" +
-                messagingChannel.getId();
+                deviceChannel.getId();
     }
 
-    private String createQueueDlxName(MessagingChannel messagingChannel) {
+    private String createQueueDlxName(DeviceChannel deviceChannel) {
         return QUEUE_PREFIX +
-                messagingChannel.getChannelRootName() +
+                deviceChannel.getChannelRootName() +
                 DLX_SUFFIX;
 
     }
 
-    private String createRoutingKey(MessagingChannel messagingChannel) {
+    private String createRoutingKey(DeviceChannel deviceChannel) {
 
         return ROUTING_KEY_PREFIX +
-                messagingChannel.getChannelRootName() +
+                deviceChannel.getChannelRootName() +
                 "-" +
-                messagingChannel.getId();
+                deviceChannel.getId();
     }
 
 
