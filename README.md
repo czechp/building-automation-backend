@@ -36,6 +36,7 @@ can cooperate with that system.
 - [x] aop dependency,
 - [x] additional method in DeviceChannel ( getName(), getState() ),
 - [x] AOP annotations,
+- [x] event package,
 - [ ] event entity,
 - [ ] create case,
 - [ ] delete case,

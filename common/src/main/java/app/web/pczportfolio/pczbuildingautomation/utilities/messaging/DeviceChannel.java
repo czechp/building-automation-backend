@@ -9,9 +9,9 @@ public interface DeviceChannel <T> {
 
     String getName();
 
-    T getState();
+    T getDeviceState();
 
-    T getExpectedState();
+    T getDeviceExpectedState();
 
     String getDeviceTypeName();
 }

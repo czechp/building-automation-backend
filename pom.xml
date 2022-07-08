@@ -9,6 +9,7 @@
         <module>common</module>
         <module>location</module>
         <module>switch-device</module>
+        <module>device-event</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
