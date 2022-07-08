@@ -38,6 +38,8 @@ can cooperate with that system.
 - [x] AOP annotations,
 - [x] event package,
 - [x] event entity,
+- [x] event creators,
+- [ ] warmup,
 - [ ] create case,
 - [ ] delete case,
 - [ ] update state case
