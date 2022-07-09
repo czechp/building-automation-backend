@@ -36,9 +36,9 @@ class DeviceEventEntity {
 
     private String state;
 
-    @NotNull(message="Owner cannot be null")
-    @NotBlank(message="Owner cannot be blank")
-    private String owner;
+    @NotNull(message="User cannot be null")
+    @NotBlank(message="User cannot be blank")
+    private String user;
 
     private boolean failed;
 
