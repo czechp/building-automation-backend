@@ -28,13 +28,13 @@ class DeviceEventEntity {
 
     private long deviceId;
 
-    @NotNull(message="Device name cannot be null")
-    @NotBlank(message="Device name cannot be blank")
     private String deviceName;
 
-    @NotNull(message="Device type cannot be null")
-    @NotBlank(message="Device type cannot be blank")
     private String deviceType;
+
+    private String expectedState;
+
+    private String state;
 
     @NotNull(message="Owner cannot be null")
     @NotBlank(message="Owner cannot be blank")

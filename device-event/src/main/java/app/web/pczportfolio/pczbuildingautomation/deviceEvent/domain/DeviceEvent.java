@@ -19,6 +19,8 @@ class DeviceEvent {
     private String deviceName;
     private String deviceType;
     private String owner;
+    private String expectedState;
+    private String state;
     private String content;
     private EventType eventType;
 
