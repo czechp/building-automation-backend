@@ -40,9 +40,7 @@ class DeviceEventEntity {
     @NotBlank(message="Owner cannot be blank")
     private String owner;
 
-    @NotNull(message="Content cannot be null")
-    @NotBlank(message="Content cannot be blank")
-    private String content;
+    private boolean failed;
 
     @Enumerated(EnumType.STRING)
     private EventType eventType;

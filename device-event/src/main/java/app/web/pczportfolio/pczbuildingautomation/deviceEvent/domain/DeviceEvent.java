@@ -21,7 +21,7 @@ class DeviceEvent {
     private String owner;
     private String expectedState;
     private String state;
-    private String content;
+    private boolean failed;
     private EventType eventType;
 
     private DeviceEvent(DeviceChannel deviceChannel) {
@@ -31,11 +31,11 @@ class DeviceEvent {
         this.owner = deviceChannel.getOwner();
     }
 
-    public static DeviceEvent createEvent(DeviceChannel deviceChannel) {
-        final var createDeviceEvent = new DeviceEvent(deviceChannel);
-        createDeviceEvent.eventType = EventType.CREATE;
-        createDeviceEvent.content = "Created a new device:" + createDeviceEvent.getDeviceType() + " with name: " + createDeviceEvent.getDeviceName();
-        return createDeviceEvent;
+    public static DeviceEvent createEvent(DeviceChannel deviceChannel, EventType eventType, boolean failed) {
+        final var deviceEvent = new DeviceEvent(deviceChannel);
+        deviceEvent.eventType = eventType;
+        deviceEvent.failed = failed;
+        return deviceEvent;
     }
 
     public static DeviceEvent deleteEvent(DeviceChannel deviceChannel) {
