@@ -18,7 +18,7 @@ class DeviceEvent {
     private long deviceId;
     private String deviceName;
     private String deviceType;
-    private String user;
+    private String owner;
     private String expectedState;
     private String state;
     private boolean failed;
@@ -28,7 +28,7 @@ class DeviceEvent {
         this.deviceId = deviceChannel.getId();
         this.deviceName = deviceChannel.getName();
         this.deviceType = deviceChannel.getDeviceTypeName();
-        this.user = deviceChannel.getOwner();
+        this.owner = deviceChannel.getOwner();
     }
 
     public static DeviceEvent createEvent(DeviceChannel deviceChannel, EventType eventType) {
@@ -40,7 +40,7 @@ class DeviceEvent {
 
     public static DeviceEvent createFailedEvent(String user, EventType eventType) {
         final var deviceEvent = new DeviceEvent();
-        deviceEvent.user = user;
+        deviceEvent.owner = user;
         deviceEvent.eventType = eventType;
         deviceEvent.failed = true;
         return deviceEvent;
