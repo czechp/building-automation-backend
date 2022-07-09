@@ -28,16 +28,24 @@ class DeviceEvent {
         this.deviceId = deviceChannel.getId();
         this.deviceName = deviceChannel.getName();
         this.deviceType = deviceChannel.getDeviceTypeName();
-        this.owner = deviceChannel.getOwner();
+        this.user = deviceChannel.getOwner();
     }
 
-    public static DeviceEvent createEvent(DeviceChannel deviceChannel, EventType eventType, boolean failed) {
+    public static DeviceEvent createEvent(DeviceChannel deviceChannel, EventType eventType) {
         final var deviceEvent = new DeviceEvent(deviceChannel);
         deviceEvent.eventType = eventType;
-        deviceEvent.failed = failed;
         return deviceEvent;
     }
-    
+
+
+    public static DeviceEvent createFailedEvent(String user, EventType eventType) {
+        final var deviceEvent = new DeviceEvent();
+        deviceEvent.user = user;
+        deviceEvent.eventType = eventType;
+        deviceEvent.failed = true;
+        return deviceEvent;
+    }
+
     private static String recognizeStateType(Object deviceState) {
         if (deviceState instanceof Boolean) {
             return (boolean) deviceState ? "ON" : "OFF";
