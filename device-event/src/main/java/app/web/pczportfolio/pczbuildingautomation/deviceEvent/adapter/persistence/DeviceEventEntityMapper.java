@@ -2,8 +2,6 @@ package app.web.pczportfolio.pczbuildingautomation.deviceEvent.adapter.persisten
 
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 
-deviceEvent.getExpectedState(),
-deviceEvent.getState(),
 class DeviceEventEntityMapper {
     static DeviceEventEntity toEntity(DeviceEvent deviceEvent) {
         return new DeviceEventEntity(
