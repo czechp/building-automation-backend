@@ -1,11 +1,12 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase;
 
-import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
+
+import java.util.List;
 
 public interface SwitchDeviceUseCaseDelete {
-    void deleteSwitchDeviceById(long switchDeviceId);
+    SwitchDevice deleteSwitchDeviceById(long switchDeviceId);
 
-    void deleteSwitchDevicesLocationRemoved(long locationId);
+    List<SwitchDevice> deleteSwitchDevicesLocationRemoved(long locationId);
 
-    void deleteSwitchDevicesAccountRemoved(AccountFacadeDto accountFacadeDto);
 }
