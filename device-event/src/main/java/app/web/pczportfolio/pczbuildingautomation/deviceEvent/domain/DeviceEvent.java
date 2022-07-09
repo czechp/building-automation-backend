@@ -29,6 +29,8 @@ class DeviceEvent {
         this.deviceName = deviceChannel.getName();
         this.deviceType = deviceChannel.getDeviceTypeName();
         this.owner = deviceChannel.getOwner();
+        this.expectedState = deviceChannel.getEventExpectState();
+        this.state = deviceChannel.getEventState();
     }
 
     public static DeviceEvent createEvent(DeviceChannel deviceChannel, EventType eventType) {

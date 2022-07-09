@@ -18,13 +18,15 @@ class DeviceEventUseCaseCreateImpl implements DeviceEventUseCaseCreate {
     @Override
     public DeviceEvent createDeviceEvent(DeviceChannel deviceChannel, EventType eventType) {
         final var normalDeviceEvent = DeviceEvent.createEvent(deviceChannel, eventType);
-        return deviceEventPortSave.save(normalDeviceEvent);
+        deviceEventPortSave.save(normalDeviceEvent);
+        return normalDeviceEvent;
     }
 
     @Override
     public DeviceEvent createDeviceEventFailed(EventType eventType) {
         final var currentUser = deviceEventPortFindCurrentUser.findCurrentUser();
         final var failedEvent = DeviceEvent.createFailedEvent(currentUser, eventType);
-        return deviceEventPortSave.save(failedEvent);
+        deviceEventPortSave.save(failedEvent);
+        return failedEvent;
     }
 }
