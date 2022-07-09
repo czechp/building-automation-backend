@@ -1,6 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
-public interface DeviceChannel <T> {
+public interface DeviceChannel  {
     long getId();
 
     String getOwner();
@@ -9,9 +9,9 @@ public interface DeviceChannel <T> {
 
     String getName();
 
-    T getDeviceState();
+    String getEventState();
 
-    T getDeviceExpectedState();
+    String getEventExpectState();
 
     String getDeviceTypeName();
 }

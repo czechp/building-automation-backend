@@ -28,8 +28,6 @@ can cooperate with that system.
 - [x] trim all whitespaces from username in account,
 - [x] service to posting message in queue when switch device state was changed,
 - [x] set state of switch device,
-- [ ] handle ttl and dlx,
-- [ ] device events
 
 ### Events 
 - [x] rename MessagingChannel to DeviceChannel,
@@ -38,6 +36,10 @@ can cooperate with that system.
 - [x] AOP annotations,
 - [x] event package,
 - [x] event entity,
+- [x] event creators,
+- [ ] warmup,
 - [ ] create case,
 - [ ] delete case,
-- [ ] update state case
+- [ ] update state case,
+- [ ] failed events,
+- [ ] switch device dlx queue,

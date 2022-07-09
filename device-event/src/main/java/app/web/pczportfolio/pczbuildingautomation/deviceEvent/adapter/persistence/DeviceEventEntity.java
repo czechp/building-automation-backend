@@ -28,21 +28,19 @@ class DeviceEventEntity {
 
     private long deviceId;
 
-    @NotNull(message="Device name cannot be null")
-    @NotBlank(message="Device name cannot be blank")
     private String deviceName;
 
-    @NotNull(message="Device type cannot be null")
-    @NotBlank(message="Device type cannot be blank")
     private String deviceType;
+
+    private String expectedState;
+
+    private String state;
 
     @NotNull(message="Owner cannot be null")
     @NotBlank(message="Owner cannot be blank")
     private String owner;
 
-    @NotNull(message="Content cannot be null")
-    @NotBlank(message="Content cannot be blank")
-    private String content;
+    private boolean failed;
 
     @Enumerated(EnumType.STRING)
     private EventType eventType;

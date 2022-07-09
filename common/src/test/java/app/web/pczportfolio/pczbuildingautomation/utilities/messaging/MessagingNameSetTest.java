@@ -23,6 +23,26 @@ class MessagingNameSetTest {
             public String getChannelRootName() {
                 return "someRoot";
             }
+
+            @Override
+            public String getName() {
+                return null;
+            }
+
+            @Override
+            public String getEventState() {
+                return null;
+            }
+
+            @Override
+            public String getEventExpectState() {
+                return null;
+            }
+
+            @Override
+            public String getDeviceTypeName() {
+                return null;
+            }
         };
         //when
         final var setOfNames = new MessagingNameSet(messagingChannel);
