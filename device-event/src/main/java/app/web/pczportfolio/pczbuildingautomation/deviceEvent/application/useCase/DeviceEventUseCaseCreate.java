@@ -6,5 +6,5 @@ import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChan
 
 public interface DeviceEventUseCaseCreate {
     DeviceEvent createDeviceEvent(DeviceChannel deviceChannel, EventType eventType);
-    DeviceEvent createDeviceEventFailed(String user, EventType eventType);
+    DeviceEvent createDeviceEventFailed(EventType eventType);
 }
