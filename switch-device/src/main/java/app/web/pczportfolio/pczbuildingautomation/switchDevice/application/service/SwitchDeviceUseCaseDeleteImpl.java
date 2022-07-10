@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeleteDeviceEvent;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCase.SwitchDeviceUseCaseDelete;
@@ -21,7 +22,9 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
     private final SwitchDevicePortDelete switchDevicePortDelete;
     private final SwitchDevicePortChannelDelete switchDevicePortChannelDelete;
 
+
     @Override
+    @DeleteDeviceEvent
     public SwitchDevice deleteSwitchDeviceById(long switchDeviceId) {
         final SwitchDevice switchDevice = getSwitchDevice(switchDeviceId);
         switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDevice);
@@ -30,6 +33,7 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
     }
 
     @Override
+    @DeleteDeviceEvent
     public List<SwitchDevice> deleteSwitchDevicesLocationRemoved(long locationId) {
         List<SwitchDevice> switchDevicesToDelete = switchDevicePortFindByLocationId.findSwitchDevicesByLocationId(locationId);
         switchDevicesToDelete
