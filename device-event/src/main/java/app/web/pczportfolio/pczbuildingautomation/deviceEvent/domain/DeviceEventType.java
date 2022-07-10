@@ -1,6 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain;
 
-public enum EventType {
+public enum DeviceEventType {
     CREATE,
     DELETE,
     NEW_STATE_REQUEST,

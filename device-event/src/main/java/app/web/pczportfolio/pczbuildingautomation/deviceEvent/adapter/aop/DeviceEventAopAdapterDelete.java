@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.adapter.aop;
 
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.useCase.DeviceEventUseCaseCreate;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.EventType;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEventType;
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannel;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.JoinPoint;
@@ -20,7 +20,7 @@ class DeviceEventAopAdapterDelete {
     private final DeviceEventUseCaseCreate deviceEventUseCaseCreate;
 
     @AfterReturning(
-            value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeleteDeviceEvent)",
+            value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventDelete)",
             returning = "deviceChannel"
     )
     public void deleteDeviceEventAdvice(JoinPoint joinPoint, Object deviceChannel) {
@@ -30,9 +30,9 @@ class DeviceEventAopAdapterDelete {
             createManyRemoveEvent(deviceChannel);
     }
 
-    @AfterThrowing("@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeleteDeviceEvent)")
+    @AfterThrowing("@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventDelete)")
     public void deleteFailedDeviceEvent(JoinPoint joinPoint) {
-        deviceEventUseCaseCreate.createDeviceEventFailed(EventType.DELETE);
+        deviceEventUseCaseCreate.createDeviceEventFailed(DeviceEventType.DELETE);
     }
 
     private void createSingleRemoveEvent(Object deviceChannel) {
@@ -41,7 +41,7 @@ class DeviceEventAopAdapterDelete {
     }
 
     private void createDeleteEvent(DeviceChannel channel) {
-        deviceEventUseCaseCreate.createDeviceEvent(channel, EventType.DELETE);
+        deviceEventUseCaseCreate.createDeviceEvent(channel, DeviceEventType.DELETE);
     }
 
 

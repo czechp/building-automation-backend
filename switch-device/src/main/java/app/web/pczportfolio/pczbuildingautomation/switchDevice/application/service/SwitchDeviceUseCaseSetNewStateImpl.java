@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventSetNewStateRequest;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetNewStateDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceSetNewStateMsgDto;
@@ -21,6 +22,7 @@ class SwitchDeviceUseCaseSetNewStateImpl implements SwitchDeviceUseCaseSetNewSta
     private final SwitchDevicePortSave switchDevicePortSave;
 
     @Override
+    @DeviceEventSetNewStateRequest
     public SwitchDevice setNewStateForSwitchDevice(SwitchDeviceSetNewStateDto switchDeviceSetNewStateDto) throws JsonProcessingException {
         final var switchDevice = getSwitchDeviceOrThrowException(switchDeviceSetNewStateDto.getSwitchDeviceId());
         switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDevice);
