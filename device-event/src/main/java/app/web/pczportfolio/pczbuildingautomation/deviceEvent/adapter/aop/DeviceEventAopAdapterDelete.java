@@ -20,7 +20,7 @@ class DeviceEventAopAdapterDelete {
     private final DeviceEventUseCaseCreate deviceEventUseCaseCreate;
 
     @AfterReturning(
-            value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeleteDeviceEvent)",
+            value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventDelete)",
             returning = "deviceChannel"
     )
     public void deleteDeviceEventAdvice(JoinPoint joinPoint, Object deviceChannel) {
@@ -30,7 +30,7 @@ class DeviceEventAopAdapterDelete {
             createManyRemoveEvent(deviceChannel);
     }
 
-    @AfterThrowing("@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeleteDeviceEvent)")
+    @AfterThrowing("@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventDelete)")
     public void deleteFailedDeviceEvent(JoinPoint joinPoint) {
         deviceEventUseCaseCreate.createDeviceEventFailed(DeviceEventType.DELETE);
     }

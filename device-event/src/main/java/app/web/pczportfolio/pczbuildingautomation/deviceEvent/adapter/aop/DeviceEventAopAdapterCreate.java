@@ -17,7 +17,7 @@ class DeviceEventAopAdapterCreate {
     private final DeviceEventType createDeviceEventType = DeviceEventType.CREATE;
 
     @AfterReturning(
-            value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.CreateDeviceEvent)",
+            value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventCreate)",
             returning = "deviceChannel"
     )
     public void createDeviceEventAdvice(JoinPoint joinPoint, Object deviceChannel) {
@@ -25,7 +25,7 @@ class DeviceEventAopAdapterCreate {
                 .ifPresent(channel -> deviceEventUseCaseCreate.createDeviceEvent(channel, createDeviceEventType));
     }
 
-    @AfterThrowing(value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.CreateDeviceEvent)")
+    @AfterThrowing(value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventCreate)")
     public void createFailedDeviceEventAdvice() {
         deviceEventUseCaseCreate.createDeviceEventFailed(createDeviceEventType);
     }
