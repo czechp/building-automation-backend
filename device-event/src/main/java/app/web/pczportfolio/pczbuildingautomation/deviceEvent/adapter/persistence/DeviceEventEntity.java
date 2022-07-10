@@ -1,6 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.adapter.persistence;
 
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.EventType;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEventType;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -43,6 +43,6 @@ class DeviceEventEntity {
     private boolean failed;
 
     @Enumerated(EnumType.STRING)
-    private EventType eventType;
+    private DeviceEventType deviceEventType;
 
 }

@@ -22,7 +22,7 @@ class DeviceEvent {
     private String expectedState;
     private String state;
     private boolean failed;
-    private EventType eventType;
+    private DeviceEventType deviceEventType;
 
     private DeviceEvent(DeviceChannel deviceChannel) {
         this.deviceId = deviceChannel.getId();
@@ -33,17 +33,17 @@ class DeviceEvent {
         this.state = deviceChannel.getEventState();
     }
 
-    public static DeviceEvent createEvent(DeviceChannel deviceChannel, EventType eventType) {
+    public static DeviceEvent createEvent(DeviceChannel deviceChannel, DeviceEventType deviceEventType) {
         final var deviceEvent = new DeviceEvent(deviceChannel);
-        deviceEvent.eventType = eventType;
+        deviceEvent.deviceEventType = deviceEventType;
         return deviceEvent;
     }
 
 
-    public static DeviceEvent createFailedEvent(String user, EventType eventType) {
+    public static DeviceEvent createFailedEvent(String user, DeviceEventType deviceEventType) {
         final var deviceEvent = new DeviceEvent();
         deviceEvent.owner = user;
-        deviceEvent.eventType = eventType;
+        deviceEvent.deviceEventType = deviceEventType;
         deviceEvent.failed = true;
         return deviceEvent;
     }

@@ -2,7 +2,7 @@ package app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.servi
 
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortSave;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.EventType;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEventType;
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannel;
 import app.web.pczportfolio.pczbuildingautomation.utilities.tools.LoggerInfo;
 import org.slf4j.Logger;
@@ -34,10 +34,10 @@ class DeviceEventWarmup {
 
     private void saveNormalEvents() {
         Stream.of(
-                DeviceEvent.createEvent(supplyDeviceChannel(1, "First device event"), EventType.CREATE),
-                DeviceEvent.createEvent(supplyDeviceChannel(2, "Second device event"), EventType.DELETE),
-                DeviceEvent.createEvent(supplyDeviceChannel(3, "Third device event"), EventType.NEW_STATE_REQUEST),
-                DeviceEvent.createEvent(supplyDeviceChannel(4, "Fourth device event"), EventType.FEEDBACK_FROM_DEVICE)
+                DeviceEvent.createEvent(supplyDeviceChannel(1, "First device event"), DeviceEventType.CREATE),
+                DeviceEvent.createEvent(supplyDeviceChannel(2, "Second device event"), DeviceEventType.DELETE),
+                DeviceEvent.createEvent(supplyDeviceChannel(3, "Third device event"), DeviceEventType.NEW_STATE_REQUEST),
+                DeviceEvent.createEvent(supplyDeviceChannel(4, "Fourth device event"), DeviceEventType.FEEDBACK_FROM_DEVICE)
         ).forEach(deviceEventPortSave::save);
     }
 
@@ -82,10 +82,10 @@ class DeviceEventWarmup {
 
     private void saveFailedEvents() {
         Stream.of(
-                        DeviceEvent.createFailedEvent(EVENT_OWNER, EventType.CREATE),
-                        DeviceEvent.createFailedEvent(EVENT_OWNER, EventType.DELETE),
-                        DeviceEvent.createFailedEvent(EVENT_OWNER, EventType.NEW_STATE_REQUEST),
-                        DeviceEvent.createFailedEvent(EVENT_OWNER, EventType.FEEDBACK_FROM_DEVICE)
+                        DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.CREATE),
+                        DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.DELETE),
+                        DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.NEW_STATE_REQUEST),
+                        DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.FEEDBACK_FROM_DEVICE)
                 )
                 .forEach(deviceEventPortSave::save);
     }

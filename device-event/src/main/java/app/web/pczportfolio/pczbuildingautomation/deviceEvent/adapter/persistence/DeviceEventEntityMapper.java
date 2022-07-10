@@ -15,7 +15,7 @@ class DeviceEventEntityMapper {
                 deviceEvent.getState(),
                 deviceEvent.getOwner(),
                 deviceEvent.isFailed(),
-                deviceEvent.getEventType()
+                deviceEvent.getDeviceEventType()
         );
     }
 

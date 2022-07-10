@@ -1,7 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.adapter.aop;
 
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.useCase.DeviceEventUseCaseCreate;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.EventType;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEventType;
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 class DeviceEventAopAdapterCreate {
     private final DeviceEventUseCaseCreate deviceEventUseCaseCreate;
-    private final EventType createEventType = EventType.CREATE;
+    private final DeviceEventType createDeviceEventType = DeviceEventType.CREATE;
 
     @AfterReturning(
             value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.CreateDeviceEvent)",
@@ -22,11 +22,11 @@ class DeviceEventAopAdapterCreate {
     )
     public void createDeviceEventAdvice(JoinPoint joinPoint, Object deviceChannel) {
         DeviceEventAopDeviceChannelMapper.castToDeviceChannel(deviceChannel)
-                .ifPresent(channel -> deviceEventUseCaseCreate.createDeviceEvent(channel, createEventType));
+                .ifPresent(channel -> deviceEventUseCaseCreate.createDeviceEvent(channel, createDeviceEventType));
     }
 
     @AfterThrowing(value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.CreateDeviceEvent)")
     public void createFailedDeviceEventAdvice() {
-        deviceEventUseCaseCreate.createDeviceEventFailed(createEventType);
+        deviceEventUseCaseCreate.createDeviceEventFailed(createDeviceEventType);
     }
 }
