@@ -68,4 +68,18 @@ class DeviceEventAopAdapterDeleteTest {
         final var listOfThreeDeviceEvent = deviceEventJpaRepository.findAll();
         assertThat(listOfThreeDeviceEvent, hasSize(3));
     }
+
+    @Test
+    @WithMockUser
+    void deleteFailedDeviceEvent() throws Exception {
+        final var switchDeviceId = Integer.MAX_VALUE;
+        final var requestBuilder = MockMvcRequestBuilders
+                .delete(URL_SWITCH_DEVICES + "/{id}", switchDeviceId);
+        //when
+        mockMvc.perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+        //then
+        final var listWithSingleEvent = deviceEventJpaRepository.findAll();
+        assertThat(listWithSingleEvent, hasSize(1));
+    }
 }
