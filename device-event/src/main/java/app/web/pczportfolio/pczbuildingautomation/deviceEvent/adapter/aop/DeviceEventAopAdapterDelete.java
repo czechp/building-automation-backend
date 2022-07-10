@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChan
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,10 @@ class DeviceEventAopAdapterDelete {
             createManyRemoveEvent(deviceChannel);
     }
 
+    @AfterThrowing("@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeleteDeviceEvent)")
+    public void deleteFailedDeviceEvent(JoinPoint joinPoint) {
+        deviceEventUseCaseCreate.createDeviceEventFailed(EventType.DELETE);
+    }
 
     private void createSingleRemoveEvent(Object deviceChannel) {
         DeviceEventAopDeviceChannelMapper.castToDeviceChannel(deviceChannel)
