@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChan
 import lombok.AllArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,12 @@ class DeviceEventAopAdapterFeedback {
     public void createFeedbackDeviceEventAdvice(JoinPoint joinPoint, Object deviceChannel) {
         DeviceEventAopDeviceChannelMapper.castToDeviceChannel(deviceChannel)
                 .ifPresent(this::createFeedbackDeviceEvent);
+    }
+
+
+    @AfterThrowing(value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventFeedback)")
+    public void createFailedFeedbackDeviceEventAdvice(JoinPoint joinPoint) {
+        deviceEventUseCaseCreate.createDeviceEventFailed(DeviceEventType.FEEDBACK_FROM_DEVICE);
     }
 
     private void createFeedbackDeviceEvent(DeviceChannel deviceChannel) {
