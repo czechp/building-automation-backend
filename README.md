@@ -46,3 +46,4 @@ can cooperate with that system.
 - [ ] query (findAll, findByAccount),
 - [ ] remove event (only by admin),
 - [ ] switch device dlx queue,
+- [ ] mark @Transactional above use cases
