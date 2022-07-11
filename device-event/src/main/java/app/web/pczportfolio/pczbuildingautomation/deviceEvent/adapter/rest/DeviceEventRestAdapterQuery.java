@@ -24,4 +24,11 @@ class DeviceEventRestAdapterQuery {
         return deviceEventQuery.findAllDeviceEvents(pageable);
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @Secured({"ROLE_ADMIN"})
+    DeviceEventQueryDto findEventDeviceById(@PathVariable(name = "id") long deviceEventId) {
+        return deviceEventQuery.findById(deviceEventId);
+    }
+
 }
