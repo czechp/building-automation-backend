@@ -18,7 +18,7 @@ class DeviceEventAopAdapterFeedback {
     @AfterReturning(
             value = "@annotation(app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventFeedback)",
             returning = "deviceChannel")
-    public void deviceEventFeedbackAdvice(JoinPoint joinPoint, Object deviceChannel) {
+    public void createFeedbackDeviceEventAdvice(JoinPoint joinPoint, Object deviceChannel) {
         DeviceEventAopDeviceChannelMapper.castToDeviceChannel(deviceChannel)
                 .ifPresent(this::createFeedbackDeviceEvent);
     }

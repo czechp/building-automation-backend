@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service;
 
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.annotation.DeviceEventFeedback;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceFeedbackDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindById;
@@ -19,6 +20,7 @@ class SwitchDeviceUseCaseGetFeedbackImpl implements SwitchDeviceUseCaseGetFeedba
 
     @Transactional
     @Override
+    @DeviceEventFeedback
     public SwitchDevice receiveFeedbackFromDevice(SwitchDeviceFeedbackDto switchDeviceFeedbackDto) {
         final var switchDeviceToUpdate = findSwitchDeviceOrThrowException(switchDeviceFeedbackDto);
         switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDeviceToUpdate);
