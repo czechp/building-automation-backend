@@ -1,8 +1,34 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain;
 
 public enum DeviceEventType {
-    CREATE,
-    DELETE,
-    NEW_STATE_REQUEST,
-    FEEDBACK_FROM_DEVICE
+    CREATE {
+        @Override
+        public String getFullName() {
+            return CREATE.removeWhiteSpaces();
+        }
+    },
+    DELETE {
+        @Override
+        public String getFullName() {
+            return DELETE.removeWhiteSpaces();
+        }
+    },
+    NEW_STATE_REQUEST {
+        @Override
+        public String getFullName() {
+            return NEW_STATE_REQUEST.removeWhiteSpaces();
+        }
+    },
+    FEEDBACK_FROM_DEVICE {
+        @Override
+        public String getFullName() {
+            return FEEDBACK_FROM_DEVICE.removeWhiteSpaces();
+        }
+    };
+
+    public abstract String getFullName();
+
+    private String removeWhiteSpaces() {
+        return this.toString().replace("_", " ");
+    }
 }

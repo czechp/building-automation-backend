@@ -31,6 +31,7 @@ class DeviceEventEntityMapper {
                 .withState(deviceEventEntity.getState())
                 .withOwner(deviceEventEntity.getOwner())
                 .withFailed(deviceEventEntity.isFailed())
+                .withDeviceEventType(deviceEventEntity.getDeviceEventType())
                 .build();
     }
 }

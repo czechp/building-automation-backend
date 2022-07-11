@@ -48,11 +48,4 @@ class DeviceEvent {
         return deviceEvent;
     }
 
-    private static String recognizeStateType(Object deviceState) {
-        if (deviceState instanceof Boolean) {
-            return (boolean) deviceState ? "ON" : "OFF";
-        }
-
-        return "UNRECOGNIZED";
-    }
 }
