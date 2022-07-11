@@ -31,4 +31,10 @@ class DeviceEventRestAdapterQuery {
         return deviceEventQuery.findById(deviceEventId);
     }
 
+    @GetMapping("/account")
+    @ResponseStatus(HttpStatus.OK)
+    List<DeviceEventQueryDto> findDeviceEvents(Pageable pageable){
+        return deviceEventQuery.findByCurrentUser(pageable);
+    }
+
 }
