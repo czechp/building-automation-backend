@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.dto;
 
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.query.DeviceEventSummaryFormatter;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEventType;
 import lombok.AccessLevel;
@@ -18,16 +19,16 @@ public class DeviceEventQueryDto {
     private long deviceId;
     private boolean failed;
     private DeviceEventType deviceEvent;
-    private String content;
+    private String summary;
 
-    public static DeviceEventQueryDto create(DeviceEvent deviceEvent, String content) {
+    public static DeviceEventQueryDto create(DeviceEvent deviceEvent) {
         return new DeviceEventQueryDto(
                 deviceEvent.getId(),
                 deviceEvent.getCreationTimestamp(),
                 deviceEvent.getDeviceId(),
                 deviceEvent.isFailed(),
                 deviceEvent.getDeviceEventType(),
-                content
+                DeviceEventSummaryFormatter.createSummary(deviceEvent)
         );
     }
 }
