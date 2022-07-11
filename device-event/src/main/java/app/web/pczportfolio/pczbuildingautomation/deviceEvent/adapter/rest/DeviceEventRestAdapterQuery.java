@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/device-events")
 @CrossOrigin("*")
 @AllArgsConstructor
-class EventDeviceRestAdapterQuery {
+class DeviceEventRestAdapterQuery {
     private final DeviceEventQuery deviceEventQuery;
 
     @GetMapping
