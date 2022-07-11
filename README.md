@@ -41,7 +41,7 @@ can cooperate with that system.
 - [x] create case,
 - [x] delete case,
 - [x] set new state case,
-- [ ] get feedback case
+- [x] get feedback case
 - [x] failed events,
 - [ ] query (findAll, findByAccount),
 - [ ] remove event (only by admin),
