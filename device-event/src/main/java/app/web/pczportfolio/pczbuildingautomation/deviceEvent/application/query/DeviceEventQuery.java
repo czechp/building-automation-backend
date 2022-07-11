@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface DeviceEventQuery {
     List<DeviceEventQueryDto> findAllDeviceEvents(Pageable pageable);
-    List<DeviceEventQueryDto> findByCurrentUser(String owner, Pageable pageable);
+    List<DeviceEventQueryDto> findByCurrentUser(Pageable pageable);
     DeviceEventQueryDto findById(long deviceEventId);
 }

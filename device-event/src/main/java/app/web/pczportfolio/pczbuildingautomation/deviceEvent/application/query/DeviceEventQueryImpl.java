@@ -30,7 +30,7 @@ class DeviceEventQueryImpl implements DeviceEventQuery {
     }
 
     @Override
-    public List<DeviceEventQueryDto> findByCurrentUser(String owner, Pageable pageable) {
+    public List<DeviceEventQueryDto> findByCurrentUser(Pageable pageable) {
         final var currentUser = deviceEventPortFindCurrentUser.findCurrentUser();
         return deviceEventPortFindByOwner.findDeviceEventsByOwner(currentUser, pageable)
                 .stream()
