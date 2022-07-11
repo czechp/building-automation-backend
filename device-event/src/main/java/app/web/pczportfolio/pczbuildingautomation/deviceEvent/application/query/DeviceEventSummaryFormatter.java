@@ -37,6 +37,8 @@ public class DeviceEventSummaryFormatter {
                 .append(deviceEvent.getDeviceEventType().getFullName())
                 .append("\n")
                 .append("Status: ")
-                .append(deviceEvent.isFailed() ? "FAILED" : "SUCCESS");
+                .append(deviceEvent.isFailed() ? "FAILED" : "SUCCESS")
+                .append("\n");
+
     }
 }
