@@ -24,6 +24,13 @@ public enum DeviceEventType {
         public String getFullName() {
             return FEEDBACK_FROM_DEVICE.removeWhiteSpaces();
         }
+    },
+
+    REJECTED_MESSAGE {
+        @Override
+        public String getFullName() {
+            return REJECTED_MESSAGE.removeWhiteSpaces();
+        }
     };
 
     public abstract String getFullName();
