@@ -1,9 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.adapter.persistence;
 
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindAll;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindById;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindByOwner;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortSave;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +16,8 @@ class DeviceEventPersistenceAdapter implements
         DeviceEventPortSave,
         DeviceEventPortFindAll,
         DeviceEventPortFindByOwner,
-        DeviceEventPortFindById
+        DeviceEventPortFindById,
+        DeviceEventPortDelete
 {
     private final DeviceEventJpaRepository deviceEventJpaRepository;
 
@@ -49,5 +47,11 @@ class DeviceEventPersistenceAdapter implements
     public Optional<DeviceEvent> findDeviceEventById(long id) {
         return deviceEventJpaRepository.findById(id)
                 .map(DeviceEventEntityMapper::toDomain);
+    }
+
+    @Override
+    public void deleteDeviceEvent(DeviceEvent deviceEvent) {
+        final var deviceEventEntityToDelete = DeviceEventEntityMapper.toEntity(deviceEvent);
+        deviceEventJpaRepository.delete(deviceEventEntityToDelete);
     }
 }
