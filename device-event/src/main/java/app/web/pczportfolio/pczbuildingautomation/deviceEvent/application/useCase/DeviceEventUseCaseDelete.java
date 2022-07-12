@@ -3,5 +3,5 @@ package app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.useCa
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 
 public interface DeviceEventUseCaseDelete {
-    DeviceEvent deleteDeviceEvent(DeviceEvent deviceEvent);
+    DeviceEvent deleteDeviceEvent(long deviceEventId);
 }
