@@ -15,7 +15,8 @@ import java.util.Map;
 class MessagingQueueCreator {
     private static final String DLX_HEADER = "x-dead-letter-exchange";
     private static final String TTL_HEADER = "x-message-ttl";
-    private static final int TTL_SECONDS_VALUE = 60_000;
+    //TODO: change this value to 60 000 == 1 min
+    private static final int TTL_MILISECONDS_VALUE = 1_000;
     private final RabbitAdmin rabbitAdmin;
 
     String createDeviceQueue(DeviceChannel deviceChannel) {
@@ -43,7 +44,7 @@ class MessagingQueueCreator {
     private Map<String, Object> createQueueArguments(MessagingNameSet names) {
         final var arguments = new HashMap<String, Object>();
         arguments.put(DLX_HEADER, names.getExchangeDlxName());
-        arguments.put(TTL_HEADER, TTL_SECONDS_VALUE);
+        arguments.put(TTL_HEADER, TTL_MILISECONDS_VALUE);
         return arguments;
     }
 
