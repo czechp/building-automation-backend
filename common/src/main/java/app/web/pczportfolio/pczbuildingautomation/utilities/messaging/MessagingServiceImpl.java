@@ -10,8 +10,9 @@ class MessagingServiceImpl implements MessagingService {
     private final MessagingDirectExchangeCreator messagingDirectExchangeCreator;
     private final MessagingQueueRemover messagingQueueRemover;
     private final MessagingQueueCreator messagingQueueCreator;
-
     private final MessagingMessageSender messagingMessageSender;
+
+    private final MessagingListenerActivator messagingListenerActivator;
     @Override
     public String createDeviceDirectExchange(DeviceChannel deviceChannel) {
         return messagingDirectExchangeCreator.createDirectExchangeWithDlx(deviceChannel);
@@ -30,5 +31,10 @@ class MessagingServiceImpl implements MessagingService {
     @Override
     public void sendMessageToChannel(DeviceChannel deviceChannel, DeviceChannelMsg deviceChannelMsg) throws JsonProcessingException {
         messagingMessageSender.sendMessageToQueue(deviceChannel, deviceChannelMsg);
+    }
+
+    @Override
+    public void listenerActivation(String listenerId) {
+        messagingListenerActivator.activateListener(listenerId);
     }
 }

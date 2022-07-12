@@ -10,4 +10,6 @@ public interface MessagingService {
     void deleteDeviceChannel(DeviceChannel deviceChannel);
 
     void sendMessageToChannel(DeviceChannel deviceChannel, DeviceChannelMsg deviceChannelMsg) throws JsonProcessingException;
+
+    void listenerActivation(String listenerId);
 }
