@@ -43,7 +43,7 @@ can cooperate with that system.
 - [x] set new state case,
 - [x] get feedback case
 - [x] failed events,
-- [ ] query (findAll, findByAccount),
-- [ ] remove event (only by admin),
+- [x] query (findAll, findByAccount),
+- [x] remove event (only by admin),
 - [ ] switch device dlx queue,
 - [ ] mark @Transactional above use cases
