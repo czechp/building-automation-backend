@@ -10,15 +10,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class MessagingMessageSender {
     private final RabbitTemplate rabbitTemplate;
-    private final ObjectMapper objectMapper;
 
     void sendMessageToQueue(DeviceChannel deviceChannel, DeviceChannelMsg deviceChannelMsg) throws JsonProcessingException {
         MessagingNameSet names = new MessagingNameSet(deviceChannel);
-        final var message = objectMapper.writeValueAsString(deviceChannelMsg);
         rabbitTemplate.convertAndSend(
                 names.getExchangeName(),
                 names.getRoutingKeyName(),
-                message
+                deviceChannelMsg
         );
     }
 }

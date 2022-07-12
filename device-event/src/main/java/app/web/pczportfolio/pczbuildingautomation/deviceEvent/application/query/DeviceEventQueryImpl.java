@@ -39,7 +39,6 @@ class DeviceEventQueryImpl implements DeviceEventQuery {
 
     }
 
-    //TODO
     @Override
     public DeviceEventQueryDto findById(long deviceEventId) {
         return deviceEventPortFindById.findDeviceEventById(deviceEventId)
