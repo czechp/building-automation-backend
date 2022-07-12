@@ -30,7 +30,7 @@ class SwitchDeviceUseCaseSetNewStateImpl implements SwitchDeviceUseCaseSetNewSta
         switchDevice.setNewState(switchDeviceSetNewStateDto);
         switchDevicePortSave.saveSwitchDevice(switchDevice);
 
-        final var message = new SwitchDeviceSetNewStateMsgDto(switchDevice.isExpectedState());
+        final var message = new SwitchDeviceSetNewStateMsgDto(switchDevice);
         switchDevicePortChannelSendMsg.sendMsgToDeviceChannel(switchDevice, message);
 
         return switchDevice;
