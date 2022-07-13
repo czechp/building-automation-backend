@@ -47,3 +47,10 @@ can cooperate with that system.
 - [x] remove event (only by admin),
 - [x] switch device dlx queue,
 - [ ] mark @Transactional above use cases
+
+### Authorization from external services
+- [ ] account endpoint to authenticate user from other systems by http request
+### Docker
+- [ ] prepare image with MySql (MariaDb),
+- [ ] prepare image with backend (OpenJdk11),
+- [ ] connect each other in docker-compose
