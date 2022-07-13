@@ -10,6 +10,7 @@ import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.function.Function;
 
@@ -23,6 +24,7 @@ class AccountUseCaseRestorePasswordImpl implements AccountUseCaseRestorePassword
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    @Transactional
     public Account generateTokenToRestorePassword(String email) {
         Account account = accountPortFindByEmail.findAccountByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Account with such email: " + email + " does not exist"));

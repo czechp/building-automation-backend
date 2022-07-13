@@ -11,6 +11,7 @@ import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.useCa
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -21,6 +22,7 @@ class SwitchDeviceUseCaseCreateImpl implements SwitchDeviceUseCaseCreate {
 
     @DeviceEventCreate
     @Override
+    @Transactional
     public SwitchDevice createSwitchDevice(SwitchDeviceCreateDto switchDeviceCreateDto) {
         final var locationToAssign = findLocationToAssign(switchDeviceCreateDto);
         final var createdSwitchDevice = SwitchDevice.create(switchDeviceCreateDto, locationToAssign);

@@ -23,8 +23,8 @@ class AccountUseCaseDeleteImpl implements AccountUseCaseDelete {
     private final AccountPortEmitDeleteEvent accountPortEmitDeleteEvent;
     private final SecurityCurrentUser securityCurrentUser;
 
-    @Transactional
     @Override
+    @Transactional
     public void deleteAccountById(long accountId) {
         Account account = accountPortFindById.findAccountById(accountId)
                 .orElseThrow(() -> new NotFoundException("Account with id: " + accountId + " does not exist."));

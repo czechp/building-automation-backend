@@ -8,6 +8,7 @@ import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -16,6 +17,7 @@ class DeviceEventUseCaseCreateImpl implements DeviceEventUseCaseCreate {
     private final DeviceEventPortFindCurrentUser deviceEventPortFindCurrentUser;
 
     @Override
+    @Transactional
     public DeviceEvent createDeviceEvent(DeviceChannel deviceChannel, DeviceEventType deviceEventType) {
         final var normalDeviceEvent = DeviceEvent.createEvent(deviceChannel, deviceEventType);
         deviceEventPortSave.save(normalDeviceEvent);
@@ -23,6 +25,7 @@ class DeviceEventUseCaseCreateImpl implements DeviceEventUseCaseCreate {
     }
 
     @Override
+    @Transactional
     public DeviceEvent createDeviceEventFailed(DeviceEventType deviceEventType) {
         final var currentUser = deviceEventPortFindCurrentUser.findCurrentUser();
         final var failedEvent = DeviceEvent.createFailedEvent(currentUser, deviceEventType);

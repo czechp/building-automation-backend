@@ -9,6 +9,7 @@ import app.web.pczportfolio.pczbuildingautomation.location.application.useCase.L
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -17,6 +18,7 @@ class LocationUseCaseCreateImpl implements LocationUseCaseCreate {
     private final LocationPortFindCurrentUserAccount locationPortFindCurrentUserAccount;
 
     @Override
+    @Transactional
     public Location createLocation(LocationCreateCommandDto locationCommandDto) {
         AccountFacadeDto accountFacadeDto = locationPortFindCurrentUserAccount.findAccountOfCurrentUser()
                 .orElseThrow(() -> new NotFoundException("There is no active logged user"));

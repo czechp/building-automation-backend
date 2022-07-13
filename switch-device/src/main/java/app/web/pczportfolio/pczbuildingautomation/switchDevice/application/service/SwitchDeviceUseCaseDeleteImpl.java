@@ -25,6 +25,7 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
 
     @Override
     @DeviceEventDelete
+    @Transactional
     public SwitchDevice deleteSwitchDeviceById(long switchDeviceId) {
         final SwitchDevice switchDevice = getSwitchDevice(switchDeviceId);
         switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDevice);
@@ -34,6 +35,7 @@ class SwitchDeviceUseCaseDeleteImpl implements SwitchDeviceUseCaseDelete {
 
     @Override
     @DeviceEventDelete
+    @Transactional
     public List<SwitchDevice> deleteSwitchDevicesLocationRemoved(long locationId) {
         List<SwitchDevice> switchDevicesToDelete = switchDevicePortFindByLocationId.findSwitchDevicesByLocationId(locationId);
         switchDevicesToDelete

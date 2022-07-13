@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannelMsg;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -13,6 +14,7 @@ class DeviceEventUseCaseRejectedMsgImpl implements DeviceEventUseCaseRejectedMsg
     private final DeviceEventPortSave deviceEventPortSave;
 
     @Override
+    @Transactional
     public DeviceEvent createEventFromRejectedMsg(DeviceChannelMsg deviceChannelMsg) {
         final var deviceEventRejectedMsg = DeviceEvent.createFailedEvent(deviceChannelMsg);
         deviceEventPortSave.save(deviceEventRejectedMsg);

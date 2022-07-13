@@ -7,6 +7,7 @@ import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -15,6 +16,7 @@ class DeviceEventUseCaseDeleteImpl implements DeviceEventUseCaseDelete {
     private final DeviceEventPortDelete deviceEventPortDelete;
 
     @Override
+    @Transactional
     public DeviceEvent deleteDeviceEvent(long deviceEventId) {
         final var deviceEventToDelete = getDeviceEventOrThrowException(deviceEventId);
         deviceEventPortDelete.deleteDeviceEvent(deviceEventToDelete);
