@@ -45,5 +45,5 @@ can cooperate with that system.
 - [x] failed events,
 - [x] query (findAll, findByAccount),
 - [x] remove event (only by admin),
-- [ ] switch device dlx queue,
+- [x] switch device dlx queue,
 - [ ] mark @Transactional above use cases
