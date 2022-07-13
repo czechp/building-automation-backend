@@ -7,4 +7,13 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
-
+  automation-db:
+     image: mariadb
+     container_name: automation-db
+     ports:
+       - 3306:3306
+     environment: 
+                MARIADB_USER: pczech
+                MARIADB_PASSWORD: pczech123
+                MARIADB_ROOT_PASSWORD: root
+                MARIADB_DATABASE: building_automation
