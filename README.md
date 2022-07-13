@@ -49,7 +49,7 @@ can cooperate with that system.
 - [ ] mark @Transactional above use cases
 
 ### Authorization from external services
-- [ ] account endpoint to authenticate user from other systems by http request
+- [x] account endpoint to authenticate user from other systems by http request
 ### Docker
 - [ ] prepare image with MySql (MariaDb),
 - [ ] prepare image with backend (OpenJdk11),

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class AccountCurrentUserOwnChecker {
+public class AccountOwnerValidator {
     private final SecurityCurrentUser securityCurrentUser;
     private final AccountPortFindByUsername accountPortFindByUsername;
 

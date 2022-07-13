@@ -18,17 +18,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AccountCurrentUserOwnCheckerTest {
+class AccountOwnerValidatorTest {
     @Mock
     SecurityCurrentUser securityCurrentUser;
     @Mock
     AccountPortFindByUsername accountPortFindByUsername;
 
-    AccountCurrentUserOwnChecker accountCurrentUserOwnChecker;
+    AccountOwnerValidator accountOwnerValidator;
 
     @BeforeEach
     void init() {
-        this.accountCurrentUserOwnChecker = new AccountCurrentUserOwnChecker(securityCurrentUser, accountPortFindByUsername);
+        this.accountOwnerValidator = new AccountOwnerValidator(securityCurrentUser, accountPortFindByUsername);
     }
 
     @Test
@@ -45,7 +45,7 @@ class AccountCurrentUserOwnCheckerTest {
         //when
         when(securityCurrentUser.getCurrentUser()).thenReturn(commonUsername);
         when(accountPortFindByUsername.findAccountByUsername(any())).thenReturn(Optional.of(fetchedAccount));
-        boolean isOwner = accountCurrentUserOwnChecker.isAccountOwner(currentUserAccount);
+        boolean isOwner = accountOwnerValidator.isAccountOwner(currentUserAccount);
         //then
         assertTrue(isOwner);
     }
@@ -65,7 +65,7 @@ class AccountCurrentUserOwnCheckerTest {
         //when
         when(securityCurrentUser.getCurrentUser()).thenReturn(commonUsername);
         when(accountPortFindByUsername.findAccountByUsername(any())).thenReturn(Optional.of(currentUserAccount));
-        boolean isOwner = accountCurrentUserOwnChecker.isAccountOwner(account);
+        boolean isOwner = accountOwnerValidator.isAccountOwner(account);
         //then
         assertFalse(isOwner);
     }
@@ -85,7 +85,7 @@ class AccountCurrentUserOwnCheckerTest {
         //when
         when(securityCurrentUser.getCurrentUser()).thenReturn(commonUsername);
         when(accountPortFindByUsername.findAccountByUsername(any())).thenReturn(Optional.of(currentUserAccount));
-        boolean isAdmin = accountCurrentUserOwnChecker.isAccountOwner(account);
+        boolean isAdmin = accountOwnerValidator.isAccountOwner(account);
         //then
         assertTrue(isAdmin);
     }
