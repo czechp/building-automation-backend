@@ -14,7 +14,7 @@ class DeviceEventUseCaseRejectedMsgImpl implements DeviceEventUseCaseRejectedMsg
 
     @Override
     public DeviceEvent createEventFromRejectedMsg(DeviceChannelMsg deviceChannelMsg) {
-        final var deviceEventRejectedMsg = DeviceEvent.createEventFromRejectedMsg(deviceChannelMsg);
+        final var deviceEventRejectedMsg = DeviceEvent.createFailedEvent(deviceChannelMsg);
         deviceEventPortSave.save(deviceEventRejectedMsg);
         return deviceEventRejectedMsg;
     }

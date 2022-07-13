@@ -41,6 +41,7 @@ class DeviceEvent {
         this.deviceName = deviceChannelMsg.getDeviceName();
         this.deviceType = deviceChannelMsg.getDeviceType();
         this.deviceEventType = DeviceEventType.REJECTED_MESSAGE;
+        this.failed=true;
     }
 
     public static DeviceEvent createEvent(DeviceChannel deviceChannel, DeviceEventType deviceEventType) {
@@ -58,7 +59,7 @@ class DeviceEvent {
         return deviceEvent;
     }
 
-    public static DeviceEvent createEventFromRejectedMsg(DeviceChannelMsg deviceChannelMsg) {
+    public static DeviceEvent createFailedEvent(DeviceChannelMsg deviceChannelMsg) {
         return new DeviceEvent(deviceChannelMsg);
     }
 }
