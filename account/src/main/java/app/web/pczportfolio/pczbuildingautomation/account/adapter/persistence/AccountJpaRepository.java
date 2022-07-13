@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountQueryDto;
+import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountUserDetailsDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,6 @@ public interface AccountJpaRepository extends JpaRepository<AccountEntity, Long>
     @Query("SELECT a FROM AccountEntity a")
     List<AccountQueryDto> findAllQuery(Pageable pageable);
 
+    @Query("SELECT a from AccountEntity a WHERE a.username=:username")
+    Optional<AccountUserDetailsDto> findByUsernameUserDetailsQuery(@Param("username") String username);
 }

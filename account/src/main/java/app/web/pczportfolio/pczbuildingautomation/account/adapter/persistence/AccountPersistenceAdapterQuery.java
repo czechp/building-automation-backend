@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.account.adapter.persistence;
 
 import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountQueryDto;
+import app.web.pczportfolio.pczbuildingautomation.account.application.dto.AccountUserDetailsDto;
 import app.web.pczportfolio.pczbuildingautomation.account.application.port.AccountPortQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +23,10 @@ class AccountPersistenceAdapterQuery implements AccountPortQuery {
     @Override
     public List<AccountQueryDto> findAllAccountQuery(Pageable pageable) {
         return accountJpaRepository.findAllQuery(pageable);
+    }
+
+    @Override
+    public Optional<AccountUserDetailsDto> findAccountByUsername(String username) {
+        return accountJpaRepository.findByUsernameUserDetailsQuery(username);
     }
 }
