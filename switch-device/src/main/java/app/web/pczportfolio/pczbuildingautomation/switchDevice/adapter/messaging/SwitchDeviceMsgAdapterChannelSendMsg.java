@@ -13,13 +13,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 class SwitchDeviceMsgAdapterChannelSendMsg implements SwitchDevicePortChannelSendMsg {
     private final MessagingService messagingService;
-    private final ObjectMapper objectMapper;
 
 
     @Override
     public void sendMsgToDeviceChannel(DeviceChannel deviceChannel, SwitchDeviceSetNewStateMsgDto switchDeviceSetNewStateMsgDto) throws JsonProcessingException {
-        final var message = objectMapper.writeValueAsString(switchDeviceSetNewStateMsgDto);
-        messagingService.sendMessageToChannel(deviceChannel, message);
-
+        messagingService.sendMessageToChannel(deviceChannel, switchDeviceSetNewStateMsgDto);
     }
 }

@@ -1,5 +1,6 @@
 package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +10,9 @@ class MessagingServiceImpl implements MessagingService {
     private final MessagingDirectExchangeCreator messagingDirectExchangeCreator;
     private final MessagingQueueRemover messagingQueueRemover;
     private final MessagingQueueCreator messagingQueueCreator;
-
     private final MessagingMessageSender messagingMessageSender;
+
+    private final MessagingListenerActivator messagingListenerActivator;
     @Override
     public String createDeviceDirectExchange(DeviceChannel deviceChannel) {
         return messagingDirectExchangeCreator.createDirectExchangeWithDlx(deviceChannel);
@@ -27,7 +29,12 @@ class MessagingServiceImpl implements MessagingService {
     }
 
     @Override
-    public void sendMessageToChannel(DeviceChannel deviceChannel, String message) {
-        messagingMessageSender.sendMessageToQueue(deviceChannel, message);
+    public void sendMessageToChannel(DeviceChannel deviceChannel, DeviceChannelMsg deviceChannelMsg) throws JsonProcessingException {
+        messagingMessageSender.sendMessageToQueue(deviceChannel, deviceChannelMsg);
+    }
+
+    @Override
+    public void listenerActivation(String listenerId) {
+        messagingListenerActivator.activateListener(listenerId);
     }
 }

@@ -4,6 +4,7 @@ import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.D
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEventType;
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannel;
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannelMsg;
 import app.web.pczportfolio.pczbuildingautomation.utilities.tools.LoggerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,8 +86,38 @@ class DeviceEventWarmup {
                         DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.CREATE),
                         DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.DELETE),
                         DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.NEW_STATE_REQUEST),
-                        DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.FEEDBACK_FROM_DEVICE)
+                        DeviceEvent.createFailedEvent(EVENT_OWNER, DeviceEventType.FEEDBACK_FROM_DEVICE),
+                        DeviceEvent.createFailedEvent(supplyDeviceChannelMsg())
                 )
                 .forEach(deviceEventPortSave::save);
+    }
+
+    private DeviceChannelMsg supplyDeviceChannelMsg() {
+        return new DeviceChannelMsg() {
+            @Override
+            public long getDeviceId() {
+                return 1;
+            }
+
+            @Override
+            public String getNewState() {
+                return "true";
+            }
+
+            @Override
+            public String getOwner() {
+                return "Some owner";
+            }
+
+            @Override
+            public String getDeviceName() {
+                return "Switch device 1";
+            }
+
+            @Override
+            public String getDeviceType() {
+                return "Switch device";
+            }
+        };
     }
 }

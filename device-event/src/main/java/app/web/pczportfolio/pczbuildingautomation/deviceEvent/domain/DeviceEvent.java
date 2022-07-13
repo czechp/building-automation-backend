@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannel;
+import app.web.pczportfolio.pczbuildingautomation.utilities.messaging.DeviceChannelMsg;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,16 @@ class DeviceEvent {
         this.state = deviceChannel.getEventState();
     }
 
+    private DeviceEvent(DeviceChannelMsg deviceChannelMsg) {
+        this.deviceId = deviceChannelMsg.getDeviceId();
+        this.expectedState = deviceChannelMsg.getNewState();
+        this.owner = deviceChannelMsg.getOwner();
+        this.deviceName = deviceChannelMsg.getDeviceName();
+        this.deviceType = deviceChannelMsg.getDeviceType();
+        this.deviceEventType = DeviceEventType.REJECTED_MESSAGE;
+        this.failed=true;
+    }
+
     public static DeviceEvent createEvent(DeviceChannel deviceChannel, DeviceEventType deviceEventType) {
         final var deviceEvent = new DeviceEvent(deviceChannel);
         deviceEvent.deviceEventType = deviceEventType;
@@ -48,4 +59,7 @@ class DeviceEvent {
         return deviceEvent;
     }
 
+    public static DeviceEvent createFailedEvent(DeviceChannelMsg deviceChannelMsg) {
+        return new DeviceEvent(deviceChannelMsg);
+    }
 }

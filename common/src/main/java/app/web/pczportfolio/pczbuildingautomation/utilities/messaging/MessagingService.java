@@ -1,5 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.utilities.messaging;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface MessagingService {
     String createDeviceChannel(DeviceChannel deviceChannel);
 
@@ -7,5 +9,7 @@ public interface MessagingService {
 
     void deleteDeviceChannel(DeviceChannel deviceChannel);
 
-    void sendMessageToChannel(DeviceChannel deviceChannel, String message);
+    void sendMessageToChannel(DeviceChannel deviceChannel, DeviceChannelMsg deviceChannelMsg) throws JsonProcessingException;
+
+    void listenerActivation(String listenerId);
 }
