@@ -1,10 +1,14 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.query;
 
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEventType;
 
 public class DeviceEventSummaryFormatter {
     public static String createSummary(DeviceEvent deviceEvent) {
-        return deviceEvent.isFailed() ? prepareFailedSummary(deviceEvent) : prepareNormalSummary(deviceEvent);
+        if (deviceEvent.getDeviceEventType() == DeviceEventType.REJECTED_MESSAGE)
+            return prepareRejectedMsgEventSummary(deviceEvent);
+        else
+            return deviceEvent.isFailed() ? prepareFailedSummary(deviceEvent) : prepareNormalSummary(deviceEvent);
     }
 
     private static String prepareNormalSummary(DeviceEvent deviceEvent) {
@@ -26,6 +30,16 @@ public class DeviceEventSummaryFormatter {
 
     private static String prepareFailedSummary(DeviceEvent deviceEvent) {
         return getContentPrefix(deviceEvent).toString();
+    }
+
+    private static String prepareRejectedMsgEventSummary(DeviceEvent deviceEvent) {
+        return getContentPrefix(deviceEvent)
+                .append("Device name: ")
+                .append(deviceEvent.getDeviceName())
+                .append("\n")
+                .append("Expected state: ")
+                .append(deviceEvent.getExpectedState())
+                .toString();
     }
 
     private static StringBuilder getContentPrefix(DeviceEvent deviceEvent) {
