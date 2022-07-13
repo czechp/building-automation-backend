@@ -10,6 +10,7 @@ import app.web.pczportfolio.pczbuildingautomation.location.application.useCase.L
 import app.web.pczportfolio.pczbuildingautomation.location.domain.Location;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -22,6 +23,7 @@ class LocationUseCaseDeleteImpl implements LocationUseCaseDelete {
 
 
     @Override
+    @Transactional
     public void deleteLocationById(long locationId) {
         Location location = locationPortFindById.findLocationById(locationId)
                 .orElseThrow(() -> new NotFoundException("Location with id: " + locationId + " does not exist"));
@@ -31,6 +33,7 @@ class LocationUseCaseDeleteImpl implements LocationUseCaseDelete {
     }
 
     @Override
+    @Transactional
     public void deleteLocationsAccountRemoved(long accountId) {
         locationPortFindByAccountId.findLocationsByAccountId(accountId)
                 .forEach(this::deleteLocation);

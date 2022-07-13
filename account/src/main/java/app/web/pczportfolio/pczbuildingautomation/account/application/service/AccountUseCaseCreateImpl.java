@@ -10,6 +10,7 @@ import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFile
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.function.Function;
 
@@ -22,6 +23,7 @@ class AccountUseCaseCreateImpl implements AccountUseCaseCreate {
     private final AccountPortSave accountPortSave;
 
     @Override
+    @Transactional
     public Account createAccount(AccountCreateCmdDto accountCreateCmdDto) {
         Function<String, String> hashPasswordFunction = passwordEncoder::encode;
         accountPortFindByUsernameOrEmail.findAccountByUsernameOrEmail(accountCreateCmdDto.getUsername(), accountCreateCmdDto.getPassword())

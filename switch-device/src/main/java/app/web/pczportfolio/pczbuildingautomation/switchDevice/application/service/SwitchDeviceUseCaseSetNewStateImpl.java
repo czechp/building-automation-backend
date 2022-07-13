@@ -12,6 +12,7 @@ import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevi
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +24,7 @@ class SwitchDeviceUseCaseSetNewStateImpl implements SwitchDeviceUseCaseSetNewSta
 
     @Override
     @DeviceEventSetNewStateRequest
+    @Transactional
     public SwitchDevice setNewStateForSwitchDevice(SwitchDeviceSetNewStateDto switchDeviceSetNewStateDto) throws JsonProcessingException {
         final var switchDevice = getSwitchDeviceOrThrowException(switchDeviceSetNewStateDto.getSwitchDeviceId());
         switchDeviceOwnerValidator.currentUserIsOwnerOrElseThrowException(switchDevice);
