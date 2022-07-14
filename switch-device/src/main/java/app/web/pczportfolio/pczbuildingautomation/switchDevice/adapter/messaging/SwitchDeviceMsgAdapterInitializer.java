@@ -10,8 +10,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class SwitchDeviceMsgAdapterInitializer {
     private final MessagingService messagingService;
     private final SwitchDevicePortFindAll switchDevicePortFindAll;
