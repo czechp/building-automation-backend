@@ -15,8 +15,8 @@ import java.util.Map;
 class MessagingQueueCreator {
     private static final String DLX_HEADER = "x-dead-letter-exchange";
     private static final String TTL_HEADER = "x-message-ttl";
-    //TODO: change this value to 60 000 == 1 min
-    private static final int TTL_MILISECONDS_VALUE = 1_000;
+
+    private static final int TTL_MILISECONDS_VALUE = 60_000;
     private final RabbitAdmin rabbitAdmin;
 
     String createDeviceQueue(DeviceChannel deviceChannel) {

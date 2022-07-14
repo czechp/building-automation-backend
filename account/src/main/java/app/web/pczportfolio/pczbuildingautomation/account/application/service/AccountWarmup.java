@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ class AccountWarmup {
     }
 
     @EventListener(ApplicationReadyEvent.class)
+    @Order(1)
     void init() {
         LoggerInfo.showInfo(logger, "Warmup for Account entity");
         accountForDevelopment()
