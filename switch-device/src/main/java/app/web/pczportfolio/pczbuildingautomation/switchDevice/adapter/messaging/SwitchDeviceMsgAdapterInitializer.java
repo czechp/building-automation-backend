@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class SwitchDeviceMsgAdapterInitializer {
     private final MessagingService messagingService;
     private final SwitchDevicePortFindAll switchDevicePortFindAll;
@@ -26,7 +25,8 @@ public class SwitchDeviceMsgAdapterInitializer {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    void initializingSwitchDeviceMessaging() {
+    @Transactional
+    public void initializingSwitchDeviceMessaging() {
         LoggerInfo.showInfo(logger, "Initializing messaging structure for SWITCH DEVICE started ");
         createExchangeForSwitchDevice();
         createChannelForDevices();
