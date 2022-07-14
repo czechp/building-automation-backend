@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @Service
-@Profile({"development", "test"})
+@Profile({"development", "test", "integration-development"})
 class SwitchDeviceWarmup {
     private final SwitchDevicePortFindLocationById switchDevicePortFindLocationById;
     private final SwitchDevicePortSave switchDevicePortSave;

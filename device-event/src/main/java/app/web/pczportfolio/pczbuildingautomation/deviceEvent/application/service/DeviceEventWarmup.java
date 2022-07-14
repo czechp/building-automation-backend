@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.stream.Stream;
 
 @Component
-@Profile({"development", "test"})
+@Profile({"development", "test", "integration-development"})
 class DeviceEventWarmup {
     private static final String EVENT_OWNER = "user";
     private final DeviceEventPortSave deviceEventPortSave;

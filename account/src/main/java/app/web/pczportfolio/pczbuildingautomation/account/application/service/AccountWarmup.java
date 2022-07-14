@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@Profile({"development", "test"})
+@Profile({"development", "test", "integration-development"})
 class AccountWarmup {
     private final AccountPortSave accountPortSave;
     final private Logger logger;
