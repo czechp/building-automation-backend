@@ -50,6 +50,12 @@ can cooperate with that system.
 
 ### Authorization from external services
 - [x] account endpoint to authenticate user from other systems by http request
+
+
+### Location
+- [ ] assign client to location,
+
+
 ### Docker
 - [ ] prepare image with MySql (MariaDb),
 - [ ] prepare image with backend (OpenJdk11),
