@@ -31,4 +31,8 @@ public class LocationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private AccountSimpleEntity accountSimpleEntity;
+
+    private String clientUUID = "";
+
+    private String clientName = "";
 }

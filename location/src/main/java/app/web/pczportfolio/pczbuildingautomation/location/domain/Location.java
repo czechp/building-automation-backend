@@ -22,6 +22,10 @@ public class Location {
     private LocalDateTime creationTimestamp;
     private AccountParent accountParent;
 
+    private String clientUUID;
+
+    private String clientName;
+
     public Location(String name, AccountParent accountParent) {
         this.name = name;
         this.accountParent = accountParent;
