@@ -1,6 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.location.domain;
 
 import app.web.pczportfolio.pczbuildingautomation.account.dto.AccountFacadeDto;
+import app.web.pczportfolio.pczbuildingautomation.exception.ConditionsNotFulFiledException;
 import app.web.pczportfolio.pczbuildingautomation.location.application.dto.LocationCreateCommandDto;
 import lombok.*;
 
@@ -36,5 +37,18 @@ public class Location {
                 locationCommandDto.getName(),
                 new AccountParent(accountFacadeDto.getId(), accountFacadeDto.getUsername())
         );
+    }
+
+    public void assignClient(String clientUUID, String clientName) {
+        final var dataCorrect = !clientUUID.isBlank() && !clientName.isBlank();
+        if (dataCorrect) {
+            this.clientName = clientName;
+            this.clientUUID = clientUUID;
+        } else throw new ConditionsNotFulFiledException("Client name or client UUID is not correct");
+    }
+
+    public void clearClientBinding() {
+        this.clientUUID = "";
+        this.clientName = "";
     }
 }
