@@ -15,7 +15,9 @@ class LocationEntityMapper {
                 new AccountSimpleEntity(
                         location.getAccountParent().getId(),
                         location.getAccountParent().getUsername()
-                )
+                ),
+                location.getClientUUID(),
+                location.getClientName()
         );
     }
 
@@ -32,6 +34,8 @@ class LocationEntityMapper {
                                 .withUsername(locationEntity.getAccountSimpleEntity().getUsername())
                                 .build()
                 )
+                .withClientUUID(locationEntity.getClientUUID())
+                .withClientName(locationEntity.getClientName())
                 .build();
     }
 }
