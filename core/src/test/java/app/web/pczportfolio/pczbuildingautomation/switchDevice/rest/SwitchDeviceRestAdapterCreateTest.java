@@ -47,7 +47,9 @@ class SwitchDeviceRestAdapterCreateTest {
                         0L,
                         null,
                         RandomStringGenerator.getRandomString(),
-                        new AccountSimpleEntity(user.getId(), user.getUsername())
+                        new AccountSimpleEntity(user.getId(), user.getUsername()),
+                        "",
+                        ""
                 )
         );
 
@@ -95,7 +97,9 @@ class SwitchDeviceRestAdapterCreateTest {
                         0L,
                         null,
                         RandomStringGenerator.getRandomString(),
-                        new AccountSimpleEntity(user.getId(), user.getUsername())
+                        new AccountSimpleEntity(user.getId(), user.getUsername()),
+                        "",
+                        ""
                 )
         );
 

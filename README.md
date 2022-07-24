@@ -53,7 +53,8 @@ can cooperate with that system.
 
 
 ### Location
-- [ ] assign client to location,
+- [x] assign client to location,
+- [ ] query to find unassigned locations,
 
 
 ### Docker
