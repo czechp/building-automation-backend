@@ -17,7 +17,9 @@ class LocationPersistenceAdapter implements
         LocationPortFindByAccountId,
         LocationPortFindById,
         LocationPortDelete,
-        LocationPortFindByIdAndAccountUsername {
+        LocationPortFindByIdAndAccountUsername,
+        LocationPortExistsByClientUUID
+{
     private final LocationJpaRepository locationJpaRepository;
 
     @Override
@@ -56,5 +58,10 @@ class LocationPersistenceAdapter implements
     @Override
     public Optional<Location> findLocationByIdAndAccountUsername(long locationId, String username) {
         return locationJpaRepository.findByIdAndAccountSimpleEntity_Username(locationId, username).map(LocationEntityMapper::mapToDomain);
+    }
+
+    @Override
+    public boolean locationExistsWithClientUUID(String clientUUID) {
+        return locationJpaRepository.existsByClientUUID(clientUUID);
     }
 }
