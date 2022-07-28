@@ -18,6 +18,7 @@ import java.util.HashMap;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts/login")
+@CrossOrigin("*")
 class AccountRestAdapterLogin {
     private final SecurityAuthenticator securityAuthenticator;
 
