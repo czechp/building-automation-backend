@@ -3,6 +3,7 @@ package app.web.pczportfolio.pczbuildingautomation.account.adapter.rest;
 
 import app.web.pczportfolio.pczbuildingautomation.account.adapter.rest.dto.LoginDto;
 import app.web.pczportfolio.pczbuildingautomation.configuration.security.SecurityAuthenticator;
+import app.web.pczportfolio.pczbuildingautomation.configuration.security.dto.SecurityLoginQueryDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,8 @@ class AccountRestAdapterLogin {
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity<HashMap<String, String>> login(@RequestBody @Valid LoginDto loginDto) {
         try {
-            securityAuthenticator.authenticateAccount(loginDto.getUsername(), loginDto.getPassword());
+            SecurityLoginQueryDto loginQueryDto = securityAuthenticator.authenticateAccount(loginDto.getUsername(), loginDto.getPassword());
+            return new ResponseEntity(loginQueryDto, HttpStatus.OK);
         } catch (DisabledException disabledException) {
             return buildResponse("Account is currently disabled", HttpStatus.UNAUTHORIZED);
         } catch (LockedException lockedException) {
@@ -34,7 +36,6 @@ class AccountRestAdapterLogin {
         } catch (BadCredentialsException badCredentialsException) {
             return buildResponse("There is no account with such credentials", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     private ResponseEntity<HashMap<String, String>> buildResponse(String message, HttpStatus httpStatus) {
