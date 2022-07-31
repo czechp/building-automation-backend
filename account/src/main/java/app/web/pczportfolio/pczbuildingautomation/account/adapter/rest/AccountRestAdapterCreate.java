@@ -13,6 +13,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
 @Validated
+@CrossOrigin("*")
 class AccountRestAdapterCreate {
     private final AccountUseCaseCreate accountUseCaseCreate;
 
