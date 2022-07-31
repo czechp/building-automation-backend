@@ -13,4 +13,8 @@ public interface LocationQueryDto {
     String getName();
 
     LocalDateTime getCreationTimestamp();
+
+    String getClientUUID();
+
+    String getClientName();
 }

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Profile({"development", "test", "integration-development"})
 @Service
@@ -45,6 +46,8 @@ class LocationWarmup {
         return Arrays.asList(
                 Location.builder()
                         .withName("First location name")
+                        .withClientName("Some client name 1")
+                        .withClientUUID(UUID.randomUUID().toString())
                         .withAccountParent(AccountParent.builder()
                                 .withId(accountFacadeDto.getId())
                                 .withUsername(accountFacadeDto.getUsername())
@@ -52,12 +55,16 @@ class LocationWarmup {
                         .build(),
                 Location.builder()
                         .withName("Second location name")
+                        .withClientName("Some client name 1")
+                        .withClientUUID(UUID.randomUUID().toString())
                         .withAccountParent(AccountParent.builder()
                                 .withId(accountFacadeDto.getId())
                                 .withUsername(accountFacadeDto.getUsername())
                                 .build())
                         .build(), Location.builder()
                         .withName("Third location name")
+                        .withClientName("Some client name 1")
+                        .withClientUUID(UUID.randomUUID().toString())
                         .withAccountParent(AccountParent.builder()
                                 .withId(accountFacadeDto.getId())
                                 .withUsername(accountFacadeDto.getUsername())
