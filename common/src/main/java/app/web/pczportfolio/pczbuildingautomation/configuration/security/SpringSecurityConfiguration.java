@@ -37,6 +37,7 @@ class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/accounts").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/accounts/login").permitAll()
+                .antMatchers("/api/accounts/email-confirmation").permitAll()
                 .antMatchers("/api/accounts/password-restore/**").permitAll()
                 .antMatchers("/api/accounts/email-confirmation/*").permitAll()
                 .antMatchers("/api/accounts/login").permitAll()

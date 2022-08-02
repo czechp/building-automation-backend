@@ -19,8 +19,9 @@ class AccountRestAdapterCreate {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    void createAccount(@RequestBody @Valid AccountCreateCmdDto accountCreateCmdDto) {
-        accountUseCaseCreate.createAccount(accountCreateCmdDto);
+    String createAccount(@RequestBody @Valid AccountCreateCmdDto accountCreateCmdDto) {
+        final var createdAccount = accountUseCaseCreate.createAccount(accountCreateCmdDto);
+        return createdAccount.getAccountConfiguration().getEnableToken();
     }
 
 
