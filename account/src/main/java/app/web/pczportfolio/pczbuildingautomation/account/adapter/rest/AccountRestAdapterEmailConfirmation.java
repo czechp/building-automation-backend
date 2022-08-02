@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts/email-confirmation")
+@CrossOrigin("*")
 class AccountRestAdapterEmailConfirmation {
     private final AccountUseCaseEmailConfirmation accountUseCaseEmailConfirmation;
 
