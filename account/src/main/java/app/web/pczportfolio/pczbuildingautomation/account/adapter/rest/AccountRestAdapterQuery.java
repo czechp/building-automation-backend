@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts")
+@CrossOrigin("*")
 class AccountRestAdapterQuery {
     private final AccountQuery accountQuery;
 
