@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/accounts/admin-activation")
+@CrossOrigin("*")
 class AccountRestAdapterAdminActivation {
     private final AccountUseCaseAdminActivation accountUseCaseAdminActivation;
 
