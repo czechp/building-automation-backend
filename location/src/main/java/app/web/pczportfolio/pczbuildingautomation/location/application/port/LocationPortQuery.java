@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface LocationPortQuery {
     List<LocationQueryDto> findAllLocations(Pageable pageable);
 
-    List<LocationQueryDto> findLocationsByAccountUsername(String username);
+    List<LocationQueryDto> findLocationsByAccountUsername(String username, Pageable pageable);
 
     Optional<LocationQueryDto> findLocationById(long locationId);
 }
