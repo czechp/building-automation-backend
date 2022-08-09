@@ -18,7 +18,7 @@ public interface LocationJpaRepository extends JpaRepository<LocationEntity, Lon
     List<LocationQueryDto> findAllQuery(Pageable pageable);
 
     @Query("SELECT l from LocationEntity l WHERE l.accountSimpleEntity.username=:username")
-    List<LocationQueryDto> findByAccountUsernameQuery(@Param("username") String username);
+    List<LocationQueryDto> findByAccountUsernameQuery(@Param("username") String username, Pageable pageable);
 
     @Query("SELECT l FROM LocationEntity l WHERE l.id=:id")
     Optional<LocationQueryDto> findByIdQuery(@Param("id") long locationId);

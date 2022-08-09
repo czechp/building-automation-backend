@@ -20,8 +20,8 @@ class LocationPersistenceAdapterQuery implements LocationPortQuery {
     }
 
     @Override
-    public List<LocationQueryDto> findLocationsByAccountUsername(String username) {
-        return locationJpaRepository.findByAccountUsernameQuery(username);
+    public List<LocationQueryDto> findLocationsByAccountUsername(String username, Pageable pageable) {
+        return locationJpaRepository.findByAccountUsernameQuery(username, pageable);
     }
 
     @Override

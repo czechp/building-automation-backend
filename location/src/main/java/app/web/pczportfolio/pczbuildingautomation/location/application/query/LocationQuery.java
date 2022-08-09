@@ -10,6 +10,6 @@ public interface LocationQuery {
 
     LocationQueryDto findLocationById(long locationId);
 
-    List<LocationQueryDto> findLocationsByCurrentUser();
+    List<LocationQueryDto> findLocationsByCurrentUser(Pageable pageable);
 
 }

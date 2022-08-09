@@ -16,4 +16,10 @@ public interface AccountQueryDto {
     @Value("#{target.accountRole}")
     String getRole();
 
+    @Value("#{target.accountConfigurationEmb.adminActivation}")
+    boolean isAdminActivated();
+
+
+    @Value("#{target.accountConfigurationEmb.emailConfirmed}")
+    boolean isEmailConfirmed();
 }

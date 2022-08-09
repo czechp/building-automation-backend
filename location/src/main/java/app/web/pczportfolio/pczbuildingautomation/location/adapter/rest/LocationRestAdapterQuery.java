@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/locations")
 @AllArgsConstructor
+@CrossOrigin("*")
 class LocationRestAdapterQuery {
     private final LocationQuery locationQuery;
 
@@ -26,8 +27,8 @@ class LocationRestAdapterQuery {
 
     @GetMapping("/account")
     @ResponseStatus(HttpStatus.OK)
-    List<LocationQueryDto> findALocationsByCurrentUser() {
-        return locationQuery.findLocationsByCurrentUser();
+    List<LocationQueryDto> findALocationsByCurrentUser(Pageable pageable) {
+        return locationQuery.findLocationsByCurrentUser(pageable);
     }
 
     @GetMapping("/{id}")

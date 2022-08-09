@@ -26,9 +26,9 @@ class LocationQueryImpl implements LocationQuery {
     }
 
     @Override
-    public List<LocationQueryDto> findLocationsByCurrentUser() {
+    public List<LocationQueryDto> findLocationsByCurrentUser(Pageable pageable) {
         final var currentUser = securityCurrentUser.getCurrentUser();
-        return locationPortQuery.findLocationsByAccountUsername(currentUser);
+        return locationPortQuery.findLocationsByAccountUsername(currentUser, pageable);
     }
 
     @Override
