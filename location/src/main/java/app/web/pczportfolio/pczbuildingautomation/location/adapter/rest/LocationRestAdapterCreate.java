@@ -11,6 +11,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/locations")
 @AllArgsConstructor
+@CrossOrigin("*")
 class LocationRestAdapterCreate {
     private final LocationUseCaseCreate locationUseCaseCreate;
 
