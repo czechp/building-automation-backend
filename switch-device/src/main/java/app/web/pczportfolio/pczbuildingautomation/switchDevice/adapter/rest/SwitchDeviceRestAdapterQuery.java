@@ -36,4 +36,14 @@ class SwitchDeviceRestAdapterQuery {
     SwitchDeviceQueryDto findSwitchDeviceBtId(@PathVariable(name = "id") long switchDeviceId) {
         return switchDeviceQuery.findSwitchDeviceById(switchDeviceId);
     }
+
+    @GetMapping("/location/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    List<SwitchDeviceQueryDto> findByLocationIdAndCurrentUser(
+            @PathVariable(name = "id") long locationId,
+            Pageable pageable
+    ) {
+        return switchDeviceQuery.findByLocationIdAndCurrentUser(locationId,pageable);
+    }
+
 }

@@ -52,6 +52,8 @@ class SwitchDeviceWarmup {
                                 .withLastFeedBackTimestamp(LocalDateTime.now())
                                 .withOwner(locationParent.getOwnerUsername())
                                 .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
+                                .withExpectedState(true)
+                                .withState(true)
                                 .build(),
                         SwitchDevice.builder()
                                 .withName("Switch device 2")
@@ -66,6 +68,7 @@ class SwitchDeviceWarmup {
                                 .withLastFeedBackTimestamp(LocalDateTime.now())
                                 .withOwner(locationParent.getOwnerUsername())
                                 .withLocationParent(LocationParent.builder().withId(locationParent.getId()).withName(locationParent.getName()).build())
+                                .withDeviceError(true)
                                 .build()
                 ).map(switchDevicePortSave::saveSwitchDevice)
                 .forEach(switchDevicePortChannelCreate::createChannelForSwitchDevice);

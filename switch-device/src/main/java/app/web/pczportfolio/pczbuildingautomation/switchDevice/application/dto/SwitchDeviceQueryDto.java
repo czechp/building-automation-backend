@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 public class SwitchDeviceQueryDto {
     private long id;
     private LocalDateTime creationTimestamp;
+    private LocalDateTime lastSetCmd;
+    private LocalDateTime lastDeviceFeedback;
     private String name;
     private String owner;
     private boolean expectedState;
@@ -24,6 +26,8 @@ public class SwitchDeviceQueryDto {
         return new SwitchDeviceQueryDto(
                 switchDevice.getId(),
                 switchDevice.getCreationTimestamp(),
+                switchDevice.getLastSetCommandTimestamp(),
+                switchDevice.getLastFeedBackTimestamp(),
                 switchDevice.getName(),
                 switchDevice.getOwner(),
                 switchDevice.isExpectedState(),

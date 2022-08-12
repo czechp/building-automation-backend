@@ -6,6 +6,7 @@ import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.dto.SwitchDeviceQueryDto;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindAll;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindById;
+import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindByLocationIdAndOwner;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.port.SwitchDevicePortFindByOwner;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.application.service.SwitchDeviceOwnerValidator;
 import app.web.pczportfolio.pczbuildingautomation.switchDevice.domain.SwitchDevice;
@@ -24,6 +25,7 @@ class SwitchDeviceQueryImpl implements SwitchDeviceQuery {
     private final SwitchDevicePortFindById switchDevicePortFindById;
     private final SecurityCurrentUser securityCurrentUser;
     private final SwitchDeviceOwnerValidator switchDeviceOwnerValidator;
+    private final SwitchDevicePortFindByLocationIdAndOwner switchDevicePortFindByLocationIdAndOwner;
 
     @Override
     public List<SwitchDeviceQueryDto> findAllSwitchDevices(Pageable pageable) {
@@ -49,5 +51,14 @@ class SwitchDeviceQueryImpl implements SwitchDeviceQuery {
         if (switchDeviceOwnerValidator.currentUserIsOwner(switchDevice))
             return SwitchDeviceQueryDto.toQueryDto(switchDevice);
         else throw new NotEnoughPrivilegesException("You are not owner of switch device with id: " + switchDeviceId);
+    }
+
+    @Override
+    public List<SwitchDeviceQueryDto> findByLocationIdAndCurrentUser(long locationId, Pageable pageable) {
+        final var currentUser = securityCurrentUser.getCurrentUser();
+        return switchDevicePortFindByLocationIdAndOwner.findSwitchDevicesByLocationIdAndOwner(locationId, currentUser, pageable)
+                .stream()
+                .map(SwitchDeviceQueryDto::toQueryDto)
+                .collect(Collectors.toList());
     }
 }

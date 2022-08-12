@@ -11,4 +11,6 @@ public interface SwitchDeviceJpaRepository extends JpaRepository<SwitchDeviceEnt
     List<SwitchDeviceEntity> findByOwner(String owner, Pageable pageable);
 
     List<SwitchDeviceEntity> findByLocationSimpleEntity_Id(long locationId);
+
+    List<SwitchDeviceEntity> findByLocationSimpleEntity_IdAndOwner(long locationId, String owner, Pageable pageable);
 }

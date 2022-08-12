@@ -11,4 +11,6 @@ public interface SwitchDeviceQuery {
     List<SwitchDeviceQueryDto> findAllSwitchDevices(Pageable pageable);
 
     List<SwitchDeviceQueryDto> findAllSwitchDevicesByCurrentUser(Pageable pageable);
+
+    List<SwitchDeviceQueryDto> findByLocationIdAndCurrentUser(long locationId, Pageable pageable);
 }
