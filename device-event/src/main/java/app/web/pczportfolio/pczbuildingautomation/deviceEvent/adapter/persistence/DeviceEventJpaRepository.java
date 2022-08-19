@@ -12,4 +12,6 @@ import java.util.List;
 public
 interface DeviceEventJpaRepository extends JpaRepository<DeviceEventEntity, Long> {
     List<DeviceEventEntity> findByOwner(String owner, Pageable pageable);
+
+    List<DeviceEventEntity> findByOwnerAndDeviceId(String owner, long deviceId);
 }

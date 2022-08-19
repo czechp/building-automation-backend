@@ -1,10 +1,7 @@
 package app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.query;
 
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.dto.DeviceEventQueryDto;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindAll;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindById;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindByOwner;
-import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindCurrentUser;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.*;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.service.DeviceEventOwnerValidator;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
@@ -23,6 +20,7 @@ class DeviceEventQueryImpl implements DeviceEventQuery {
     private final DeviceEventPortFindCurrentUser deviceEventPortFindCurrentUser;
     private final DeviceEventPortFindById deviceEventPortFindById;
     private final DeviceEventOwnerValidator deviceEventOwnerValidator;
+    private final DeviceEventPortFindByOwnerAndDeviceId deviceEventPortFindByOwnerAndDeviceId;
 
     @Override
     public List<DeviceEventQueryDto> findAllDeviceEvents(Pageable pageable) {
@@ -48,5 +46,14 @@ class DeviceEventQueryImpl implements DeviceEventQuery {
                 .orElseThrow(() -> new NotFoundException("Device event with deviceEventId: " + deviceEventId + " does not exist."));
         deviceEventOwnerValidator.validateDeviceEventOwningOrThrowException(deviceEvent);
         return DeviceEventQueryDto.create(deviceEvent);
+    }
+
+    @Override
+    public List<DeviceEventQueryDto> findByDeviceId(long deviceId) {
+        final var currentUser = deviceEventPortFindCurrentUser.findCurrentUser();
+        return deviceEventPortFindByOwnerAndDeviceId.findDeviceEventsByOwnerAndDeviceId(currentUser, deviceId)
+                .stream()
+                .map(DeviceEventQueryDto::create)
+                .collect(Collectors.toList());
     }
 }

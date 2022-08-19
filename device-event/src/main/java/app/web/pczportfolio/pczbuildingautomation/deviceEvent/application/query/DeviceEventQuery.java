@@ -9,4 +9,5 @@ public interface DeviceEventQuery {
     List<DeviceEventQueryDto> findAllDeviceEvents(Pageable pageable);
     List<DeviceEventQueryDto> findByCurrentUser(Pageable pageable);
     DeviceEventQueryDto findById(long deviceEventId);
+    List<DeviceEventQueryDto> findByDeviceId(long deviceId);
 }

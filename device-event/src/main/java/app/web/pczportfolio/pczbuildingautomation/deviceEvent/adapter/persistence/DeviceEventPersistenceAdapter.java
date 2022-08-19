@@ -17,7 +17,8 @@ class DeviceEventPersistenceAdapter implements
         DeviceEventPortFindAll,
         DeviceEventPortFindByOwner,
         DeviceEventPortFindById,
-        DeviceEventPortDelete
+        DeviceEventPortDelete,
+        DeviceEventPortFindByOwnerAndDeviceId
 {
     private final DeviceEventJpaRepository deviceEventJpaRepository;
 
@@ -53,5 +54,13 @@ class DeviceEventPersistenceAdapter implements
     public void deleteDeviceEvent(DeviceEvent deviceEvent) {
         final var deviceEventEntityToDelete = DeviceEventEntityMapper.toEntity(deviceEvent);
         deviceEventJpaRepository.delete(deviceEventEntityToDelete);
+    }
+
+    @Override
+    public List<DeviceEvent> findDeviceEventsByOwnerAndDeviceId(String owner, long deviceId) {
+        return deviceEventJpaRepository.findByOwnerAndDeviceId(owner, deviceId)
+                .stream()
+                .map(DeviceEventEntityMapper::toDomain)
+                .collect(Collectors.toList());
     }
 }
