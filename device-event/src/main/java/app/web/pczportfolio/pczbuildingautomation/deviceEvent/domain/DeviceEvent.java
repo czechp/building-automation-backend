@@ -62,4 +62,8 @@ class DeviceEvent {
     public static DeviceEvent createFailedEvent(DeviceChannelMsg deviceChannelMsg) {
         return new DeviceEvent(deviceChannelMsg);
     }
+
+    public boolean checkOwning(String ownerToCheck){
+        return this.owner.equals(ownerToCheck);
+    }
 }

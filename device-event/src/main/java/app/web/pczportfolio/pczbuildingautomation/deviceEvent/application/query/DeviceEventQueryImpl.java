@@ -5,6 +5,8 @@ import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.D
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindById;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindByOwner;
 import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.port.DeviceEventPortFindCurrentUser;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.application.service.DeviceEventOwnerValidator;
+import app.web.pczportfolio.pczbuildingautomation.deviceEvent.domain.DeviceEvent;
 import app.web.pczportfolio.pczbuildingautomation.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,7 @@ class DeviceEventQueryImpl implements DeviceEventQuery {
     private final DeviceEventPortFindByOwner deviceEventPortFindByOwner;
     private final DeviceEventPortFindCurrentUser deviceEventPortFindCurrentUser;
     private final DeviceEventPortFindById deviceEventPortFindById;
+    private final DeviceEventOwnerValidator deviceEventOwnerValidator;
 
     @Override
     public List<DeviceEventQueryDto> findAllDeviceEvents(Pageable pageable) {
@@ -41,8 +44,9 @@ class DeviceEventQueryImpl implements DeviceEventQuery {
 
     @Override
     public DeviceEventQueryDto findById(long deviceEventId) {
-        return deviceEventPortFindById.findDeviceEventById(deviceEventId)
-                .map(DeviceEventQueryDto::create)
+        final var deviceEvent = deviceEventPortFindById.findDeviceEventById(deviceEventId)
                 .orElseThrow(() -> new NotFoundException("Device event with deviceEventId: " + deviceEventId + " does not exist."));
+        deviceEventOwnerValidator.validateDeviceEventOwningOrThrowException(deviceEvent);
+        return DeviceEventQueryDto.create(deviceEvent);
     }
 }
